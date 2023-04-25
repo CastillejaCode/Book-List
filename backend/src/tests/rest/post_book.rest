@@ -1,0 +1,9 @@
+POST http://localhost:3001/api/books
+Content-Type: application/json
+
+{
+    "title": "Moby Dick",
+    "author": "Herman Melville",
+    "rating": 5,
+    "review": "Whales, so many whales..."
+}
