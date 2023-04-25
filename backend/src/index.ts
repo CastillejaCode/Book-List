@@ -1,15 +1,7 @@
-import typeDefs from './schema.js';
-import resolvers from './resolvers.js';
-import { ApolloServer } from '@apollo/server';
-import { startStandaloneServer } from '@apollo/server/standalone';
+import app from './app.js';
+import logger from './utils/logger.js';
+import config from './utils/config.js';
 
-const server = new ApolloServer({
-	typeDefs,
-	resolvers,
+app.listen(config.PORT, () => {
+	logger.info(`Connected to port ${config.PORT}`);
 });
-
-const { url } = await startStandaloneServer(server, {
-	listen: { port: 4000 },
-});
-
-console.log(`🚀  Server ready at: ${url}`);
