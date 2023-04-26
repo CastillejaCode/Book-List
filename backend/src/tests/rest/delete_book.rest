@@ -1,0 +1,2 @@
+DELETE http://localhost:3001/api/books/64489ac8c98a03d7ca1932b2
+

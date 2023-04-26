@@ -7,4 +7,12 @@ const bookSchema = new mongoose.Schema({
 	review: String,
 });
 
+bookSchema.set('toJSON', {
+	transform: (_document, returnedObject) => {
+		returnedObject.id = returnedObject._id.toString();
+		delete returnedObject._id;
+		delete returnedObject.__v;
+	},
+});
+
 export const Book = mongoose.model('Book', bookSchema);

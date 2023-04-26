@@ -1,0 +1,6 @@
+PATCH http://localhost:3001/api/books/6448981fc98a03d7ca1932aa
+Content-Type: application/json
+
+{
+    "rating": 4
+}
