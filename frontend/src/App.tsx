@@ -1,12 +1,12 @@
 import "./App.css";
 import NavBar from "./components/NavBar/index";
-import Content from "./components/Content/index";
+import Books from "./components/Content/Books";
 
 const App = () => {
   return (
     <div>
       <NavBar />
-      <Content />
+      <Books />
     </div>
   );
 };

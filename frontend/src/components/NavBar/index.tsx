@@ -1,7 +1,7 @@
 const NavBar = () => {
   return (
     <header>
-      <h1>Book List</h1>
+      <h1 className="text-2xl">Book List</h1>
     </header>
   );
 };
