@@ -1,19 +1,20 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
+import { Book } from "../types";
 
 export const bookApi = createApi({
   reducerPath: "bookApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/api/" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/api" }),
   tagTypes: ["Books"],
   endpoints: (builder) => ({
-    getAllBooks: builder.query({
-      query: () => "books",
+    getAllBooks: builder.query<Book[], void>({
+      query: () => "/books",
       providesTags: ["Books"],
     }),
 
     addBook: builder.mutation({
       query: (body) => {
         return {
-          url: "books",
+          url: "/books",
           method: "POST",
           body,
         };
@@ -23,11 +24,11 @@ export const bookApi = createApi({
     deleteBook: builder.mutation({
       query: (id) => {
         return {
-          url: "books",
+          url: `/books/${id}`,
           method: "DELETE",
-          body: id,
         };
       },
+      invalidatesTags: ["Books"],
     }),
   }),
 });

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useAddBookMutation } from "../../services/books";
 
-const Form = () => {
+const Form = ({ toggleForm }: { toggleForm: () => void }) => {
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [rating, setRating] = useState<number>(0);
@@ -26,6 +26,7 @@ const Form = () => {
     setAuthor("");
     setRating(0);
     setReview("");
+    toggleForm();
   };
 
   return (
