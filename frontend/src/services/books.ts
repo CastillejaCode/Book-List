@@ -38,3 +38,24 @@ export const {
   useAddBookMutation,
   useDeleteBookMutation,
 } = bookApi;
+
+export const bookSearchApi = createApi({
+  reducerPath: "bookSearchApi",
+  baseQuery: fetchBaseQuery({
+    baseUrl: "https://openlibrary.org/search.json",
+  }),
+  endpoints: (builder) => ({
+    getBookId: builder.query({
+      query: (title: string) => {
+        const formattedTitle = title.split(" ").join("+").toLowerCase();
+        return {
+          url: `?title=${formattedTitle}`,
+          method: "GET",
+        };
+      },
+      transformResponse: (response: any) => response.docs[0].cover_i,
+    }),
+  }),
+});
+
+export const { useGetBookIdQuery } = bookSearchApi;

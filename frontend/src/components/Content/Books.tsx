@@ -1,7 +1,6 @@
 import { useGetAllBooksQuery } from "../../services/books";
 import { Book } from "../../types";
-import OneBook from "./OneBook";
-import { motion } from "framer-motion";
+import Card from "./Card/Card";
 
 const Books = () => {
   const { data: books, isLoading, isError, isSuccess } = useGetAllBooksQuery();
@@ -11,17 +10,9 @@ const Books = () => {
 
   if (isSuccess)
     return (
-      <div className="m-2 grid grid-cols-2 gap-4">
+      <div className="m-4 flex flex-col items-center gap-4">
         {books.map((book: Book) => {
-          return (
-            <motion.div
-              key={book.id}
-              initial={{ scale: 0 }}
-              animate={{ scale: 1 }}
-            >
-              <OneBook book={book} />
-            </motion.div>
-          );
+          return <Card book={book} key={book.id} />;
         })}
       </div>
     );
