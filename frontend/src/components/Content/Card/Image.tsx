@@ -1,11 +1,6 @@
 import { useGetBookIdQuery } from "../../../services/books";
 const Image = ({ title }: { title: string }) => {
-  const {
-    data: value,
-    isLoading,
-    isError,
-    isSuccess,
-  } = useGetBookIdQuery(title);
+  const { data: value, isLoading, isError } = useGetBookIdQuery(title);
   const key = "id";
   const size = "M";
 
@@ -19,7 +14,7 @@ const Image = ({ title }: { title: string }) => {
     <img
       src={imgSrc}
       alt={`$Book cover for ${title}`}
-      className="aspect-[1/1.5] h-full rounded-md border-2 border-gray-900"
+      className="aspect-[1/1.5] w-5/12 rounded-md border-2 border-gray-900"
     />
   );
 };

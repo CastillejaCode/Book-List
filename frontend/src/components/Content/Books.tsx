@@ -10,7 +10,7 @@ const Books = () => {
 
   if (isSuccess)
     return (
-      <div className="m-4 flex flex-col items-center gap-4">
+      <div className=" flex flex-col items-center">
         {books.map((book: Book) => {
           return <Card book={book} key={book.id} />;
         })}

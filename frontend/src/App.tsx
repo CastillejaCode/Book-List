@@ -9,16 +9,14 @@ const App = () => {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <div>
-      <div>
-        <Books />
-      </div>
+    <>
+      <Books />
       <PlusCircleIcon
-        className="fixed bottom-0 right-0 m-2 h-14 w-14"
+        className="fixed bottom-0 right-0 h-14 w-14"
         onClick={() => setIsOpen(!isOpen)}
       />
       <Modal isOpen={isOpen} setIsOpen={setIsOpen} />
-    </div>
+    </>
   );
 };
 
