@@ -32,5 +32,3 @@ const Options = ({ id, options }: Props) => {
     </div>
   );
 };
-
-export default Options;

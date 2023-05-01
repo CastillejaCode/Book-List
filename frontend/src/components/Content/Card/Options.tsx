@@ -1,12 +1,21 @@
-const Options = ({ showOptions }: { showOptions: boolean }) => {
+import { useDeleteBookMutation } from "../../../services/books";
+
+const Options = ({ id }: { id: string }) => {
+  const [deleteBook] = useDeleteBookMutation();
+
   return (
-    <div
-      className={`absolute bottom-0 -z-50 flex w-full rounded-lg border-2 border-gray-500/70 bg-gray-50 p-2 shadow-md transition-all duration-300 ${
-        showOptions ? "translate-y-12" : ""
-      }`}
-    >
-      <button className="px-2 py-4">Delete</button>
-      <button>Edit</button>
+    <div className="relative flex justify-center gap-20">
+      <button
+        className="rounded-md border-2 border-gray-700 px-2 py-1 font-semibold"
+        onClick={() => {
+          deleteBook(id);
+        }}
+      >
+        Delete
+      </button>
+      <button className="relative z-50 rounded-md border-2 border-gray-700 px-2 py-1 font-semibold">
+        Edit
+      </button>
     </div>
   );
 };
