@@ -25,10 +25,10 @@ booksRouter.delete('/:id', async (req, res) => {
 	res.status(204).json(deletedBook);
 });
 
-booksRouter.patch('/:id', async (req, res) => {
-	const field = req.body;
+booksRouter.put('/:id', async (req, res) => {
+	const { body } = req;
 	const id = req.params.id;
-	const foundBook = await Book.findByIdAndUpdate(id, field, { new: true });
+	const foundBook = await Book.findByIdAndUpdate(id, body, { new: true });
 	res.json(foundBook);
 });
 

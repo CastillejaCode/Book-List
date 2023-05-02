@@ -1,6 +1,12 @@
 import { useDeleteBookMutation } from "../../../services/books";
 
-const Options = ({ id }: { id: string }) => {
+const Options = ({
+  id,
+  toggleEdit,
+}: {
+  id: string;
+  toggleEdit: () => void;
+}) => {
   const [deleteBook] = useDeleteBookMutation();
 
   return (
@@ -13,7 +19,10 @@ const Options = ({ id }: { id: string }) => {
       >
         Delete
       </button>
-      <button className="relative z-50 rounded-md border-2 border-gray-700 px-2 py-1 font-semibold">
+      <button
+        className="relative z-50 rounded-md border-2 border-gray-700 px-2 py-1 font-semibold"
+        onClick={toggleEdit}
+      >
         Edit
       </button>
     </div>

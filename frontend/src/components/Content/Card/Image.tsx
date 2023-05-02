@@ -1,6 +1,16 @@
 import { useGetBookIdQuery } from "../../../services/books";
-const Image = ({ title }: { title: string }) => {
-  const { data: value, isLoading, isError } = useGetBookIdQuery(title);
+
+interface Props {
+  title: string;
+  author: string;
+}
+
+const Image = ({ title, author }: Props) => {
+  const {
+    data: value,
+    isLoading,
+    isError,
+  } = useGetBookIdQuery({ title, author });
   const key = "id";
   const size = "M";
 

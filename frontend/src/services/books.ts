@@ -30,6 +30,16 @@ export const bookApi = createApi({
       },
       invalidatesTags: ["Books"],
     }),
+    updateBook: builder.mutation({
+      query: ({ id, body }) => {
+        return {
+          url: `/books/${id}`,
+          method: "PUT",
+          body,
+        };
+      },
+      invalidatesTags: ["Books"],
+    }),
   }),
 });
 
@@ -37,6 +47,7 @@ export const {
   useGetAllBooksQuery,
   useAddBookMutation,
   useDeleteBookMutation,
+  useUpdateBookMutation,
 } = bookApi;
 
 export const bookSearchApi = createApi({
@@ -46,10 +57,11 @@ export const bookSearchApi = createApi({
   }),
   endpoints: (builder) => ({
     getBookId: builder.query({
-      query: (title: string) => {
+      query: ({ title, author }) => {
         const formattedTitle = title.split(" ").join("+").toLowerCase();
+        const formattedAuthor = author.toLowerCase();
         return {
-          url: `?title=${formattedTitle}`,
+          url: `?title=${formattedTitle}&author=${formattedAuthor}`,
           method: "GET",
         };
       },
