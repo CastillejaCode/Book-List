@@ -9,10 +9,8 @@ interface Props {
 const UnderCard = ({ showReview, showOptions, height, children }: Props) => {
   return (
     <div
-      className={`absolute top-0 -z-50 w-full rounded-lg border-2 border-gray-500/70 bg-gray-50 p-2 shadow-md transition-all duration-300 ${
-        showReview || showOptions
-          ? `top-${height} z-0 mt-3`
-          : "border-gray500/10"
+      className={`absolute top-0 -z-50 w-full rounded-lg border-2 border-gray-500/70 bg-gray-50 p-2 shadow-sm transition-all duration-300 ${
+        showReview || showOptions ? `top-${height} z-0 mt-3` : "shadow-none"
       }`}
     >
       {children}
