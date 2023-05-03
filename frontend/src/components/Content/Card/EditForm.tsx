@@ -22,6 +22,7 @@ const EditForm = ({ book, toggleEdit }: Props) => {
       author,
       rating,
       review,
+      date: book.date,
     };
     const { id } = book;
     toggleEdit();

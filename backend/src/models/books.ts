@@ -5,6 +5,7 @@ const bookSchema = new mongoose.Schema({
 	author: String,
 	rating: Number,
 	review: String,
+	date: Number,
 });
 
 bookSchema.set('toJSON', {

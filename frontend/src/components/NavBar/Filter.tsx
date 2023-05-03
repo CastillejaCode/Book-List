@@ -24,6 +24,7 @@ const Filter = ({ showSort }: { showSort: boolean }) => {
               name="sort"
               value="recent"
               id="recent"
+              defaultChecked
               onClick={() => dispatch(setSort("recent"))}
             />
           </div>

@@ -7,6 +7,10 @@ import { Sort } from "../../types";
 
 const sortBooks = (method: Sort, books: Book[]) => {
   switch (method) {
+    case "recent":
+      return [...books].sort((a, b) => {
+        return b.date - a.date;
+      });
     case "title":
       return [...books].sort((a, b) => {
         const nameA = a.title.toLowerCase();
