@@ -35,8 +35,7 @@ const sortBooks = (method: Sort, books: Book[]) => {
 const Books = () => {
   const { data: books, isLoading, isError } = useGetAllBooksQuery();
   const sort = useSelector((state: RootState) => state.sort.value);
-
-  console.log(sort);
+  const showSort = useSelector((state: RootState) => state.toggle.sort);
 
   if (isLoading) return <div>Still Loading</div>;
   if (isError) return <div>Sorry, somthing went wrong!</div>;
@@ -46,7 +45,11 @@ const Books = () => {
   const sortedBooks = sortBooks(sort, books);
 
   return (
-    <div className="flex flex-col items-center">
+    <div
+      className={`flex flex-col items-center transition-all duration-300 ${
+        showSort ? "mt-80" : "mt-16"
+      }`}
+    >
       {sortedBooks.map((book: Book) => {
         return <Card book={book} key={book.id} />;
       })}

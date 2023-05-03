@@ -17,6 +17,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
         author,
         rating,
         review,
+        date: Date.now(),
       });
     } catch (error) {
       console.log(error);
