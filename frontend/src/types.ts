@@ -5,3 +5,6 @@ export interface Book {
   review: string;
   id: string;
 }
+
+export type Sort = "title" | "author" | "rating" | "recent";
+
