@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useAddBookMutation } from "../../services/books";
+import { setUndoStatus } from "../../features/undoSlice";
+import { useDispatch } from "react-redux";
 
 const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
+  const dispatch = useDispatch();
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
   const [rating, setRating] = useState<number>(3);
@@ -28,6 +31,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
     setRating(0);
     setReview("");
     toggleOpen();
+    dispatch(setUndoStatus(false));
   };
 
   return (

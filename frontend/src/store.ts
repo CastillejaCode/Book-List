@@ -2,9 +2,11 @@ import { configureStore } from "@reduxjs/toolkit";
 import { bookApi, bookSearchApi } from "./services/books";
 import toggleReducer from "./features/toggleSlice";
 import sortReducer from "./features/sortSlice";
+import undoReducer from "./features/undoSlice";
 
 export const store = configureStore({
   reducer: {
+    undo: undoReducer,
     sort: sortReducer,
     toggle: toggleReducer,
     [bookApi.reducerPath]: bookApi.reducer,

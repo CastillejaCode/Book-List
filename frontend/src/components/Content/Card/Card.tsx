@@ -74,7 +74,7 @@ const Card = ({ book }: { book: Book }) => {
         <Review review={book.review} />
       </UnderCard>
       <UnderCard height={height} showOptions={showOptions}>
-        <Options id={book.id} toggleEdit={toggleEdit} />
+        <Options book={book} toggleEdit={toggleEdit} />
       </UnderCard>
     </div>
   );
