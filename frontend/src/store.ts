@@ -3,9 +3,11 @@ import { bookApi, bookSearchApi } from "./services/books";
 import toggleReducer from "./features/toggleSlice";
 import sortReducer from "./features/sortSlice";
 import undoReducer from "./features/undoSlice";
+import searchReducer from "./features/searchSlice";
 
 export const store = configureStore({
   reducer: {
+    search: searchReducer,
     undo: undoReducer,
     sort: sortReducer,
     toggle: toggleReducer,

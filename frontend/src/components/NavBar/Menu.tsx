@@ -1,29 +1,39 @@
-import { PlusIcon } from "@heroicons/react/20/solid";
+import { PlusIcon, MagnifyingGlassIcon } from "@heroicons/react/20/solid";
 import { useDispatch } from "react-redux";
-import { toggleModal } from "../../features/toggleSlice";
+import { toggleModal, toggleSearch } from "../../features/toggleSlice";
 
-const Menu = ({ showMenu }: { showMenu: boolean }) => {
+interface Props {
+  showMenu: boolean;
+  focusInput: () => void;
+}
+
+const Menu = ({ showMenu, focusInput }: Props) => {
   const dispatch = useDispatch();
   return (
     <div
-      className={`menu absolute z-50 w-56 rounded-br-md border-b-2 border-r-2 border-gray-900 bg-base-100 transition-all duration-300
+      className={`menu absolute z-50 w-fit rounded-br-md border-b-2 border-r-2 border-gray-900 bg-base-100 transition-all duration-300
     ${showMenu ? "left-0" : "-left-60"}
     `}
     >
-      <ul>
-        <li>
-          <button
-            className="flex align-baseline"
-            onClick={() => dispatch(toggleModal())}
+      <ul className="menu text-xl">
+        <li onClick={() => dispatch(toggleModal())}>
+          <a>
+            <PlusIcon className="aspect-square w-6" />
+            <p>Add Book</p>
+          </a>
+        </li>
+        <li tabIndex={0}>
+          <a
+            onClick={() => {
+              dispatch(toggleSearch());
+              setTimeout(() => {
+                focusInput();
+              }, 50);
+            }}
           >
-            <PlusIcon className="aspect-square w-6" /> <p>Add Book</p>
-          </button>
-        </li>
-        <li>
-          <a>Item 2</a>
-        </li>
-        <li>
-          <a>Item 3</a>
+            <MagnifyingGlassIcon className="aspect-square w-6" />
+            Search
+          </a>
         </li>
       </ul>
     </div>

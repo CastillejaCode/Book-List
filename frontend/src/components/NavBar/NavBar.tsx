@@ -6,42 +6,79 @@ import {
 } from "@heroicons/react/24/solid";
 import Filter from "./Filter";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleMenu, toggleSort } from "../../features/toggleSlice";
+import {
+  toggleMenu,
+  toggleSearch,
+  toggleSort,
+} from "../../features/toggleSlice";
 import { RootState } from "../../store";
 import Menu from "./Menu";
 import { useAddBookMutation } from "../../services/books";
 import { toggleUndoStatus } from "../../features/undoSlice";
+import { useRef } from "react";
+import { resetSearch, setSearch } from "../../features/searchSlice";
 
 const NavBar = () => {
   const dispatch = useDispatch();
   const showSort = useSelector((state: RootState) => state.toggle.sort);
   const showMenu = useSelector((state: RootState) => state.toggle.menu);
   const showUndo = useSelector((state: RootState) => state.undo.status);
+  const showSearch = useSelector((state: RootState) => state.toggle.search);
+
+  const inputRef = useRef(null);
 
   const undoBook = useSelector((state: RootState) => state.undo.value);
   const [addBook] = useAddBookMutation();
+  const searchTerm = useSelector((state: RootState) => state.search.value);
 
   const addUndoBook = () => {
     addBook(undoBook);
     dispatch(toggleUndoStatus());
   };
 
+  const focusInput = () => {
+    inputRef.current.focus();
+  };
+
   return (
     <div className="fixed top-0 z-20">
       <header className="sticky flex w-screen items-center justify-between border-b-2 border-gray-900 bg-gray-200 px-4 pb-2 pt-2 shadow-md">
-        <button onClick={() => dispatch(toggleMenu())} className="relative">
+        <button
+          onClick={() => {
+            dispatch(resetSearch());
+            if (showSearch) dispatch(toggleSearch());
+            else dispatch(toggleMenu());
+          }}
+          className="relative"
+        >
           <Bars3Icon
             className={` aspect-square w-10 transition-all duration-300 
-            ${showMenu ? "invisible rotate-90 opacity-0" : ""}`}
+            ${showMenu || showSearch ? "invisible rotate-90 opacity-0" : ""}`}
           />
           <XMarkIcon
             className={`absolute left-0 top-0 aspect-square w-10 transition-all duration-300 
-            ${!showMenu ? "invisible -rotate-90 opacity-0" : ""}`}
+            ${!showMenu && !showSearch ? "invisible -rotate-90 opacity-0" : ""}
+            `}
           />
         </button>
-        <h1 className="self-baseline text-3xl font-semibold tracking-wide">
-          BookL:
-        </h1>
+        <div className="relative">
+          <h1
+            className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300
+          ${showSearch && "invisible opacity-0"}
+          `}
+          >
+            BookL:
+          </h1>
+          <input
+            onChange={(event) => dispatch(setSearch(event.target.value))}
+            value={searchTerm}
+            type="text"
+            ref={inputRef}
+            className={`input-bordered input absolute left-1/2 top-0 h-full -translate-x-1/2 text-lg transition-all duration-300
+            ${!showSearch && "invisible opacity-0"}
+            `}
+          />
+        </div>
         <button onClick={() => dispatch(toggleSort())}>
           <AdjustmentsHorizontalIcon
             className={`aspect-square w-8 transition-all duration-300 ${
@@ -57,7 +94,7 @@ const NavBar = () => {
           <ArrowUturnDownIcon />
         </button>
       </header>
-      <Menu showMenu={showMenu} />
+      <Menu showMenu={showMenu} focusInput={focusInput} />
       <Filter showSort={showSort} />
     </div>
   );

@@ -40,6 +40,9 @@ const Books = () => {
   const { data: books, isLoading, isError } = useGetAllBooksQuery();
   const sort = useSelector((state: RootState) => state.sort.value);
   const showSort = useSelector((state: RootState) => state.toggle.sort);
+  const searchTerm = useSelector((state: RootState) =>
+    state.search.value.toLowerCase()
+  );
 
   if (isLoading) return <div>Still Loading</div>;
   if (isError) return <div>Sorry, somthing went wrong!</div>;
@@ -47,14 +50,16 @@ const Books = () => {
   if (!books) return;
 
   const sortedBooks = sortBooks(sort, books);
-
+  const searchedBooks = sortedBooks.filter((book) =>
+    book.title.toLowerCase().startsWith(searchTerm)
+  );
   return (
     <div
       className={`flex flex-col items-center transition-all duration-300 ${
-        showSort ? "mt-80" : "mt-16"
+        showSort ? "mt-72" : "mt-16"
       }`}
     >
-      {sortedBooks.map((book: Book) => {
+      {searchedBooks.map((book: Book) => {
         return <Card book={book} key={book.id} />;
       })}
     </div>

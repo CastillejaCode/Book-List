@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Book } from "../../../types";
-import { ChevronDownIcon } from "@heroicons/react/24/outline";
+import { ChevronDownIcon, BookmarkIcon } from "@heroicons/react/24/outline";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import Image from "./Image";
 import Rating from "./Rating";
@@ -49,6 +49,7 @@ const Card = ({ book }: { book: Book }) => {
                 {book.title}
               </h2>
               <h3 className=" text-xl">{book.author}</h3>
+
               <div
                 className="flex flex-grow justify-center"
                 onClick={toggleReview}
@@ -64,7 +65,7 @@ const Card = ({ book }: { book: Book }) => {
             <EllipsisVerticalIcon
               className="absolute right-0 aspect-square w-5"
               onClick={toggleOptions}
-            />{" "}
+            />
           </>
         ) : (
           <EditForm book={book} toggleEdit={toggleEdit} />

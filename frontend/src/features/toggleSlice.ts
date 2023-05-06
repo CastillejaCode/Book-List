@@ -6,6 +6,7 @@ export interface Toggle {
   sort: boolean;
   menu: boolean;
   modal: boolean;
+  search: boolean;
 }
 
 const initialState: Toggle = {
@@ -14,6 +15,7 @@ const initialState: Toggle = {
   sort: false,
   menu: false,
   modal: false,
+  search: false,
 };
 
 export const toggleSlice = createSlice({
@@ -35,9 +37,14 @@ export const toggleSlice = createSlice({
     toggleMenu: (state) => {
       state.menu = !state.menu;
       state.sort = false;
+      state.search = false;
     },
     toggleModal: (state) => {
       state.modal = !state.modal;
+      state.menu = false;
+    },
+    toggleSearch: (state) => {
+      state.search = !state.search;
       state.menu = false;
     },
   },
@@ -49,6 +56,7 @@ export const {
   toggleSort,
   toggleMenu,
   toggleModal,
+  toggleSearch,
 } = toggleSlice.actions;
 
 export default toggleSlice.reducer;
