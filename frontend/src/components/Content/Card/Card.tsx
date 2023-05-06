@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Book } from "../../../types";
 import { ChevronDownIcon, BookmarkIcon } from "@heroicons/react/24/outline";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
@@ -13,6 +13,13 @@ const Card = ({ book }: { book: Book }) => {
   const [showReview, setShowReview] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [height, setHeight] = useState(52);
+
+  const cardRef = useRef(null);
+
+  useLayoutEffect(() => {
+    setHeight(cardRef.current.clientHeight);
+  }, []);
 
   const toggleReview = () => {
     setShowReview(!showReview);
@@ -29,15 +36,15 @@ const Card = ({ book }: { book: Book }) => {
     setShowOptions(false);
   };
 
-  const height = 52;
   return (
     //Extra Div to allow for Review to hide behind main card
     <div
-      className={`relative my-4 w-11/12 max-w-md shadow-md transition-all duration-300
-        ${showReview || showOptions ? "mb-20" : ""} `}
+      ref={cardRef}
+      className={`relative my-4 w-11/12 max-w-md shadow-md transition-all duration-300 
+        ${showReview || showOptions ? "mb-24" : ""}`}
     >
       <div
-        className={`relative z-0 flex h-${height} rounded-lg border-2 border-gray-500/70 bg-gray-50 p-3 `}
+        className={`relative z-0 flex rounded-lg border-2 border-gray-500/70 bg-gray-50 p-3 `}
       >
         {!showEdit ? (
           <>
