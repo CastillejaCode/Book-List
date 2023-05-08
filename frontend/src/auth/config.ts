@@ -1,5 +1,6 @@
 // Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
+import { setPersistence, browserSessionPersistence } from "firebase/auth";
 import { getAuth } from "firebase/auth";
 
 // Your web app's Firebase configuration
@@ -13,4 +14,8 @@ const firebaseConfig = {
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const auth = getAuth(app);
+(async () => {
+  await setPersistence(auth, browserSessionPersistence);
+})();
+export default auth;

@@ -1,5 +1,5 @@
-import { createUserWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../auth/config";
+import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import auth from "../../auth/config";
 import { useState } from "react";
 
 interface Props {
@@ -15,7 +15,9 @@ const CreateForm = ({ setCreate }: Props) => {
     event.preventDefault();
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        // Signed in
         const user = userCredential.user;
+        updateProfile(user, { displayName: name });
       })
       .catch((error) => {
         const errorCode = error.code;

@@ -1,16 +1,14 @@
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { auth } from "../../auth/config";
+import auth from "../../auth/config";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setUID } from "../../features/userSlice";
-import { redirect, useNavigate } from "react-router-dom";
+import { setName, setUID } from "../../features/userSlice";
 
 interface Props {
   setCreate: () => boolean;
 }
 
 const LoginForm = ({ setCreate }: Props) => {
-  const navigate = useNavigate();
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,9 +19,9 @@ const LoginForm = ({ setCreate }: Props) => {
       .then((userCredential) => {
         const user = userCredential.user;
         dispatch(setUID(user.uid));
+        dispatch(setName(user.displayName));
         setEmail("");
         setPassword("");
-        navigate("/home");
       })
       .catch((error) => {
         const errorCode = error.code;
