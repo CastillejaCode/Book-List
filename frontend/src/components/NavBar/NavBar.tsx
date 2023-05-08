@@ -74,7 +74,7 @@ const NavBar = () => {
             value={searchTerm}
             type="text"
             ref={inputRef}
-            className={`input-bordered input absolute left-1/2 top-0 h-full -translate-x-1/2 text-lg transition-all duration-300
+            className={`w- input-bordered input absolute left-1/2 top-0 h-full w-52 -translate-x-1/2 text-lg transition-all duration-300
             ${!showSearch && "invisible opacity-0"}
             `}
           />

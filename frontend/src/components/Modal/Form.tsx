@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import { useAddBookMutation } from "../../services/books";
 import { setUndoStatus } from "../../features/undoSlice";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
   const dispatch = useDispatch();
@@ -11,6 +12,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
   const [review, setReview] = useState("");
 
   const [addBook] = useAddBookMutation();
+  const uid = useSelector((state: RootState) => state.user.id);
 
   const submitForm = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -21,6 +23,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
         rating,
         review,
         date: Date.now(),
+        uid,
       });
     } catch (error) {
       console.log(error);

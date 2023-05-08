@@ -38,6 +38,7 @@ const sortBooks = (method: Sort, books: Book[]) => {
 
 const Books = () => {
   const { data: books, isLoading, isError } = useGetAllBooksQuery();
+  const uid = useSelector((state: RootState) => state.user.id);
   const sort = useSelector((state: RootState) => state.sort.value);
   const showSort = useSelector((state: RootState) => state.toggle.sort);
   const searchTerm = useSelector((state: RootState) =>
@@ -49,7 +50,8 @@ const Books = () => {
 
   if (!books) return;
 
-  const sortedBooks = sortBooks(sort, books);
+  const userBooks = books.filter((book) => book.uid === uid);
+  const sortedBooks = sortBooks(sort, userBooks);
   const searchedBooks = sortedBooks.filter((book) =>
     book.title.toLowerCase().startsWith(searchTerm)
   );

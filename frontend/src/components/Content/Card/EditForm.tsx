@@ -1,6 +1,8 @@
 import { useState } from "react";
 import { Book } from "../../../types";
 import { useUpdateBookMutation } from "../../../services/books";
+import { useSelector } from "react-redux";
+import { RootState } from "../../../store";
 
 interface Props {
   book: Book;
@@ -9,6 +11,7 @@ interface Props {
 
 const EditForm = ({ book, toggleEdit }: Props) => {
   const [updateBook] = useUpdateBookMutation();
+  const uid = useSelector((state: RootState) => state.user.id);
 
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
@@ -23,6 +26,7 @@ const EditForm = ({ book, toggleEdit }: Props) => {
       rating,
       review,
       date: book.date,
+      uid,
     };
     const { id } = book;
     toggleEdit();
