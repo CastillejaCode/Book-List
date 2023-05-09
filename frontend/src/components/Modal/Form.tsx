@@ -24,6 +24,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
         review,
         date: Date.now(),
         uid,
+        img: 0,
       });
     } catch (error) {
       console.log(error);

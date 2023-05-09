@@ -30,42 +30,42 @@ const LoginForm = ({ setCreate }: Props) => {
       });
   };
   return (
-    <div className="absolute top-1/4 flex flex-col items-center">
-      <h2 className="mb-4 text-2xl">Login</h2>
+    <>
+      <h2 className="mb-4 text-3xl font-semibold">Login</h2>
       <form className="flex flex-col gap-4" onSubmit={login}>
         <div className="flex flex-col">
           <label htmlFor="email">email</label>
           <input
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            className="input-bordered input input-sm"
+            className="input-bordered input input-sm bg-gray-200"
             type="text"
             id="email"
           />
         </div>
-        <div className="mb-2 flex flex-col">
+        <div className="mb-4 flex flex-col">
           <label htmlFor="pwd">password</label>
           <input
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="input-bordered input input-sm"
+            className="input-bordered input input-sm bg-gray-200"
             type="text"
             id="pwd"
           />
         </div>
         <div className="flex flex-col items-center gap-4">
-          <button type="submit" className="btn w-fit">
+          <button type="submit" className="btn bg-blue-500 text-xl normal-case">
             Login
           </button>
           <button
-            className="btn-outline btn-sm btn w-fit"
+            className=" btn-outline btn-sm btn w-fit text-lg normal-case"
             onClick={() => setCreate(true)}
           >
             Create
           </button>
         </div>
       </form>
-    </div>
+    </>
   );
 };
 

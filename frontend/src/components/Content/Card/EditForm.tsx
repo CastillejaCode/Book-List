@@ -27,6 +27,7 @@ const EditForm = ({ book, toggleEdit }: Props) => {
       review,
       date: book.date,
       uid,
+      img: book.img,
     };
     const { id } = book;
     toggleEdit();

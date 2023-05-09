@@ -6,6 +6,7 @@ export interface Book {
   id: string;
   date: number;
   uid: string;
+  img: number;
 }
 
 export type Sort = "title" | "author" | "rating" | "recent";
