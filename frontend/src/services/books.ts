@@ -34,7 +34,7 @@ export const bookApi = createApi({
       query: ({ id, body }) => {
         return {
           url: `/books/${id}`,
-          method: "PUT",
+          method: "PATCH",
           body,
         };
       },
@@ -53,7 +53,7 @@ export const {
 export const bookSearchApi = createApi({
   reducerPath: "bookSearchApi",
   baseQuery: fetchBaseQuery({
-    baseUrl: "https://openlibrary.org/search.json",
+    baseUrl: "https://openlibrary.org",
   }),
   endpoints: (builder) => ({
     getBookId: builder.query({
@@ -61,13 +61,30 @@ export const bookSearchApi = createApi({
         const formattedTitle = title.split(" ").join("+").toLowerCase();
         const formattedAuthor = author.toLowerCase();
         return {
-          url: `?title=${formattedTitle}&author=${formattedAuthor}`,
+          url: `/search.json?title=${formattedTitle}&author=${formattedAuthor}`,
           method: "GET",
         };
       },
-      transformResponse: (response: any) => response.docs,
     }),
   }),
 });
 
+// export const bookCoverApi = createApi({
+//   reducerPath: "bookCoverApi",
+//   baseQuery: fetchBaseQuery({
+//     baseUrl: "https://covers.openlibrary.org",
+//   }),
+//   endpoints: (builder) => ({
+//     getBookCover: builder.query({
+//       query: ({ data, coverNumber, key, size }) => {
+//         return {
+//           url: `https://covers.openlibrary.org/b/${key}/${data[coverNumber].cover_i}-${size}.jpg`,
+//           method: "GET",
+//         };
+//       },
+//     }),
+//   }),
+// });
+
 export const { useGetBookIdQuery } = bookSearchApi;
+// export const { useGetBookCoverQuery } = bookCoverApi;

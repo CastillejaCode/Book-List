@@ -4,17 +4,15 @@ import { BookOpenIcon } from "@heroicons/react/24/outline";
 interface Props {
   title: string;
   author: string;
-  imgNumber: number;
+  coverNumber: number;
 }
 
-const Image = ({ title, author, imgNumber }: Props) => {
+const Image = ({ title, author, coverNumber }: Props) => {
   const {
     data: value,
     isLoading,
     isError,
   } = useGetBookIdQuery({ title, author });
-  const key = "id";
-  const size = "M";
 
   if (isLoading)
     return (
@@ -27,11 +25,15 @@ const Image = ({ title, author, imgNumber }: Props) => {
       </div>
     );
 
-  const imgSrc = `https://covers.openlibrary.org/b/${key}/${value[0].cover_i}-${size}.jpg`;
+  // Image options
+  const key = "id";
+  const size = "M";
+  const imgSrc = (id = 0) =>
+    `https://covers.openlibrary.org/b/${key}/${value[id].cover_i}-${size}.jpg`;
 
   return (
     <img
-      src={imgSrc}
+      src={imgSrc(coverNumber)}
       alt={`$Book cover for ${title}`}
       className="mr-4 aspect-[1/1.5] w-5/12 rounded-md border-2 border-gray-700"
     />

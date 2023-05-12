@@ -5,6 +5,7 @@ import Card from "./Card/Card";
 import { RootState } from "../../store";
 import { Sort } from "../../types";
 
+// TODO: import to separate module
 const sortBooks = (method: Sort, books: Book[]) => {
   switch (method) {
     case "recent":
@@ -50,8 +51,11 @@ const Books = () => {
 
   if (!books) return;
 
+  // Filter books to individual user
   const userBooks = books.filter((book) => book.uid === uid);
+  // Sort books based on option
   const sortedBooks = sortBooks(sort, userBooks);
+  // Filter books via search param
   const searchedBooks = sortedBooks.filter((book) =>
     book.title.toLowerCase().startsWith(searchTerm)
   );

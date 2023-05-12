@@ -1,10 +1,6 @@
-import { useEffect, useLayoutEffect, useRef, useState } from "react";
+import { useLayoutEffect, useRef, useState } from "react";
 import { Book } from "../../../types";
-import {
-  ChevronDownIcon,
-  ChevronLeftIcon,
-  ChevronRightIcon,
-} from "@heroicons/react/24/outline";
+import { ChevronDownIcon } from "@heroicons/react/24/outline";
 import { EllipsisVerticalIcon } from "@heroicons/react/20/solid";
 import Image from "./Image";
 import Rating from "./Rating";
@@ -12,6 +8,7 @@ import Review from "./Review";
 import Options from "./Options";
 import UnderCard from "./UnderCard";
 import EditForm from "./EditForm";
+import LeftRight from "./LeftRight";
 import { useUpdateBookMutation } from "../../../services/books";
 
 const Card = ({ book }: { book: Book }) => {
@@ -22,8 +19,8 @@ const Card = ({ book }: { book: Book }) => {
 
   const [updateBook] = useUpdateBookMutation();
 
+  // To find out height on paint, to allow for responsive sliding of review card
   const cardRef = useRef(null);
-
   useLayoutEffect(() => {
     setHeight(cardRef.current.clientHeight);
   }, []);
@@ -58,7 +55,7 @@ const Card = ({ book }: { book: Book }) => {
             <Image
               title={book.title}
               author={book.author}
-              imgNumber={book.img}
+              coverNumber={book.coverNumber}
             />
             <div
               className={`flex flex-auto flex-col transition-all duration-300`}
@@ -67,12 +64,12 @@ const Card = ({ book }: { book: Book }) => {
                 {book.title}
               </h2>
               <h3 className=" text-xl">{book.author}</h3>
-              <div className="flex flex-grow flex-col justify-end">
-                {/* <div className=" flex justify-center gap-8">
-                  <ChevronLeftIcon className="aspect-square w-7" />
-                  <ChevronRightIcon className="aspect-square w-7" />
-                </div> */}
-                <div className="flex justify-center " onClick={toggleReview}>
+              <div
+                className="flex flex-grow flex-col justify-end"
+                // onClick={toggleReview}
+              >
+                <LeftRight id={book.id} coverNumber={book.coverNumber} />
+                <div className="flex justify-center ">
                   <ChevronDownIcon
                     className={` aspect-square w-5 self-end transition-transform duration-300 ${
                       showReview ? "rotate-180" : ""

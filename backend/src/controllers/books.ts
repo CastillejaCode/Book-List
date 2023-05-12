@@ -32,4 +32,11 @@ booksRouter.put('/:id', async (req, res) => {
 	res.json(foundBook);
 });
 
+booksRouter.patch('/:id', async (req, res) => {
+	const { body } = req;
+	const { id } = req.params;
+	const updatedBook = await Book.findByIdAndUpdate(id, body, { new: true });
+	res.status(200).json(updatedBook);
+});
+
 export default booksRouter;
