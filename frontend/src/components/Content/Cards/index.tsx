@@ -1,9 +1,9 @@
 import { useSelector } from "react-redux";
-import { useGetAllBooksQuery } from "../../services/books";
-import { Book } from "../../types";
-import Card from "./Card/Card";
-import { RootState } from "../../store";
-import { Sort } from "../../types";
+import { useGetAllBooksQuery } from "../../../services/books";
+import { Book } from "../../../types";
+import Card from "../Card";
+import { RootState } from "../../../store";
+import { Sort } from "../../../types";
 
 // TODO: import to separate module
 const sortBooks = (method: Sort, books: Book[]) => {

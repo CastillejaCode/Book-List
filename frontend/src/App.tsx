@@ -1,6 +1,6 @@
 import "./App.css";
 import NavBar from "./components/NavBar/NavBar";
-import Books from "./components/Content/Books";
+import Books from "./components/Content/Cards/index.js";
 import Modal from "./components/Modal/Modal";
 import Login from "./components/Login/Index";
 

@@ -1,7 +1,7 @@
 import { useDispatch } from "react-redux";
-import { useDeleteBookMutation } from "../../../services/books";
-import { Book } from "../../../types";
-import { saveUndo, setUndoStatus } from "../../../features/undoSlice";
+import { useDeleteBookMutation } from "../../../../services/books";
+import { Book } from "../../../../types";
+import { saveUndo, setUndoStatus } from "../../../../features/undoSlice";
 
 interface Props {
   book: Book;

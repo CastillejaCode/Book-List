@@ -65,6 +65,7 @@ export const bookSearchApi = createApi({
           method: "GET",
         };
       },
+      transformResponse: (res: object) => res.docs.filter((doc) => doc.cover_i),
     }),
   }),
 });

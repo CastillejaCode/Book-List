@@ -3,6 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 export interface Toggle {
   review: boolean;
   options: boolean;
+  edit: boolean;
   sort: boolean;
   menu: boolean;
   modal: boolean;
@@ -12,6 +13,7 @@ export interface Toggle {
 const initialState: Toggle = {
   review: false,
   options: false,
+  edit: false,
   sort: false,
   menu: false,
   modal: false,
@@ -29,6 +31,10 @@ export const toggleSlice = createSlice({
     toggleOptions: (state) => {
       state.options = !state.options;
       state.sort = state.menu = false;
+    },
+    toggleEdit: (state) => {
+      state.edit = !state.edit;
+      state.review = state.review = false;
     },
     toggleSort: (state) => {
       state.sort = !state.sort;

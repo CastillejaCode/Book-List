@@ -1,5 +1,5 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
-import { useUpdateBookMutation } from "../../../services/books";
+import { useUpdateBookMutation } from "../../../../services/books";
 interface Props {
   id: string;
   coverNumber: number;
@@ -9,9 +9,9 @@ export default function LeftRight({ id, coverNumber }: Props) {
   const [updateBook] = useUpdateBookMutation();
 
   const number = (condition: "next" | "prev") => {
-    let value;
-    if (condition === "next") value = coverNumber + 1;
-    if (condition === "prev") value = coverNumber - 1;
+    let value = coverNumber;
+    if (condition === "next") value += 1;
+    if (condition === "prev") value -= 1;
 
     if (value < 0) return;
     const body = { coverNumber: value };
