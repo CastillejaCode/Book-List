@@ -22,11 +22,11 @@ export default function LeftRight({ id, coverNumber }: Props) {
   return (
     <div className=" flex justify-center gap-8">
       <ChevronLeftIcon
-        className="aspect-square w-7"
+        className="aspect-square w-10"
         onClick={() => number("prev")}
       />
       <ChevronRightIcon
-        className="aspect-square w-7"
+        className="aspect-square w-10"
         onClick={() => number("next")}
       />
     </div>

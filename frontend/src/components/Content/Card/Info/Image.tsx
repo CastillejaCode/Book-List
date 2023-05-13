@@ -5,9 +5,10 @@ interface Props {
   title: string;
   author: string;
   coverNumber: number;
+  handleImage: () => void;
 }
 
-const Image = ({ title, author, coverNumber }: Props) => {
+const Image = ({ title, author, coverNumber, handleImage }: Props) => {
   const {
     data: docs,
     isLoading,
@@ -37,6 +38,7 @@ const Image = ({ title, author, coverNumber }: Props) => {
       src={imgSrc}
       alt={`$Book cover for ${title}`}
       className="mr-4 aspect-[1/1.5] w-5/12 rounded-md border-2 border-gray-700"
+      onClick={handleImage}
     />
   );
 };

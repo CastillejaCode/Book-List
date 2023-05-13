@@ -5,11 +5,13 @@ import Options from "./UnderCard/Options";
 import UnderCard from "./UnderCard";
 import EditForm from "./EditForm";
 import Info from "./Info";
+import LeftRight from "./UnderCard/LeftRight";
 
 const Card = ({ book }: { book: Book }) => {
   const [showReview, setShowReview] = useState(false);
   const [showOptions, setShowOptions] = useState(false);
   const [showEdit, setShowEdit] = useState(false);
+  const [showImageControls, setShowImageControls] = useState(false);
   const [height, setHeight] = useState(52);
 
   // To find out height on paint, to allow for responsive sliding of review card
@@ -22,15 +24,25 @@ const Card = ({ book }: { book: Book }) => {
   const toggleReview = () => {
     setShowReview(!showReview);
     setShowOptions(false);
+    setShowImageControls(false);
   };
 
   const toggleOptions = () => {
     setShowOptions(!showOptions);
+    setShowReview(false);
     setShowEdit(false);
+    setShowImageControls(false);
   };
 
   const toggleEdit = () => {
     setShowEdit(!showEdit);
+    setShowImageControls(false);
+  };
+
+  const toggleImageControls = () => {
+    setShowImageControls(!showImageControls);
+    setShowOptions(false);
+    setShowReview(false);
   };
 
   return (
@@ -38,7 +50,7 @@ const Card = ({ book }: { book: Book }) => {
     <div
       ref={cardRef}
       className={`relative my-4 w-11/12 max-w-sm shadow-md transition-all duration-300 
-        ${showReview || showOptions ? "mb-24" : ""}`}
+        ${showReview || showOptions || showImageControls ? "mb-24" : ""}`}
     >
       <div
         className={`relative z-0 flex rounded-lg border-2 border-gray-800 bg-gray-50 p-3 `}
@@ -48,6 +60,7 @@ const Card = ({ book }: { book: Book }) => {
             {...book}
             handleReview={toggleReview}
             handleOptions={toggleOptions}
+            handleImage={toggleImageControls}
             showReview={showReview}
           />
         ) : (
@@ -59,6 +72,9 @@ const Card = ({ book }: { book: Book }) => {
       </UnderCard>
       <UnderCard height={height} showOptions={showOptions}>
         <Options book={book} toggleEdit={toggleEdit} />
+      </UnderCard>
+      <UnderCard height={height} showImageControls={showImageControls}>
+        <LeftRight id={book.id} coverNumber={book.coverNumber} />
       </UnderCard>
     </div>
   );

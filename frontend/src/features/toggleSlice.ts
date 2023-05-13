@@ -24,18 +24,6 @@ export const toggleSlice = createSlice({
   name: "toggle",
   initialState,
   reducers: {
-    toggleReview: (state) => {
-      state.review = !state.review;
-      state.sort = state.menu = false;
-    },
-    toggleOptions: (state) => {
-      state.options = !state.options;
-      state.sort = state.menu = false;
-    },
-    toggleEdit: (state) => {
-      state.edit = !state.edit;
-      state.review = state.review = false;
-    },
     toggleSort: (state) => {
       state.sort = !state.sort;
       state.menu = false;
@@ -56,13 +44,7 @@ export const toggleSlice = createSlice({
   },
 });
 
-export const {
-  toggleReview,
-  toggleOptions,
-  toggleSort,
-  toggleMenu,
-  toggleModal,
-  toggleSearch,
-} = toggleSlice.actions;
+export const { toggleSort, toggleMenu, toggleModal, toggleSearch } =
+  toggleSlice.actions;
 
 export default toggleSlice.reducer;
