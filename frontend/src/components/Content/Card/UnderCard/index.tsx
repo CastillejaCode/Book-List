@@ -21,10 +21,10 @@ const UnderCard = ({
   return (
     <div
       style={style}
-      className={`absolute top-0 -z-10 w-full p-2  transition-all duration-300
+      className={`absolute top-0 -z-10 w-full p-2 transition-all duration-300
       ${
         showReview || showOptions || showImageControls
-          ? `z-0 mt-5`
+          ? ` mt-5`
           : `transform-none shadow-none`
       }
       ${
