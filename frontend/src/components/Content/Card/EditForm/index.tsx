@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { Book } from "../../../types";
-import { useUpdateBookMutation } from "../../../services/books";
+import { Book } from "../../../../types";
+import { useUpdateBookMutation } from "../../../../services/books";
 
 interface Props {
   book: Book;

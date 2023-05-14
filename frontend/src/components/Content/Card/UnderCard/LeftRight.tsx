@@ -3,28 +3,35 @@ import { useUpdateBookMutation } from "../../../../services/books";
 interface Props {
   id: string;
   coverNumber: number;
+  docs: [];
 }
 
-export default function LeftRight({ id, coverNumber }: Props) {
+export default function LeftRight({ id, coverNumber, docs }: Props) {
   const [updateBook] = useUpdateBookMutation();
+
+  if (!docs) return;
+  const length = docs.length > 5 ? 9 : docs.length - 1;
 
   const number = (condition: "next" | "prev") => {
     let value = coverNumber;
     if (condition === "next") value += 1;
     if (condition === "prev") value -= 1;
 
-    if (value < 0) return;
+    if (value < 0 || value > length) return;
     const body = { coverNumber: value };
 
     updateBook({ id, body });
   };
 
   return (
-    <div className=" flex justify-center gap-8">
+    <div className=" flex justify-center gap-4">
       <ChevronLeftIcon
         className="aspect-square w-10"
         onClick={() => number("prev")}
       />
+      <div className="grid place-content-center text-center text-xl">
+        {coverNumber + 1} / {length + 1}
+      </div>
       <ChevronRightIcon
         className="aspect-square w-10"
         onClick={() => number("next")}

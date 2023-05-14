@@ -1,6 +1,5 @@
 import Image from "./Image";
 import Rating from "./Rating";
-import LeftRight from "../UnderCard/LeftRight";
 
 import {
   ChevronDownIcon,
@@ -20,7 +19,6 @@ export default function Info({
   author,
   rating,
   coverNumber,
-  id,
   handleOptions,
   handleReview,
   handleImage,
