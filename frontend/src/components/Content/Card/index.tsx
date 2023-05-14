@@ -60,11 +60,11 @@ const Card = ({ book }: { book: Book }) => {
 
     <div
       ref={cardRef}
-      className={`relative my-4 w-11/12 max-w-sm shadow-md transition-all duration-300 
+      className={`relative z-0 my-4 w-11/12 max-w-sm shadow-md transition-all duration-300 
         ${showReview || showOptions || showImageControls ? "mb-24" : ""}`}
     >
       <div
-        className={`relative z-0 flex rounded-lg border-2 border-gray-800 bg-gray-50 p-3 `}
+        className={`relative flex rounded-lg border-2 border-gray-800 bg-gray-50 p-3 `}
       >
         {!showEdit ? (
           <ImageContext.Provider value={{ docs, isLoading, isError }}>
