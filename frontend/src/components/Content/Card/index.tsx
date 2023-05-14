@@ -60,7 +60,7 @@ const Card = ({ book }: { book: Book }) => {
 
     <div
       ref={cardRef}
-      className={`relative z-0 my-4 w-11/12 max-w-sm shadow-md transition-all duration-300 
+      className={`relative z-0 my-4 w-10/12 max-w-sm shadow-md transition-all duration-300 
         ${showReview || showOptions || showImageControls ? "mb-24" : ""}`}
     >
       <div

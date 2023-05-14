@@ -9,7 +9,7 @@ interface Props {
 export default function LeftRight({ id, coverNumber, docs }: Props) {
   const [updateBook] = useUpdateBookMutation();
 
-  if (!docs) throw new Error("Something went wrong with the API!");
+  if (!docs) return <div>Loading...</div>;
   const length = docs.length > 5 ? 9 : docs.length - 1;
 
   const number = (condition: "next" | "prev") => {
