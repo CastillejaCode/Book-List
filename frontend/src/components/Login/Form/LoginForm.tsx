@@ -2,14 +2,10 @@ import { signInWithEmailAndPassword } from "firebase/auth";
 import auth from "../../../auth/config";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { setName, setUID } from "../../../features/userSlice";
 import { resetError, setError } from "../../../features/errorSlice";
+import { toggleCreate } from "../../../features/toggleSlice";
 
-interface Props {
-  setCreate: (value: boolean) => boolean;
-}
-
-const LoginForm = ({ setCreate }: Props) => {
+const LoginForm = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -18,9 +14,6 @@ const LoginForm = ({ setCreate }: Props) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
-        const user = userCredential.user;
-        dispatch(setUID(user.uid));
-        dispatch(setName(user.displayName));
         setEmail("");
         setPassword("");
       })
@@ -34,8 +27,8 @@ const LoginForm = ({ setCreate }: Props) => {
   };
   return (
     <>
-      <h2 className="mb-4 text-3xl font-semibold">Login</h2>
-      <form className="flex flex-col gap-4" onSubmit={login}>
+      <h2 className="mb-6 text-3xl font-semibold">Login</h2>
+      <form className="flex flex-col gap-6" onSubmit={login}>
         <div className="flex flex-col">
           <label htmlFor="email">email</label>
           <input
@@ -52,7 +45,7 @@ const LoginForm = ({ setCreate }: Props) => {
           <input
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            className="input-bordered input input-sm bg-gray-200"
+            className="input-bordered input input-sm bg-gray-200 text-lg"
             type="text"
             id="pwd"
             required
@@ -60,11 +53,11 @@ const LoginForm = ({ setCreate }: Props) => {
         </div>
         <div className="flex flex-col items-center gap-4">
           <button type="submit" className="btn bg-blue-500 text-xl normal-case">
-            Login
+            Submit
           </button>
           <button
             className=" btn-outline btn-sm btn w-fit text-lg normal-case"
-            onClick={() => setCreate(true)}
+            onClick={() => dispatch(toggleCreate())}
           >
             Create
           </button>

@@ -4,6 +4,7 @@ import { Book } from "../../../types";
 import Card from "../Card";
 import { RootState } from "../../../store";
 import { Sort } from "../../../types";
+import auth from "../../../auth/config";
 
 // TODO: import to separate module
 const sortBooks = (method: Sort, books: Book[]) => {
@@ -52,7 +53,7 @@ const Books = () => {
   if (!books) return;
 
   // Filter books to individual user
-  const userBooks = books.filter((book) => book.uid === uid);
+  const userBooks = books.filter((book) => book.uid === auth.currentUser?.uid);
   // Sort books based on option
   const sortedBooks = sortBooks(sort, userBooks);
   // Filter books via search param
