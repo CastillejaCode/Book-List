@@ -1,26 +1,24 @@
-import { signInWithEmailAndPassword } from "firebase/auth";
-import auth from "../../../auth/config";
-import { useState } from "react";
 import { useDispatch } from "react-redux";
+import { useField } from "./useField";
 import { resetError, setError } from "../../../features/errorSlice";
 import { toggleCreate } from "../../../features/toggleSlice";
+import { signInWithEmailAndPassword } from "firebase/auth";
+import auth from "../../../auth/config";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  // id, type
+  const email = useField("email", "text");
+  const password = useField("pwd", "text");
 
   const login = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    signInWithEmailAndPassword(auth, email, password)
-      .then((_userCredential) => {
-        setEmail("");
-        setPassword("");
-      })
-      .catch((error) => {
+    signInWithEmailAndPassword(auth, email.value, password.value).catch(
+      (error) => {
         dispatch(setError(error.code));
         setTimeout(() => dispatch(resetError()), 5000);
-      });
+      }
+    );
   };
   return (
     <>
@@ -29,22 +27,16 @@ const LoginForm = () => {
         <div className="flex flex-col">
           <label htmlFor="email">email</label>
           <input
-            value={email}
-            onChange={(event) => setEmail(event.target.value)}
+            {...email}
             className="input-bordered input input-sm bg-gray-200 text-lg"
-            type="text"
-            id="email"
             required
           />
         </div>
         <div className="mb-4 flex flex-col">
           <label htmlFor="pwd">password</label>
           <input
-            value={password}
-            onChange={(event) => setPassword(event.target.value)}
+            {...password}
             className="input-bordered input input-sm bg-gray-200 text-lg"
-            type="text"
-            id="pwd"
             required
           />
         </div>
