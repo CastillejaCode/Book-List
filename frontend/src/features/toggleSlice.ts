@@ -1,23 +1,12 @@
 import { createSlice } from "@reduxjs/toolkit";
-
-export interface Toggle {
-  review: boolean;
-  options: boolean;
-  edit: boolean;
-  sort: boolean;
-  menu: boolean;
-  modal: boolean;
-  search: boolean;
-}
+import { Toggle } from "../types";
 
 const initialState: Toggle = {
-  review: false,
-  options: false,
-  edit: false,
   sort: false,
   menu: false,
   modal: false,
   search: false,
+  create: false,
 };
 
 export const toggleSlice = createSlice({
@@ -41,10 +30,18 @@ export const toggleSlice = createSlice({
       state.search = !state.search;
       state.menu = false;
     },
+    toggleCreate: (state) => {
+      state.create = !state.create;
+    },
   },
 });
 
-export const { toggleSort, toggleMenu, toggleModal, toggleSearch } =
-  toggleSlice.actions;
+export const {
+  toggleSort,
+  toggleMenu,
+  toggleModal,
+  toggleSearch,
+  toggleCreate,
+} = toggleSlice.actions;
 
 export default toggleSlice.reducer;
