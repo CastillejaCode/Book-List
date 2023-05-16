@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
 import { useGetAllBooksQuery } from "../../../services/books";
 import { Book } from "../../../types";
-import Card from "../Card";
+import Card from "../Book";
 import { RootState } from "../../../store";
 import { Sort } from "../../../types";
 import auth from "../../../auth/config";
@@ -40,7 +40,6 @@ const sortBooks = (method: Sort, books: Book[]) => {
 
 const Books = () => {
   const { data: books, isLoading, isError } = useGetAllBooksQuery();
-  const uid = useSelector((state: RootState) => state.user.id);
   const sort = useSelector((state: RootState) => state.sort.value);
   const showSort = useSelector((state: RootState) => state.toggle.sort);
   const searchTerm = useSelector((state: RootState) =>
@@ -50,7 +49,7 @@ const Books = () => {
   if (isLoading) return <div>Still Loading</div>;
   if (isError) return <div>Sorry, somthing went wrong!</div>;
 
-  if (!books) return;
+  if (!books) return <h1>a bit empty, eh?</h1>;
 
   // Filter books to individual user
   const userBooks = books.filter((book) => book.uid === auth.currentUser?.uid);

@@ -4,13 +4,11 @@ import toggleReducer from "./features/toggleSlice";
 import sortReducer from "./features/sortSlice";
 import undoReducer from "./features/undoSlice";
 import searchReducer from "./features/searchSlice";
-import userReducer from "./features/userSlice";
 import errorReducer from "./features/errorSlice";
 
 export const store = configureStore({
   reducer: {
     error: errorReducer,
-    user: userReducer,
     search: searchReducer,
     undo: undoReducer,
     sort: sortReducer,

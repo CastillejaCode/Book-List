@@ -10,8 +10,6 @@ import {
   toggleModal,
   toggleSearch,
 } from "../../features/toggleSlice";
-import { setUID } from "../../features/userSlice";
-import { RootState } from "../../store";
 import { signOut } from "firebase/auth";
 import auth from "../../auth/config";
 
@@ -22,7 +20,6 @@ interface Props {
 
 const Menu = ({ showMenu, focusInput }: Props) => {
   const dispatch = useDispatch();
-  const name = useSelector((state: RootState) => state.user.name);
   return (
     <div
       className={`menu absolute z-50 w-fit rounded-br-md border-b-2 border-r-2 border-gray-900 bg-base-100 transition-all duration-300

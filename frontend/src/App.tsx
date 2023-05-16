@@ -1,19 +1,14 @@
 import "./App.css";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "./auth/config.js";
 import NavBar from "./components/NavBar/NavBar";
-import Books from "./components/Content/Cards/index.js";
+import Books from "./components/Content/Books/index.js";
 import Modal from "./components/Modal/Modal";
 import Login from "./components/Login/index.js";
-
-import { useDispatch } from "react-redux";
-
-import auth from "./auth/config.js";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { setUID, setName } from "./features/userSlice.js";
 
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 
 const App = () => {
-  const dispatch = useDispatch();
   const [user, loading, error] = useAuthState(auth);
 
   if (loading)
@@ -23,10 +18,7 @@ const App = () => {
       </div>
     );
   if (error) return <div>something broke...</div>;
-  if (user) {
-    dispatch(setUID(user.uid));
-    dispatch(setName(user.displayName));
-  }
+
   return (
     <div>
       {user ? (
