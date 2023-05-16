@@ -4,7 +4,6 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { toggleCreate } from "../../../features/toggleSlice";
 import { setError, resetError } from "../../../features/errorSlice";
-import { setUID, setName } from "../../../features/userSlice";
 
 const CreateForm = () => {
   const dispatch = useDispatch();

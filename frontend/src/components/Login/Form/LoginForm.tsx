@@ -13,14 +13,11 @@ const LoginForm = () => {
   const login = (event: React.SyntheticEvent) => {
     event.preventDefault();
     signInWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
+      .then((_userCredential) => {
         setEmail("");
         setPassword("");
       })
       .catch((error) => {
-        const errorCode = error.code;
-        const errorMessage = error.message;
-        console.log(errorCode);
         dispatch(setError(error.code));
         setTimeout(() => dispatch(resetError()), 5000);
       });

@@ -5,7 +5,6 @@ import Error from "./Error";
 import { useSelector } from "react-redux";
 import { RootState } from "../../store";
 import { AnimatePresence } from "framer-motion";
-import { motion } from "framer-motion";
 
 const Login = () => {
   const showCreate = useSelector((state: RootState) => state.toggle.create);
