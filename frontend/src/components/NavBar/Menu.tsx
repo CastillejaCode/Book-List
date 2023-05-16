@@ -1,10 +1,4 @@
-import {
-  PlusIcon,
-  MagnifyingGlassIcon,
-  UserCircleIcon,
-  ArrowLeftOnRectangleIcon,
-} from "@heroicons/react/20/solid";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import {
   toggleMenu,
   toggleModal,
@@ -12,6 +6,13 @@ import {
 } from "../../features/toggleSlice";
 import { signOut } from "firebase/auth";
 import auth from "../../auth/config";
+
+import {
+  PlusIcon,
+  MagnifyingGlassIcon,
+  UserCircleIcon,
+  ArrowLeftOnRectangleIcon,
+} from "@heroicons/react/20/solid";
 
 interface Props {
   showMenu: boolean;
@@ -43,6 +44,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
           <a
             onClick={() => {
               dispatch(toggleSearch());
+              // Janky way of waiting for input element to exist before focusing on it 
               setTimeout(() => {
                 focusInput();
               }, 50);
@@ -55,14 +57,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
         <li>
           <a
             onClick={() => {
-              signOut(auth)
-                .then(() => {
-                  dispatch(setUID(""));
-                })
-                .catch((error) => {
-                  // An error happened.
-                });
-
+              signOut(auth);
               dispatch(toggleMenu());
             }}
           >

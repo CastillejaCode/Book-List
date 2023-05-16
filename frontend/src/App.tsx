@@ -1,4 +1,3 @@
-import "./App.css";
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "./auth/config.js";
 import NavBar from "./components/NavBar/NavBar";
