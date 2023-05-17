@@ -14,7 +14,8 @@ export interface Toggle {
   menu: boolean;
   modal: boolean;
   search: boolean;
-  create: boolean
+  create: boolean;
+  user: boolean;
 }
 
 export type Sort = "title" | "author" | "rating" | "recent";

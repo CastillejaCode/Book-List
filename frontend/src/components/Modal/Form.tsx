@@ -3,6 +3,7 @@ import { useAddBookMutation } from "../../services/books";
 import { setUndoStatus } from "../../features/undoSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "../../store";
+import auth from "../../auth/config";
 
 const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
   const dispatch = useDispatch();
@@ -12,7 +13,6 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
   const [review, setReview] = useState("");
 
   const [addBook] = useAddBookMutation();
-  const uid = useSelector((state: RootState) => state.user.id);
 
   const submitForm = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -23,7 +23,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
         rating,
         review,
         date: Date.now(),
-        uid,
+        uid: auth.currentUser?.uid,
         img: 0,
       });
     } catch (error) {

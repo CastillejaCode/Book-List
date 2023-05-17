@@ -3,6 +3,7 @@ import {
   toggleMenu,
   toggleModal,
   toggleSearch,
+  toggleUser,
 } from "../../features/toggleSlice";
 import { signOut } from "firebase/auth";
 import auth from "../../auth/config";
@@ -28,7 +29,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
     `}
     >
       <ul className="menu text-xl">
-        <li>
+        <li onClick={() => dispatch(toggleUser())}>
           <a>
             <UserCircleIcon className="aspect-square w-6" />
             {auth.currentUser?.displayName}
@@ -44,7 +45,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
           <a
             onClick={() => {
               dispatch(toggleSearch());
-              // Janky way of waiting for input element to exist before focusing on it 
+              // Janky way of waiting for input element to exist before focusing on it
               setTimeout(() => {
                 focusInput();
               }, 50);

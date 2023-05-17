@@ -5,6 +5,7 @@ import Card from "../Book";
 import { RootState } from "../../../store";
 import { Sort } from "../../../types";
 import auth from "../../../auth/config";
+import UserSettings from "./UserSettings";
 
 // TODO: import to separate module
 const sortBooks = (method: Sort, books: Book[]) => {
@@ -41,13 +42,14 @@ const sortBooks = (method: Sort, books: Book[]) => {
 const Books = () => {
   const { data: books, isLoading, isError } = useGetAllBooksQuery();
   const sort = useSelector((state: RootState) => state.sort.value);
+  const showUserSettings = useSelector((state: RootState) => state.toggle.user);
   const showSort = useSelector((state: RootState) => state.toggle.sort);
   const searchTerm = useSelector((state: RootState) =>
     state.search.value.toLowerCase()
   );
 
   if (isLoading) return <div>Still Loading</div>;
-  if (isError) return <div>Sorry, somthing went wrong!</div>;
+  if (isError) return <div>Sorry, something went wrong!</div>;
 
   if (!books) return <h1>a bit empty, eh?</h1>;
 
@@ -59,15 +61,20 @@ const Books = () => {
   const searchedBooks = sortedBooks.filter((book) =>
     book.title.toLowerCase().startsWith(searchTerm)
   );
+
   return (
     <div
-      className={`flex grid-flow-row flex-col items-center bg-gray-50 transition-all duration-300 md:grid md:grid-cols-3  md:p-8 2xl:grid-cols-4 ${
+      className={`flex h-screen grid-flow-row flex-col items-center bg-gray-50 transition-all duration-300 md:grid  md:grid-cols-3 md:p-8 2xl:grid-cols-4 ${
         showSort ? "mt-72" : "mt-16"
       }`}
     >
-      {searchedBooks.map((book: Book) => {
-        return <Card book={book} key={book.id} />;
-      })}
+      {!showUserSettings ? (
+        searchedBooks.map((book: Book) => {
+          return <Card book={book} key={book.id} />;
+        })
+      ) : (
+        <UserSettings />
+      )}
     </div>
   );
 };
