@@ -21,12 +21,14 @@ const Account = ({ handleName }: Props) => {
       updateProfile(auth.currentUser, { displayName: name.value }).then(() => {
         handleName(name.value);
         setNameValue("");
-        console.log(name.value);
       });
     }
     if (email.value) {
       updateEmail(auth.currentUser, email.value).then(() => {
-        sendEmailVerification(auth.currentUser);
+        sendEmailVerification(auth.currentUser).catch((error) =>
+          console.log(error)
+        );
+        setEmailValue("");
       });
     }
   };

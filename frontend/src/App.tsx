@@ -20,7 +20,7 @@ const App = () => {
 
   return (
     <div>
-      {user ? (
+      {user?.emailVerified ? (
         <div className="relative z-10">
           <NavBar />
           <Books />

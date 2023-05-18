@@ -13,12 +13,15 @@ const LoginForm = () => {
 
   const login = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    signInWithEmailAndPassword(auth, email.value, password.value).catch(
-      (error) => {
-        dispatch(setError(error.code));
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then(() => {
+        console.log(auth.currentUser?.emailVerified);
+        if (!auth.currentUser?.emailVerified) throw "auth/email-not-verified";
+      })
+      .catch((error) => {
+        dispatch(setError(error.code || error));
         setTimeout(() => dispatch(resetError()), 5000);
-      }
-    );
+      });
   };
   return (
     <>
