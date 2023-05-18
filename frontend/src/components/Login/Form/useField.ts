@@ -12,5 +12,6 @@ export const useField = (id: string, type = "string") => {
     type,
     value,
     onChange,
+    setValue
   };
 };

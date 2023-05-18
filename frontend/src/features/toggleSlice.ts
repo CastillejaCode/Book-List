@@ -36,6 +36,7 @@ export const toggleSlice = createSlice({
     },
     toggleUser: (state) => {
       state.user = !state.user;
+      state.menu = false;
     },
   },
 });
