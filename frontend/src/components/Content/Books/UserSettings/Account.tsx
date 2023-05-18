@@ -1,5 +1,6 @@
 import { useField } from "../../../Login/Form/useField";
 import {
+  getAuth,
   sendEmailVerification,
   updateEmail,
   updateProfile,
@@ -25,17 +26,16 @@ const Account = ({ handleName }: Props) => {
     }
     if (email.value) {
       updateEmail(auth.currentUser, email.value).then(() => {
-        sendEmailVerification(auth.currentUser).catch((error) =>
-          console.log(error)
-        );
-        setEmailValue("");
+        sendEmailVerification(auth.currentUser)
+          .then(() => setEmailValue(""))
+          .catch((error) => console.log(error));
       });
     }
   };
 
   return (
     <div className="flex w-fit flex-col items-center gap-4">
-      <div className="font-light">
+      <div className="w-full">
         <h2>Make changes to your account here.</h2>
       </div>
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={changeAccount}>
@@ -53,7 +53,7 @@ const Account = ({ handleName }: Props) => {
             className="input-sm rounded-sm border border-gray-700 text-lg"
           />
         </div>
-        <button className="btn self-end border-0  bg-green-200 text-green-900">
+        <button className="btn self-end border-0 bg-green-200 text-lg normal-case text-green-900">
           Save Changes
         </button>
       </form>
