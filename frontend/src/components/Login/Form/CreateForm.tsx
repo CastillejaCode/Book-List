@@ -3,7 +3,7 @@ import auth from "../../../auth/config";
 import { useDispatch } from "react-redux";
 import { useField } from "./useField";
 import { toggleCreate } from "../../../features/toggleSlice";
-import { setError, resetError } from "../../../features/errorSlice";
+import { setError, resetError } from "../../../features/notificationSlice";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
