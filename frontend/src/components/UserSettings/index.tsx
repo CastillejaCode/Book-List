@@ -1,4 +1,4 @@
-import auth from "../../../../auth/config";
+import auth from "../../auth/config";
 import * as Tabs from "@radix-ui/react-tabs";
 import Account from "./Account";
 import Password from "./Password";

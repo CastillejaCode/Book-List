@@ -1,11 +1,11 @@
-import { useField } from "../../../../hooks/useField";
+import { useField } from "../../hooks/useField";
 import {
   getAuth,
   sendEmailVerification,
   updateEmail,
   updateProfile,
 } from "firebase/auth";
-import auth from "../../../../auth/config";
+import auth from "../../auth/config";
 
 interface Props {
   handleName: React.Dispatch<string>;

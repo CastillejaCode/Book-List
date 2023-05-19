@@ -45,9 +45,10 @@ export const bookApi = createApi({
         return {
           url: `/books/all`,
           method: "DELETE",
-          body
+          body,
         };
       },
+      invalidatesTags: ["Books"],
     }),
   }),
 });
@@ -57,7 +58,7 @@ export const {
   useAddBookMutation,
   useDeleteBookMutation,
   useUpdateBookMutation,
-  useDeleteAllBooksMutation
+  useDeleteAllBooksMutation,
 } = bookApi;
 
 export const bookSearchApi = createApi({
