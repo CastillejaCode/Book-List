@@ -1,7 +1,7 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import auth from "../../../auth/config";
 import { useDispatch } from "react-redux";
-import { useField } from "./useField";
+import { useField } from "../../../hooks/useField";
 import { toggleCreate } from "../../../features/toggleSlice";
 import { setError, resetError } from "../../../features/notificationSlice";
 
