@@ -22,19 +22,19 @@ const UserSettings = () => {
         >
           <Tabs.Trigger
             value="tab1"
-            className="text-gray-600 underline-offset-4 focus:text-gray-900 focus:underline"
+            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline"
           >
             Account
           </Tabs.Trigger>
           <Tabs.Trigger
             value="tab2"
-            className="text-gray-600 underline-offset-4 focus:text-gray-900 focus:underline"
+            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline"
           >
             Password
           </Tabs.Trigger>
           <Tabs.Trigger
             value="tab3"
-            className="text-gray-600 underline-offset-4 focus:text-gray-900 focus:underline"
+            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline"
           >
             Delete
           </Tabs.Trigger>
@@ -45,7 +45,7 @@ const UserSettings = () => {
         <Tabs.Content value="tab2" className="px-4 pb-6 pt-4">
           <Password />
         </Tabs.Content>
-        <Tabs.Content value="tab3" className="flex p-10">
+        <Tabs.Content value="tab3" className=" px-4 pb-6 pt-4">
           <Delete />
         </Tabs.Content>
       </Tabs.Root>
