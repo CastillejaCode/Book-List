@@ -5,9 +5,11 @@ import sortReducer from "./features/sortSlice.js";
 import undoReducer from "./features/undoSlice.js";
 import searchReducer from "./features/searchSlice.js";
 import notificationReducer from "./features/notificationSlice.js";
+import userReducer from "./features/userSlice.js";
 
 export const store = configureStore({
   reducer: {
+    user: userReducer,
     notification: notificationReducer,
     search: searchReducer,
     undo: undoReducer,

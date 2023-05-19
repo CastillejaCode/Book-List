@@ -32,7 +32,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
         <li onClick={() => dispatch(toggleUser())}>
           <a>
             <UserCircleIcon className="aspect-square w-6" />
-            {auth.currentUser?.displayName}
+            {auth.currentUser?.displayName || "Lorem"}
           </a>
         </li>
         <li onClick={() => dispatch(toggleModal())}>

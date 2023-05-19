@@ -1,9 +1,21 @@
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  createUserWithEmailAndPassword,
+  updateProfile,
+  EmailAuthProvider,
+  linkWithCredential,
+  sendEmailVerification,
+  getAuth,
+} from "firebase/auth";
 import auth from "../../../auth/config";
 import { useDispatch } from "react-redux";
 import { useField } from "../../../hooks/useField";
 import { toggleCreate } from "../../../features/toggleSlice";
-import { setError, resetError } from "../../../features/notificationSlice";
+import {
+  setError,
+  resetError,
+  setNotif,
+  resetNotif,
+} from "../../../features/notificationSlice";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -18,6 +30,10 @@ const CreateForm = () => {
         // Signed in
         const user = userCredential.user;
         updateProfile(user, { displayName: name.value });
+        sendEmailVerification(user).then(() => {
+          dispatch(setNotif("Email sent!"));
+          setTimeout(() => dispatch(resetNotif()), 6000);
+        });
         setNameValue("");
         setEmailValue("");
         setPasswordValue("");
@@ -33,6 +49,30 @@ const CreateForm = () => {
       });
   };
 
+  const upgradeAccount = async (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    try {
+      const user = auth.currentUser;
+      const credential = EmailAuthProvider.credential(
+        email.value,
+        password.value
+      );
+      await linkWithCredential(user, credential);
+      await updateProfile(user, { displayName: name.value });
+      await sendEmailVerification(user);
+      setNameValue("");
+      setEmailValue("");
+      setPasswordValue("");
+      dispatch(toggleCreate());
+    } catch (error) {
+      const errorCode = error.code;
+      const errorMessage = error.message;
+      console.log(errorCode, errorMessage);
+      dispatch(setError(error.code));
+      setTimeout(() => dispatch(resetError()), 5000);
+      // ..
+    }
+  };
   return (
     <>
       <h2 className="mb-6 text-3xl font-semibold">Create Account</h2>

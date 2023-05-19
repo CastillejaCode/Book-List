@@ -6,9 +6,13 @@ import Modal from "./components/Modal/Modal";
 import Login from "./components/Login/index.js";
 
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
+import { useSelector } from "react-redux";
+import { RootState } from "./store.js";
 
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
+  const credential = useSelector((state: RootState) => state.user.credential);
+  console.log(credential);
 
   if (loading)
     return (
@@ -20,7 +24,7 @@ const App = () => {
 
   return (
     <div>
-      {user?.emailVerified ? (
+      {user?.emailVerified || (user?.isAnonymous && !credential) ? (
         <div className="relative z-10">
           <NavBar />
           <Books />
