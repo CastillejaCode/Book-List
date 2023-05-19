@@ -3,20 +3,32 @@ import auth from "../../../auth/config";
 import { useDeleteAllBooksMutation } from "../../../services/books";
 import { useDispatch } from "react-redux";
 import { toggleUser } from "../../../features/toggleSlice";
+import { deleteUser } from "firebase/auth";
 interface Props {
   data?: boolean;
+  account?: boolean;
 }
 
-const ConfirmDialog = ({ data }: Props) => {
+const ConfirmDialog = ({ data, account }: Props) => {
   const dispatch = useDispatch();
   const ref = useRef<HTMLDialogElement>(null);
+  const user = auth.currentUser;
   const [deleteAllBooks] = useDeleteAllBooksMutation();
 
   const deleteData = async () => {
-    if (!auth.currentUser) return;
-    const uid = auth.currentUser.uid;
+    if (!user) return;
+    const uid = user.uid;
     await deleteAllBooks({ uid });
     dispatch(toggleUser());
+  };
+
+  const deleteAccount = async () => {
+    try {
+      await deleteData();
+      await deleteUser(user);
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -39,16 +51,20 @@ const ConfirmDialog = ({ data }: Props) => {
             <button className="btn-outline btn border-0 bg-gray-300 text-lg normal-case text-gray-600">
               Cancel
             </button>
-            {data ? (
+            {data && (
               <button
                 className="btn  border-0 bg-red-300 text-lg normal-case text-red-900"
                 onClick={deleteData}
               >
-                Yes, Delete
+                Yes, Delete Data
               </button>
-            ) : (
-              <button className="btn  border-0 bg-red-300 text-lg normal-case text-red-900">
-                Yes, Delete
+            )}
+            {account && (
+              <button
+                className="btn  border-0 bg-red-300 text-lg normal-case text-red-900"
+                onClick={deleteAccount}
+              >
+                Yes, Delete Account
               </button>
             )}
           </form>
