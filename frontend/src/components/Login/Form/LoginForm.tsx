@@ -1,24 +1,52 @@
 import { useDispatch } from "react-redux";
-import { useField } from "./useField";
-import { resetError, setError } from "../../../features/errorSlice";
+import { useField } from "../../../hooks/useField";
+import {
+  resetError,
+  resetNotif,
+  setError,
+  setNotif,
+} from "../../../features/notificationSlice";
 import { toggleCreate } from "../../../features/toggleSlice";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  getAuth,
+  sendEmailVerification,
+  signInWithEmailAndPassword,
+} from "firebase/auth";
 import auth from "../../../auth/config";
+import { useState } from "react";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
   // id, type
-  const email = useField("email", "text");
-  const password = useField("pwd", "text");
+  const { setValue: setEmailValue, ...email } = useField("email", "text");
+  const { setValue: setPasswordValue, ...password } = useField("pwd", "text");
+  const [showVerify, setShowVerify] = useState(false);
 
   const login = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    signInWithEmailAndPassword(auth, email.value, password.value).catch(
-      (error) => {
-        dispatch(setError(error.code));
-        setTimeout(() => dispatch(resetError()), 5000);
-      }
-    );
+    signInWithEmailAndPassword(auth, email.value, password.value)
+      .then(() => {
+        const auth = getAuth();
+        setEmailValue("");
+        setPasswordValue("");
+        if (!auth.currentUser?.emailVerified && auth.currentUser) {
+          setShowVerify(true);
+          throw "auth/email-not-verified";
+        }
+      })
+      .catch((error) => {
+        dispatch(setError(error.code || error));
+        setTimeout(() => dispatch(resetError()), 6000);
+      });
+  };
+
+  const verify = (event: React.SyntheticEvent) => {
+    event.preventDefault();
+    sendEmailVerification(auth.currentUser).then(() => {
+      dispatch(setNotif("Email sent!"));
+      setShowVerify(false);
+      setTimeout(() => dispatch(resetNotif()), 6000);
+    });
   };
   return (
     <>
@@ -50,6 +78,14 @@ const LoginForm = () => {
           >
             Create
           </button>
+          {showVerify && (
+            <button
+              className="btn mt-4 bg-blue-500 text-xl normal-case"
+              onClick={verify}
+            >
+              Verify
+            </button>
+          )}
         </div>
       </form>
     </>

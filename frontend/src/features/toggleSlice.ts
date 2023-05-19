@@ -7,6 +7,7 @@ const initialState: Toggle = {
   modal: false,
   search: false,
   create: false,
+  user: false,
 };
 
 export const toggleSlice = createSlice({
@@ -33,6 +34,10 @@ export const toggleSlice = createSlice({
     toggleCreate: (state) => {
       state.create = !state.create;
     },
+    toggleUser: (state) => {
+      state.user = !state.user;
+      state.menu = false;
+    },
   },
 });
 
@@ -42,6 +47,7 @@ export const {
   toggleModal,
   toggleSearch,
   toggleCreate,
+  toggleUser,
 } = toggleSlice.actions;
 
 export default toggleSlice.reducer;

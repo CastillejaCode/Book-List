@@ -1,15 +1,15 @@
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import auth from "../../../auth/config";
 import { useDispatch } from "react-redux";
-import { useField } from "./useField";
+import { useField } from "../../../hooks/useField";
 import { toggleCreate } from "../../../features/toggleSlice";
-import { setError, resetError } from "../../../features/errorSlice";
+import { setError, resetError } from "../../../features/notificationSlice";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
-  const name = useField("name", "text");
-  const email = useField("email", "text");
-  const password = useField("pwd", "text");
+  const { setValue: setNameValue, ...name } = useField("name", "text");
+  const { setValue: setEmailValue, ...email } = useField("email", "text");
+  const { setValue: setPasswordValue, ...password } = useField("pwd", "text");
 
   const submitForm = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -18,6 +18,9 @@ const CreateForm = () => {
         // Signed in
         const user = userCredential.user;
         updateProfile(user, { displayName: name.value });
+        setNameValue("");
+        setEmailValue("");
+        setPasswordValue("");
         dispatch(toggleCreate());
       })
       .catch((error) => {
