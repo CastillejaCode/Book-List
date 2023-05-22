@@ -25,6 +25,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
         date: Date.now(),
         uid: auth.currentUser?.uid,
         img: 0,
+        coverNumber: 0,
       });
     } catch (error) {
       console.log(error);
