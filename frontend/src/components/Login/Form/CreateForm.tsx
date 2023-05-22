@@ -60,6 +60,8 @@ const CreateForm = () => {
       await linkWithCredential(user, credential);
       await updateProfile(user, { displayName: name.value });
       await sendEmailVerification(user);
+      dispatch(setNotif("Email sent!"));
+      setTimeout(() => dispatch(resetNotif()), 6000);
       setNameValue("");
       setEmailValue("");
       setPasswordValue("");
@@ -76,7 +78,10 @@ const CreateForm = () => {
   return (
     <>
       <h2 className="mb-6 text-3xl font-semibold">Create Account</h2>
-      <form className="flex flex-col gap-6" onSubmit={submitForm}>
+      <form
+        className="flex flex-col gap-6"
+        onSubmit={auth.currentUser?.isAnonymous ? upgradeAccount : submitForm}
+      >
         <div className="flex flex-col">
           <label htmlFor="name">first name</label>
           <input
