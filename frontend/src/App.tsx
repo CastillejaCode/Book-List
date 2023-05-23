@@ -12,7 +12,6 @@ import { RootState } from "./store.js";
 const App = () => {
   const [user, loading, error] = useAuthState(auth);
   const credential = useSelector((state: RootState) => state.user.credential);
-  console.log(credential);
 
   if (loading)
     return (
@@ -20,11 +19,13 @@ const App = () => {
         <ArrowPathIcon className="aspect-square h-24 animate-spin" />
       </div>
     );
-  if (error) return <div>something broke...</div>;
+  if (error) return <div>Connection to FireBase was broken...</div>;
+
+  const temporaryUser = user?.isAnonymous && !credential;
 
   return (
     <div>
-      {user?.emailVerified || (user?.isAnonymous && !credential) ? (
+      {user || temporaryUser ? (
         <div className="relative z-10">
           <NavBar />
           <Books />

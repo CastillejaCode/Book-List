@@ -4,7 +4,6 @@ import {
   EmailAuthProvider,
   linkWithCredential,
   sendEmailVerification,
-  getAuth,
 } from "firebase/auth";
 import auth from "../../../auth/config";
 import { useDispatch } from "react-redux";

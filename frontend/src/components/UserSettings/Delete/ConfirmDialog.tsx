@@ -1,9 +1,11 @@
 import { useRef } from "react";
-import auth from "../../../auth/config";
 import { useDeleteAllBooksMutation } from "../../../services/books";
 import { useDispatch } from "react-redux";
 import { toggleUser } from "../../../features/toggleSlice";
 import { deleteUser } from "firebase/auth";
+import { useAuthState } from "react-firebase-hooks/auth";
+import auth from "../../../auth/config";
+
 interface Props {
   data?: boolean;
   account?: boolean;
@@ -12,7 +14,7 @@ interface Props {
 const ConfirmDialog = ({ data, account }: Props) => {
   const dispatch = useDispatch();
   const ref = useRef<HTMLDialogElement>(null);
-  const user = auth.currentUser;
+  const [user, loading, error] = useAuthState(auth);
   const [deleteAllBooks] = useDeleteAllBooksMutation();
 
   const deleteData = async () => {
@@ -24,6 +26,7 @@ const ConfirmDialog = ({ data, account }: Props) => {
 
   const deleteAccount = async () => {
     try {
+      if (!user) return;
       await deleteData();
       await deleteUser(user);
     } catch (error) {

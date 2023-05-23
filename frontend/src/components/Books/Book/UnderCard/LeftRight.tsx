@@ -1,9 +1,10 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@heroicons/react/24/solid";
 import { useUpdateBookMutation } from "../../../../services/books";
+import { Docs } from "../../../../types";
 interface Props {
   id: string;
   coverNumber: number;
-  docs: [];
+  docs: Docs;
 }
 
 export default function LeftRight({ id, coverNumber, docs }: Props) {
