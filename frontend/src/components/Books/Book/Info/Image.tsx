@@ -12,6 +12,8 @@ interface Props {
 const Image = ({ title, coverNumber, handleImage }: Props) => {
   const { docs, isLoading, isError } = useContext(ImageContext);
 
+  console.log(docs);
+
   if (isLoading)
     return (
       <div className="loading btn-square btn mr-4 aspect-[1/1.5] h-full w-5/12 rounded-md border-2 border-gray-900"></div>

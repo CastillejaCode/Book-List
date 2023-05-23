@@ -19,7 +19,6 @@ const Login = () => {
           {error || notif ? <Error key="error" /> : ""}
         </AnimatePresence>
       </div>
-
       <Form>{!showCreate ? <LoginForm /> : <CreateForm />}</Form>
     </div>
   );

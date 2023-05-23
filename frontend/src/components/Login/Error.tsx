@@ -25,7 +25,6 @@ const Error = () => {
       exit={{ scale: 0 }}
       style={{ x: "-50%" }}
       className={`absolute left-1/2 top-0 whitespace-nowrap rounded-l bg-red-300 p-4 text-2xl
-      ${error && "bg-red-300"}
       ${notif && "bg-green-300"}
       `}
     >

@@ -2,7 +2,7 @@ import ConfirmDialog from "./ConfirmDialog";
 
 const Delete = () => {
   return (
-    <div className="flex w-fit flex-grow  flex-col items-center gap-10">
+    <div className="flex flex-col items-center gap-10 py-4">
       <ConfirmDialog data />
       <ConfirmDialog account />
     </div>

@@ -68,6 +68,11 @@ const Books = () => {
         showSort ? "mt-72" : "mt-16"
       }`}
     >
+      {userBooks.length < 1 && (
+        <div className="mt-4 text-lg font-light">
+          It's empty here, add something!
+        </div>
+      )}
       {!showUserSettings ? (
         searchedBooks.map((book: Book) => {
           return <Card book={book} key={book.id} />;
