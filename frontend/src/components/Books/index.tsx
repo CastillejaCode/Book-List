@@ -44,6 +44,7 @@ const Books = () => {
   const sort = useSelector((state: RootState) => state.sort.value);
   const showUserSettings = useSelector((state: RootState) => state.toggle.user);
   const showSort = useSelector((state: RootState) => state.toggle.sort);
+  const showUser = useSelector((state: RootState) => state.toggle.user);
   const searchTerm = useSelector((state: RootState) =>
     state.search.value.toLowerCase()
   );
@@ -68,7 +69,7 @@ const Books = () => {
         showSort ? "mt-72" : "mt-16"
       }`}
     >
-      {userBooks.length < 1 && (
+      {userBooks.length < 1 && !showUser && (
         <div className="mt-4 text-lg font-light">
           It's empty here, add something!
         </div>
