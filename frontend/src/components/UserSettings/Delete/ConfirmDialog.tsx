@@ -14,7 +14,7 @@ interface Props {
 const ConfirmDialog = ({ data, account }: Props) => {
   const dispatch = useDispatch();
   const ref = useRef<HTMLDialogElement>(null);
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [deleteAllBooks] = useDeleteAllBooksMutation();
 
   const deleteData = async () => {

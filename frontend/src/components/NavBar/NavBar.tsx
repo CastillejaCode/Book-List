@@ -27,8 +27,8 @@ const NavBar = () => {
 
   const inputRef = useRef(null);
 
-  const undoBook = useSelector((state: RootState) => state.undo.value);
   const [addBook] = useAddBookMutation();
+  const undoBook = useSelector((state: RootState) => state.undo.value);
   const searchTerm = useSelector((state: RootState) => state.search.value);
 
   const addUndoBook = () => {

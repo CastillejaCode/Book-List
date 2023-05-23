@@ -1,13 +1,13 @@
 import { ReactElement } from "react";
 import { signInAnonymously } from "firebase/auth";
 import auth from "../../../auth/config";
+
 const Form = ({ children }: { children: ReactElement }) => {
   const anonymousLogin = async () => {
     try {
       await signInAnonymously(auth);
-      console.log(auth.currentUser);
     } catch (error) {
-      console.log(error.code);
+      return <div>That didn't work... refresh the page</div>;
     }
   };
   return (
