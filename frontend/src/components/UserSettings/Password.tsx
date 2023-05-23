@@ -1,13 +1,14 @@
 import auth from "../../auth/config";
 import { updatePassword, signOut } from "firebase/auth";
 import { useField } from "../../hooks/useField";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 const Password = () => {
   const { setValue: setPasswordValue, ...password } = useField("pwd", "pwd");
+  const [user] = useAuthState(auth);
 
   const resetPassword = (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const user = auth.currentUser;
     if (!user) return;
     if (event.target.pwdconfirm.value != password.value)
       throw new Error("Passwords do not match");

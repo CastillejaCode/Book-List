@@ -3,12 +3,12 @@ import {
   sendEmailVerification,
   updateEmail,
   updateProfile,
-  EmailAuthProvider,
 } from "firebase/auth";
 import auth from "../../auth/config";
 import { useDispatch } from "react-redux";
 import { setCredential } from "../../features/userSlice";
 import { toggleCreate } from "../../features/toggleSlice";
+import { useAuthState } from "react-firebase-hooks/auth";
 
 interface Props {
   handleName: React.Dispatch<string>;
@@ -16,24 +16,23 @@ interface Props {
 
 const Account = ({ handleName }: Props) => {
   const dispatch = useDispatch();
+  const [user] = useAuthState(auth);
   const { setValue: setNameValue, ...name } = useField("name", "text");
   const { setValue: setEmailValue, ...email } = useField("email", "text");
 
-  const changeAccount = (event: React.SyntheticEvent) => {
+  const changeAccount = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    if (!auth.currentUser) return;
+    if (!user) return;
     if (name.value) {
-      updateProfile(auth.currentUser, { displayName: name.value }).then(() => {
-        handleName(name.value);
-        setNameValue("");
-      });
+      await updateProfile(user, { displayName: name.value });
+      handleName(name.value);
+      setNameValue("");
     }
     if (email.value) {
-      updateEmail(auth.currentUser, email.value).then(() => {
-        sendEmailVerification(auth.currentUser)
-          .then(() => setEmailValue(""))
-          .catch((error) => console.log(error));
-      });
+      await updateEmail(user, email.value);
+      sendEmailVerification(user)
+        .then(() => setEmailValue(""))
+        .catch((error) => console.log(error));
     }
   };
 

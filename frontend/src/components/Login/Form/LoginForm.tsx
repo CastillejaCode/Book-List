@@ -1,53 +1,41 @@
 import { useDispatch } from "react-redux";
+// import { useState } from "react";
+// import { useAuthState } from "react-firebase-hooks/auth";
 import { useField } from "../../../hooks/useField";
-import {
-  resetError,
-  resetNotif,
-  setError,
-  setNotif,
-} from "../../../features/notificationSlice";
+// import {
+//   resetError,
+//   resetNotif,
+//   setError,
+//   setNotif,
+// } from "../../../features/notificationSlice";
 import { toggleCreate } from "../../../features/toggleSlice";
-import {
-  getAuth,
-  sendEmailVerification,
-  signInWithEmailAndPassword,
-} from "firebase/auth";
 import auth from "../../../auth/config";
-import { useState } from "react";
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  // id, type
   const { setValue: setEmailValue, ...email } = useField("email", "text");
   const { setValue: setPasswordValue, ...password } = useField("pwd", "text");
-  const [showVerify, setShowVerify] = useState(false);
+  const [signInWithEmailAndPassword, error] =
+    useSignInWithEmailAndPassword(auth);
+  // const [showVerify, setShowVerify] = useState(false);
 
-  const login = (event: React.SyntheticEvent) => {
+  if (error) return <div>Connection to Firease broke, try again</div>;
+  const login = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    signInWithEmailAndPassword(auth, email.value, password.value)
-      .then(() => {
-        const auth = getAuth();
-        setEmailValue("");
-        setPasswordValue("");
-        if (!auth.currentUser?.emailVerified && auth.currentUser) {
-          setShowVerify(true);
-          throw "auth/email-not-verified";
-        }
-      })
-      .catch((error) => {
-        dispatch(setError(error.code || error));
-        setTimeout(() => dispatch(resetError()), 6000);
-      });
+    await signInWithEmailAndPassword(email.value, password.value);
+    setEmailValue("");
+    setPasswordValue("");
   };
 
-  const verify = (event: React.SyntheticEvent) => {
-    event.preventDefault();
-    sendEmailVerification(auth.currentUser).then(() => {
-      dispatch(setNotif("Email sent!"));
-      setShowVerify(false);
-      setTimeout(() => dispatch(resetNotif()), 6000);
-    });
-  };
+  // const verify = (event: React.SyntheticEvent) => {
+  //   event.preventDefault();
+  //   sendEmailVerification(user).then(() => {
+  //     dispatch(setNotif("Email sent!"));
+  //     setShowVerify(false);
+  //     setTimeout(() => dispatch(resetNotif()), 6000);
+  //   });
+  // };
   return (
     <>
       <h2 className="mb-6 text-3xl font-semibold">Login</h2>
@@ -78,14 +66,14 @@ const LoginForm = () => {
           >
             Create
           </button>
-          {showVerify && (
+          {/* {showVerify && (
             <button
               className="btn mt-4 bg-blue-500 text-xl normal-case"
               onClick={verify}
             >
               Verify
             </button>
-          )}
+          )} */}
         </div>
       </form>
     </>

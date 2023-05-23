@@ -1,5 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
-import { Book } from "../types";
+import { Book, BookSearchAPI } from "../types";
 
 export const bookApi = createApi({
   reducerPath: "bookApi",
@@ -76,27 +76,10 @@ export const bookSearchApi = createApi({
           method: "GET",
         };
       },
-      transformResponse: (res: object) => res.docs.filter((doc) => doc.cover_i),
+      transformResponse: (res: BookSearchAPI) =>
+        res.docs.filter((doc) => doc.cover_i),
     }),
   }),
 });
 
-// export const bookCoverApi = createApi({
-//   reducerPath: "bookCoverApi",
-//   baseQuery: fetchBaseQuery({
-//     baseUrl: "https://covers.openlibrary.org",
-//   }),
-//   endpoints: (builder) => ({
-//     getBookCover: builder.query({
-//       query: ({ data, coverNumber, key, size }) => {
-//         return {
-//           url: `https://covers.openlibrary.org/b/${key}/${data[coverNumber].cover_i}-${size}.jpg`,
-//           method: "GET",
-//         };
-//       },
-//     }),
-//   }),
-// });
-
 export const { useGetBookIdQuery } = bookSearchApi;
-// export const { useGetBookCoverQuery } = bookCoverApi;
