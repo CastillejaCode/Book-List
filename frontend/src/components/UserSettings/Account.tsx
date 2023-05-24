@@ -9,6 +9,8 @@ import { useDispatch } from "react-redux";
 import { setCredential } from "../../features/userSlice";
 import { toggleCreate } from "../../features/toggleSlice";
 import { useAuthState } from "react-firebase-hooks/auth";
+import Toast from "./Toast";
+import { useState } from "react";
 
 interface Props {
   handleName: React.Dispatch<string>;
@@ -17,6 +19,7 @@ interface Props {
 const Account = ({ handleName }: Props) => {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
+  const [toast, setToast] = useState("");
   const { setValue: setNameValue, ...name } = useField("name", "text");
   const { setValue: setEmailValue, ...email } = useField("email", "text");
 
@@ -27,12 +30,17 @@ const Account = ({ handleName }: Props) => {
       await updateProfile(user, { displayName: name.value });
       handleName(name.value);
       setNameValue("");
+      setToast("name changed");
     }
     if (email.value) {
       await updateEmail(user, email.value);
-      sendEmailVerification(user)
-        .then(() => setEmailValue(""))
-        .catch((error) => console.log(error));
+      setToast("email changed");
+      // sendEmailVerification(user)
+      //   .then(() => setEmailValue(""))
+      //   .catch((error) => console.log(error));
+    }
+    if (email.value && name.value) {
+      setToast("name and email changed");
     }
   };
 
@@ -47,6 +55,7 @@ const Account = ({ handleName }: Props) => {
       <div className="w-full">
         <h2>Make changes to your account here.</h2>
       </div>
+      {toast && <Toast toast={toast} setToast={setToast} />}
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={changeAccount}>
         <div className="flex flex-col">
           <label htmlFor="name">first name</label>
@@ -69,8 +78,8 @@ const Account = ({ handleName }: Props) => {
           Save Changes
         </button>
       </form>
-      {auth.currentUser?.isAnonymous && (
-        <form className=" flex w-full flex-col">
+      {user?.isAnonymous && (
+        <form className="flex w-full flex-col">
           <div className="divider"></div>
           <div className="mb-4">
             <h2>Upgrade to email account.</h2>
@@ -81,6 +90,18 @@ const Account = ({ handleName }: Props) => {
             onClick={upgradeAccount}
           >
             Upgrade
+          </button>
+        </form>
+      )}
+      {!user?.emailVerified && !user?.isAnonymous && (
+        <form className=" flex w-full flex-col">
+          <div className="divider"></div>
+          <div className="mb-4 w-fit">
+            <h2>Verify email account.</h2>
+            <h2>Add books after 24 hours.</h2>
+          </div>
+          <button className="btn-outline btn self-end text-lg normal-case ">
+            Verify
           </button>
         </form>
       )}

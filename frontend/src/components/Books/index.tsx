@@ -65,7 +65,7 @@ const Books = () => {
 
   return (
     <div
-      className={`flex h-screen grid-flow-row flex-col items-center bg-gray-50 transition-all duration-300 md:grid  md:grid-cols-3 md:p-8 2xl:grid-cols-4 ${
+      className={`flex grid-flow-row flex-col items-center bg-gray-50 transition-all duration-300 md:grid  md:grid-cols-3 md:p-8 2xl:grid-cols-4 ${
         showSort ? "mt-72" : "mt-16"
       }`}
     >

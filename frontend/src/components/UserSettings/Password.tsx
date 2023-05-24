@@ -5,12 +5,17 @@ import { useAuthState } from "react-firebase-hooks/auth";
 
 const Password = () => {
   const { setValue: setPasswordValue, ...password } = useField("pwd", "pwd");
+  const { setValue: setPasswordConfirmValue, ...passwordConfirm } = useField(
+    "pwd",
+    "pwdConfirm"
+  );
+
   const [user] = useAuthState(auth);
 
   const resetPassword = (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (!user) return;
-    if (event.target.pwdconfirm.value != password.value)
+    if (passwordConfirm.value !== password.value)
       throw new Error("Passwords do not match");
     updatePassword(user, password.value)
       .then(() => {
