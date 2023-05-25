@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetToast } from "../../../features/notificationSlice";
-import { RootState } from "../../../store";
+import { resetToast } from "../../features/notificationSlice";
+import { RootState } from "../../store";
 
 const Toast = () => {
   const dispatch = useDispatch();
