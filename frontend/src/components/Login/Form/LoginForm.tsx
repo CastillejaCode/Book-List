@@ -26,6 +26,7 @@ const LoginForm = () => {
     useSignInWithEmailAndPassword(auth);
 
   if (error) return <div>Connection to Firease broke, try again</div>;
+
   const login = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     await signInWithEmailAndPassword(email.value, password.value);

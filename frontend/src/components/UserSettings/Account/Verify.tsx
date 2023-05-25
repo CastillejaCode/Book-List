@@ -3,17 +3,21 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { sendEmailVerification } from "firebase/auth";
 import auth from "../../../auth/config";
 import { setToast } from "../../../features/notificationSlice";
+import useCheckVerify from "../../../hooks/useCheckVerify";
 
 export default function Verify() {
   const dispatch = useDispatch();
   const [user] = useAuthState(auth);
+  const checkVerify = useCheckVerify();
 
   const verifyEmail = async (event: React.SyntheticEvent) => {
     if (!user) return;
     event.preventDefault();
     try {
+      if (user.emailVerified) throw Error("email already verified");
       await sendEmailVerification(user);
       dispatch(setToast("email sent"));
+      checkVerify.start();
     } catch (error) {
       if (error instanceof Error) dispatch(setToast(error.message));
     }

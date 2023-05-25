@@ -5,14 +5,16 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import Toast from "../Toast";
 import Verify from "./Verify";
 import Upgrade from "./Upgrade";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { setToast } from "../../../features/notificationSlice";
+import { RootState } from "../../../store";
 interface Props {
   handleName: React.Dispatch<string>;
 }
 
 const Account = ({ handleName }: Props) => {
   const dispatch = useDispatch();
+  const verified = useSelector((state: RootState) => state.user.verification);
 
   const [user] = useAuthState(auth);
   const [name, setNameValue] = useField({
@@ -72,7 +74,9 @@ const Account = ({ handleName }: Props) => {
         </button>
       </form>
       {user?.isAnonymous && <Upgrade />}
-      {!user?.emailVerified && !user?.isAnonymous && <Verify />}
+      {((!user?.emailVerified && !user?.isAnonymous) || !verified) && (
+        <Verify />
+      )}
     </div>
   );
 };

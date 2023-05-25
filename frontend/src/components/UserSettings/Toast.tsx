@@ -12,7 +12,7 @@ const Toast = () => {
       dispatch(resetToast());
     }, 5000);
     return () => clearTimeout(timeout);
-  }, [toast]);
+  }, [dispatch, toast]);
 
   if (toast)
     return (
