@@ -38,6 +38,9 @@ export const toggleSlice = createSlice({
       state.user = !state.user;
       state.menu = false;
     },
+    setUser: (state, action) => {
+      state.user = action.payload;
+    },
   },
 });
 
@@ -48,6 +51,7 @@ export const {
   toggleSearch,
   toggleCreate,
   toggleUser,
+  setUser,
 } = toggleSlice.actions;
 
 export default toggleSlice.reducer;

@@ -1,5 +1,6 @@
 import { useDispatch } from "react-redux";
 import {
+  setUser,
   toggleMenu,
   toggleModal,
   toggleSearch,
@@ -75,6 +76,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
             onClick={() => {
               signOut(auth);
               dispatch(toggleMenu());
+              dispatch(setUser(false));
             }}
           >
             <ArrowLeftOnRectangleIcon className="aspect-square w-6" />
