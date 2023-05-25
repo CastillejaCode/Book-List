@@ -22,7 +22,6 @@ export const toggleSlice = createSlice({
       state.menu = !state.menu;
       state.sort = false;
       state.search = false;
-      state.user = false;
     },
     toggleModal: (state) => {
       state.modal = !state.modal;
