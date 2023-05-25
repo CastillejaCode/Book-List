@@ -2,7 +2,7 @@ import { useField } from "../../../hooks/useField";
 import { updateEmail, updateProfile } from "firebase/auth";
 import auth from "../../../auth/config";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Toast from "./Toast";
+import Toast from "../Toast";
 import Verify from "./Verify";
 import Upgrade from "./Upgrade";
 import { useDispatch } from "react-redux";
@@ -15,8 +15,14 @@ const Account = ({ handleName }: Props) => {
   const dispatch = useDispatch();
 
   const [user] = useAuthState(auth);
-  const { setValue: setNameValue, ...name } = useField("name", "text");
-  const { setValue: setEmailValue, ...email } = useField("email", "text");
+  const [name, setNameValue] = useField({
+    id: "name",
+    type: "text",
+  });
+  const [email, setEmailValue] = useField({
+    id: "email",
+    type: "email",
+  });
 
   const changeAccount = async (event: React.SyntheticEvent) => {
     event.preventDefault();

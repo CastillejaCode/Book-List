@@ -14,28 +14,25 @@ import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { setValue: setEmailValue, ...email } = useField("email", "text");
-  const { setValue: setPasswordValue, ...password } = useField("pwd", "text");
+  const [email, setEmail] = useField({
+    id: "email",
+    type: "email",
+  });
+  const [password, setPassword] = useField({
+    id: "pwd",
+    type: "password",
+  });
   const [signInWithEmailAndPassword, error] =
     useSignInWithEmailAndPassword(auth);
-  // const [showVerify, setShowVerify] = useState(false);
 
   if (error) return <div>Connection to Firease broke, try again</div>;
   const login = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     await signInWithEmailAndPassword(email.value, password.value);
-    setEmailValue("");
-    setPasswordValue("");
+    setEmail("");
+    setPassword("");
   };
 
-  // const verify = (event: React.SyntheticEvent) => {
-  //   event.preventDefault();
-  //   sendEmailVerification(user).then(() => {
-  //     dispatch(setNotif("Email sent!"));
-  //     setShowVerify(false);
-  //     setTimeout(() => dispatch(resetNotif()), 6000);
-  //   });
-  // };
   return (
     <>
       <h2 className="mb-6 text-3xl font-semibold">Login</h2>
@@ -66,14 +63,6 @@ const LoginForm = () => {
           >
             Create
           </button>
-          {/* {showVerify && (
-            <button
-              className="btn mt-4 bg-blue-500 text-xl normal-case"
-              onClick={verify}
-            >
-              Verify
-            </button>
-          )} */}
         </div>
       </form>
     </>

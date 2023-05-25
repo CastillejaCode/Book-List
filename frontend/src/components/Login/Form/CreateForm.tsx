@@ -13,9 +13,18 @@ import { FirebaseError } from "firebase/app";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
-  const { setValue: setNameValue, ...name } = useField("name", "text");
-  const { setValue: setEmailValue, ...email } = useField("email", "text");
-  const { setValue: setPasswordValue, ...password } = useField("pwd", "text");
+  const [name, setName] = useField({
+    id: "name",
+    type: "text",
+  });
+  const [email, setEmail] = useField({
+    id: "email",
+    type: "email",
+  });
+  const [password, setPassword] = useField({
+    id: "pwd",
+    type: "password",
+  });
 
   const submitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -26,9 +35,9 @@ const CreateForm = () => {
         password.value
       );
       await updateProfile(userCredential.user, { displayName: name.value });
-      setNameValue("");
-      setEmailValue("");
-      setPasswordValue("");
+      setName("");
+      setEmail("");
+      setPassword("");
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
       dispatch(setError(error.code));

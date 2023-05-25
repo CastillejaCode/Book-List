@@ -3,7 +3,7 @@ export interface Book {
   author: string;
   rating: number;
   review: string;
-  id: string;
+  id?: string;
   date: number;
   uid: string;
   coverNumber: number;

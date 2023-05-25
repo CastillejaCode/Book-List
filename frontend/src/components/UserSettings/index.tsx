@@ -4,7 +4,6 @@ import Account from "./Account";
 import Password from "./Password";
 import { useState } from "react";
 import Delete from "./Delete";
-import { Toast } from "@radix-ui/react-toast";
 
 const UserSettings = () => {
   const [name, setName] = useState(auth.currentUser?.displayName);
