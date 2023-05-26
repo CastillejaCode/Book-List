@@ -1,41 +1,45 @@
 import { useDispatch } from "react-redux";
-// import { useState } from "react";
-// import { useAuthState } from "react-firebase-hooks/auth";
 import { useField } from "../../../hooks/useField";
-// import {
-//   resetError,
-//   resetNotif,
-//   setError,
-//   setNotif,
-// } from "../../../features/notificationSlice";
-import { toggleCreate } from "../../../features/toggleSlice";
+import {
+  setError,
+  resetError,
+  setToast,
+} from "../../../features/notificationSlice";
+import {
+  toggleCreate,
+  toggleResetPassword,
+} from "../../../features/toggleSlice";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import auth from "../../../auth/config";
-import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { FirebaseError } from "firebase/app";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
-  const { setValue: setEmailValue, ...email } = useField("email", "text");
-  const { setValue: setPasswordValue, ...password } = useField("pwd", "text");
-  const [signInWithEmailAndPassword, error] =
-    useSignInWithEmailAndPassword(auth);
-  // const [showVerify, setShowVerify] = useState(false);
+  const [email, setEmail] = useField({
+    id: "email",
+    type: "email",
+  });
+  const [password, setPassword] = useField({
+    id: "pwd",
+    type: "password",
+  });
 
-  if (error) return <div>Connection to Firease broke, try again</div>;
   const login = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    await signInWithEmailAndPassword(email.value, password.value);
-    setEmailValue("");
-    setPasswordValue("");
+    try {
+      await signInWithEmailAndPassword(auth, email.value, password.value);
+      setEmail("");
+      setPassword("");
+    } catch (error) {
+      if (!(error instanceof FirebaseError)) return;
+      dispatch(setError(error.code));
+      setTimeout(() => dispatch(resetError()), 5000);
+    }
   };
 
-  // const verify = (event: React.SyntheticEvent) => {
-  //   event.preventDefault();
-  //   sendEmailVerification(user).then(() => {
-  //     dispatch(setNotif("Email sent!"));
-  //     setShowVerify(false);
-  //     setTimeout(() => dispatch(resetNotif()), 6000);
-  //   });
-  // };
   return (
     <>
       <h2 className="mb-6 text-3xl font-semibold">Login</h2>
@@ -55,6 +59,13 @@ const LoginForm = () => {
             className="input-bordered input input-sm bg-gray-200 text-lg"
             required
           />
+          <button
+            onClick={() => dispatch(toggleResetPassword())}
+            type="button"
+            className="w-fit self-end px-1 py-2 text-end text-sm font-[400]"
+          >
+            forgot password?
+          </button>
         </div>
         <div className="flex flex-col items-center gap-4">
           <button type="submit" className="btn bg-blue-500 text-xl normal-case">
@@ -66,14 +77,6 @@ const LoginForm = () => {
           >
             Create
           </button>
-          {/* {showVerify && (
-            <button
-              className="btn mt-4 bg-blue-500 text-xl normal-case"
-              onClick={verify}
-            >
-              Verify
-            </button>
-          )} */}
         </div>
       </form>
     </>

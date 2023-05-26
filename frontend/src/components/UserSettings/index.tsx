@@ -11,10 +11,9 @@ const UserSettings = () => {
   return (
     <div className="mt-10 flex flex-col">
       <h1 className="mb-10 text-center text-3xl">{name}</h1>
-
       <Tabs.Root
         defaultValue="tab1"
-        className="max-w-xl rounded-lg border-2 border-gray-900 bg-gray-50"
+        className=" rounded-lg border-2 border-gray-900 bg-gray-50"
       >
         <Tabs.List
           aria-label="tabs"

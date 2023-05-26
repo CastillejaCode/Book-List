@@ -3,7 +3,7 @@ export interface Book {
   author: string;
   rating: number;
   review: string;
-  id: string;
+  id?: string;
   date: number;
   uid: string;
   coverNumber: number;
@@ -16,6 +16,7 @@ export interface Toggle {
   search: boolean;
   create: boolean;
   user: boolean;
+  resetPassword: boolean;
 }
 
 export interface BookSearchAPI {

@@ -1,17 +1,25 @@
 import { useState } from "react";
 
-export const useField = (id: string, type = "string") => {
+interface Args {
+  id: string;
+  type: string;
+}
+
+export const useField = ({ id, type }: Args) => {
   const [value, setValue] = useState("");
 
   const onChange: React.ChangeEventHandler<HTMLInputElement> = (event) => {
     setValue(event?.target.value);
   };
 
-  return {
-    id,
-    type,
-    value,
-    onChange,
-    setValue
-  };
+  const object: [
+    {
+      id: string;
+      type: string;
+      value: string;
+      onChange: React.ChangeEventHandler;
+    },
+    React.Dispatch<React.SetStateAction<string>>
+  ] = [{ id, type, value, onChange }, setValue];
+  return object;
 };

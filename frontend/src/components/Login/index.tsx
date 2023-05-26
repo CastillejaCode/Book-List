@@ -1,5 +1,6 @@
 import CreateForm from "./Form/CreateForm";
 import LoginForm from "./Form/LoginForm";
+import ResetPasswordForm from "./Form/ResetPassword";
 import Form from "./Form";
 import Error from "./Error";
 import { useSelector } from "react-redux";
@@ -8,6 +9,9 @@ import { AnimatePresence } from "framer-motion";
 
 const Login = () => {
   const showCreate = useSelector((state: RootState) => state.toggle.create);
+  const showResetPassword = useSelector(
+    (state: RootState) => state.toggle.resetPassword
+  );
   const error = useSelector((state: RootState) => state.notification.error);
   const notif = useSelector((state: RootState) => state.notification.notif);
 
@@ -19,7 +23,15 @@ const Login = () => {
           {error || notif ? <Error key="error" /> : ""}
         </AnimatePresence>
       </div>
-      <Form>{!showCreate ? <LoginForm /> : <CreateForm />}</Form>
+      <Form>
+        {showResetPassword ? (
+          <ResetPasswordForm />
+        ) : showCreate ? (
+          <CreateForm />
+        ) : (
+          <LoginForm />
+        )}
+      </Form>
     </div>
   );
 };
