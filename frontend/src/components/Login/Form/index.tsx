@@ -1,6 +1,7 @@
 import { ReactElement } from "react";
 import { signInAnonymously } from "firebase/auth";
 import auth from "../../../auth/config";
+import Toast from "../../UserSettings/Toast";
 
 const Form = ({ children }: { children: ReactElement }) => {
   const anonymousLogin = async () => {
@@ -19,6 +20,7 @@ const Form = ({ children }: { children: ReactElement }) => {
       >
         Demo
       </button>
+      <Toast />
     </div>
   );
 };

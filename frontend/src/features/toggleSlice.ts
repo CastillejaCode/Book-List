@@ -8,6 +8,7 @@ const initialState: Toggle = {
   search: false,
   create: false,
   user: false,
+  resetPassword: false,
 };
 
 export const toggleSlice = createSlice({
@@ -34,6 +35,9 @@ export const toggleSlice = createSlice({
     toggleCreate: (state) => {
       state.create = !state.create;
     },
+    toggleResetPassword: (state) => {
+      state.resetPassword = !state.resetPassword;
+    },
     toggleUser: (state) => {
       state.user = !state.user;
       state.menu = false;
@@ -51,6 +55,7 @@ export const {
   toggleSearch,
   toggleCreate,
   toggleUser,
+  toggleResetPassword,
   setUser,
 } = toggleSlice.actions;
 

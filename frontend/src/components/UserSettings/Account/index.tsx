@@ -74,9 +74,7 @@ const Account = ({ handleName }: Props) => {
         </button>
       </form>
       {user?.isAnonymous && <Upgrade />}
-      {((!user?.emailVerified && !user?.isAnonymous) || !verified) && (
-        <Verify />
-      )}
+      {((!user?.emailVerified && !user?.isAnonymous) || verified) && <Verify />}
     </div>
   );
 };

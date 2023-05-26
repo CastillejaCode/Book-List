@@ -3,12 +3,7 @@ import auth from "../../../auth/config";
 import { useDispatch } from "react-redux";
 import { useField } from "../../../hooks/useField";
 import { toggleCreate } from "../../../features/toggleSlice";
-import {
-  setError,
-  resetError,
-  setNotif,
-  resetNotif,
-} from "../../../features/notificationSlice";
+import { setError, resetError } from "../../../features/notificationSlice";
 import { FirebaseError } from "firebase/app";
 
 const CreateForm = () => {
@@ -86,6 +81,7 @@ const CreateForm = () => {
           <label htmlFor="email">email</label>
           <input
             {...email}
+            required
             className="input-bordered input input-sm bg-gray-200 text-lg"
           />
         </div>
@@ -93,6 +89,7 @@ const CreateForm = () => {
           <label htmlFor="pwd">password</label>
           <input
             {...password}
+            required
             className="input-bordered input input-sm bg-gray-200 text-lg"
           />
         </div>

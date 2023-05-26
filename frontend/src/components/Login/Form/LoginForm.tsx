@@ -1,8 +1,18 @@
 import { useDispatch } from "react-redux";
 import { useField } from "../../../hooks/useField";
-import { setError, resetError } from "../../../features/notificationSlice";
-import { toggleCreate } from "../../../features/toggleSlice";
-import { signInWithEmailAndPassword } from "firebase/auth";
+import {
+  setError,
+  resetError,
+  setToast,
+} from "../../../features/notificationSlice";
+import {
+  toggleCreate,
+  toggleResetPassword,
+} from "../../../features/toggleSlice";
+import {
+  signInWithEmailAndPassword,
+  sendPasswordResetEmail,
+} from "firebase/auth";
 import auth from "../../../auth/config";
 import { FirebaseError } from "firebase/app";
 
@@ -49,6 +59,13 @@ const LoginForm = () => {
             className="input-bordered input input-sm bg-gray-200 text-lg"
             required
           />
+          <button
+            onClick={() => dispatch(toggleResetPassword())}
+            type="button"
+            className="w-fit self-end px-1 py-2 text-end text-sm font-[400]"
+          >
+            forgot password?
+          </button>
         </div>
         <div className="flex flex-col items-center gap-4">
           <button type="submit" className="btn bg-blue-500 text-xl normal-case">

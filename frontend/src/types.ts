@@ -16,6 +16,7 @@ export interface Toggle {
   search: boolean;
   create: boolean;
   user: boolean;
+  resetPassword: boolean;
 }
 
 export interface BookSearchAPI {
