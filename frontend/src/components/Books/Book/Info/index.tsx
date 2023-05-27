@@ -4,9 +4,11 @@ import Rating from "./Rating";
 import {
   ChevronDownIcon,
   EllipsisVerticalIcon,
-} from "@heroicons/react/24/solid";
+  CheckCircleIcon,
+} from "@heroicons/react/24/outline";
 
 import { Book } from "../../../../types";
+
 interface Props extends Book {
   handleOptions: () => void;
   handleReview: () => void;
@@ -18,6 +20,7 @@ export default function Info({
   title,
   author,
   rating,
+  read,
   coverNumber,
   handleOptions,
   handleReview,
@@ -48,6 +51,9 @@ export default function Info({
           </div>
         </div>
       </div>
+      {read && (
+        <CheckCircleIcon className="absolute bottom-10 right-2 aspect-square w-6" />
+      )}
       <Rating rating={rating} />
       <button
         className="absolute right-0 aspect-square w-5"

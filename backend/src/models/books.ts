@@ -8,6 +8,7 @@ const bookSchema = new mongoose.Schema({
 	date: Number,
 	uid: String,
 	coverNumber: Number,
+	read: Boolean,
 });
 
 bookSchema.set('toJSON', {

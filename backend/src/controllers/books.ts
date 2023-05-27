@@ -2,16 +2,10 @@ import express from 'express';
 const booksRouter = express.Router();
 import { Book } from '../models/books.js';
 
-booksRouter.get('/', async (_req, res) => {
-	const books = await Book.find({});
+booksRouter.get('/:uid', async (req, res) => {
+	const { uid } = req.params;
+	const books = await Book.find({ uid });
 	res.status(200).json(books);
-});
-
-
-
-booksRouter.get('/:id', async (req, res) => {
-	const book = await Book.findById(req.params.id);
-	res.status(200).json(book);
 });
 
 booksRouter.post('/', async (req, res) => {

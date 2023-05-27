@@ -14,6 +14,7 @@ const EditForm = ({ book, toggleEdit }: Props) => {
   const [author, setAuthor] = useState(book.author);
   const [rating, setRating] = useState(book.rating);
   const [review, setReview] = useState(book.review);
+  const [read, setRead] = useState(book.read);
 
   const submitEdit = (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -22,6 +23,7 @@ const EditForm = ({ book, toggleEdit }: Props) => {
       author,
       rating,
       review,
+      read,
     };
     const { id } = book;
     toggleEdit();
@@ -49,18 +51,26 @@ const EditForm = ({ book, toggleEdit }: Props) => {
           onChange={(event) => setAuthor(event.target.value)}
         />
         {/* <label htmlFor="rating">rating</label> */}
-        <input
-          className="w-fit rounded-md border-2 border-gray-800/70 px-2 text-xl"
-          type="number"
-          min={1}
-          max={5}
-          step={0.5}
-          id="rating"
-          value={rating}
-          onChange={(event) => setRating(Number(event.target.value))}
-        />
+        <div className="flex items-center justify-around">
+          <input
+            className="w-8 rounded-md border-2 border-gray-800/70 px-2 text-xl"
+            type="number"
+            min={1}
+            max={5}
+            step={0.5}
+            id="rating"
+            value={rating}
+            onChange={(event) => setRating(Number(event.target.value))}
+          />
+          <input
+            className="checkbox"
+            type="checkbox"
+            id="checkbox"
+            defaultChecked={read}
+            onChange={(event) => setRead(event.target.checked)}
+          />
+        </div>
       </div>
-      {/* <label htmlFor="review">review</label> */}
       <div className="flex flex-col justify-between">
         <textarea
           className="mb-2 w-full rounded-md border-2 border-gray-800/70 pl-2 text-lg"

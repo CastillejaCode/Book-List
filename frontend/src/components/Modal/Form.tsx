@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { useAddBookMutation } from "../../services/books";
 import { setUndoStatus } from "../../features/undoSlice";
 import { useDispatch } from "react-redux";
@@ -15,6 +15,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
   const [author, setAuthor] = useField({ id: "author", type: "text" });
   const [rating, setRating] = useField({ id: "rating", type: "number" });
   const [review, setReview] = useField({ id: "review", type: "text" });
+  const [read, setRead] = useState(true);
 
   const [user] = useAuthState(auth);
   const [addBook] = useAddBookMutation();
@@ -27,6 +28,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
         title: title.value,
         author: author.value,
         rating: Number(rating.value),
+        read: read,
         review: review.value,
         date: Date.now(),
         uid: user?.uid,
@@ -70,15 +72,26 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
           />
         </div>
 
-        <div className="flex flex-col items-start">
-          <label htmlFor="rating">rating</label>
-          <input
-            className="rounded-md border-2 border-gray-500 pl-2"
-            {...rating}
-            min={1}
-            max={5}
-            required
-          />
+        <div className="flex w-full justify-between align-baseline">
+          <div className="flex flex-col items-start">
+            <label htmlFor="rating">rating</label>
+            <input
+              className="rounded-md border-2 border-gray-500 pl-2"
+              {...rating}
+              min={1}
+              max={5}
+              required
+            />
+          </div>
+          <div className=" flex flex-col items-center justify-between">
+            <label htmlFor="read">read</label>
+            <input
+              className="checkbox bg-slate-700"
+              type="checkbox"
+              defaultChecked={read}
+              onChange={(e) => setRead(e.target.checked)}
+            />
+          </div>
         </div>
         <label htmlFor="review" className="mb-4 flex flex-col items-start">
           review
@@ -89,6 +102,7 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
             rows={2}
           />
         </label>
+
         <button type="submit" className="btn self-center bg-slate-700">
           Add
         </button>

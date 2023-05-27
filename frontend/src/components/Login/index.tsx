@@ -1,6 +1,6 @@
 import CreateForm from "./Form/CreateForm";
 import LoginForm from "./Form/LoginForm";
-import ResetPasswordForm from "./Form/ResetPassword";
+import ResetPasswordForm from "./Form/ResetPasswordForm";
 import Form from "./Form";
 import Error from "./Error";
 import { useSelector } from "react-redux";
