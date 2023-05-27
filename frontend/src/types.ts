@@ -7,6 +7,7 @@ export interface Book {
   date: number;
   uid: string;
   coverNumber: number;
+  read: boolean;
 }
 
 export interface Toggle {
