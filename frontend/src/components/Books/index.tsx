@@ -48,6 +48,7 @@ const Books = () => {
   const searchTerm = useSelector((state: RootState) =>
     state.search.value.toLowerCase()
   );
+  const filter = useSelector((state: RootState) => state.sort.filter);
 
   if (isLoading) return <div>Still Loading</div>;
   if (isError) return <div>Sorry, something went wrong!</div>;
@@ -63,6 +64,12 @@ const Books = () => {
     book.title.toLowerCase().startsWith(searchTerm)
   );
 
+  const filteredBooks = searchedBooks.filter((book) => {
+    if (filter.read && !filter.notRead) return book.read === true;
+    if (!filter.read && filter.notRead) return book.read === false;
+    else return book;
+  });
+
   return (
     <div
       className={`flex grid-flow-row flex-col items-center bg-gray-50 transition-all duration-300 md:grid  md:grid-cols-3 md:p-8 2xl:grid-cols-4 ${
@@ -75,7 +82,7 @@ const Books = () => {
         </div>
       )}
       {!showUserSettings ? (
-        searchedBooks.map((book: Book) => {
+        filteredBooks.map((book: Book) => {
           return <Card book={book} key={book.id} />;
         })
       ) : (
