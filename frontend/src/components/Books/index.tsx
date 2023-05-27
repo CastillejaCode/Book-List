@@ -3,80 +3,25 @@ import { useGetUserBooksQuery } from "../../services/books";
 import { Book } from "../../types";
 import Card from "./Book";
 import { RootState } from "../../store";
-import { Sort } from "../../types";
 import auth from "../../auth/config";
 import UserSettings from "../UserSettings";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
-
-// TODO: import to separate module
-const sortBooks = (method: Sort, books: Book[]) => {
-  switch (method) {
-    case "recent":
-      return [...books].sort((a, b) => {
-        return b.date - a.date;
-      });
-    case "title":
-      return [...books].sort((a, b) => {
-        const nameA = a.title.toLowerCase();
-        const nameB = b.title.toLowerCase();
-        if (nameA < nameB) return -1;
-        if (nameA > nameB) return 1;
-        return 0;
-      });
-    case "author":
-      return [...books].sort((a, b) => {
-        const authorA = a.author.toLowerCase();
-        const AuthorB = b.author.toLowerCase();
-        if (authorA < AuthorB) return -1;
-        if (authorA > AuthorB) return 1;
-        return 0;
-      });
-    case "rating":
-      return [...books].sort((a, b) => {
-        return b.rating - a.rating;
-      });
-    default:
-      return books;
-  }
-};
+import useSort from "../../hooks/useSort";
 
 const Books = () => {
   const [user] = useAuthState(auth);
-  const {
-    data: books,
-    isLoading,
-    isError,
-  } = useGetUserBooksQuery(user?.uid ?? skipToken);
+  const { data, isLoading, isError } = useGetUserBooksQuery(
+    user?.uid ?? skipToken
+  );
+  const books = useSort(data);
 
-  const sort = useSelector((state: RootState) => state.sort.value);
   const showUserSettings = useSelector((state: RootState) => state.toggle.user);
   const showSort = useSelector((state: RootState) => state.toggle.sort);
   const showUser = useSelector((state: RootState) => state.toggle.user);
-  const searchTerm = useSelector((state: RootState) =>
-    state.search.value.toLowerCase()
-  );
-  const filter = useSelector((state: RootState) => state.sort.filter);
 
   if (isLoading) return <div>Still Loading</div>;
-  if (isError) return <div>Sorry, something went wrong!</div>;
-
-  if (!books) return <h1>a bit empty, eh?</h1>;
-
-  // Filter books to individual user
-  const userBooks = books.filter((book) => book.uid === auth.currentUser?.uid);
-  // Sort books based on option
-  const sortedBooks = sortBooks(sort, userBooks);
-  // Filter books via search param
-  const searchedBooks = sortedBooks.filter((book) =>
-    book.title.toLowerCase().startsWith(searchTerm)
-  );
-
-  const filteredBooks = searchedBooks.filter((book) => {
-    if (filter.read && !filter.notRead) return book.read === true;
-    if (!filter.read && filter.notRead) return book.read === false;
-    else return book;
-  });
+  if (isError || !books) return <div>Sorry, something went wrong!</div>;
 
   return (
     <div
@@ -84,13 +29,13 @@ const Books = () => {
         showSort ? "mt-72" : "mt-16"
       }`}
     >
-      {userBooks.length < 1 && !showUser && (
+      {books.length < 1 && !showUser && (
         <div className="mt-4 text-lg font-light">
           It's empty here, add something!
         </div>
       )}
       {!showUserSettings ? (
-        filteredBooks.map((book: Book) => {
+        books.map((book: Book) => {
           return <Card book={book} key={book.id} />;
         })
       ) : (
