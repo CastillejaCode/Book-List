@@ -1,11 +1,13 @@
 import { useSelector } from "react-redux";
-import { useGetAllBooksQuery } from "../../services/books";
+import { useGetUserBooksQuery } from "../../services/books";
 import { Book } from "../../types";
 import Card from "./Book";
 import { RootState } from "../../store";
 import { Sort } from "../../types";
 import auth from "../../auth/config";
 import UserSettings from "../UserSettings";
+import { useAuthState } from "react-firebase-hooks/auth";
+import { skipToken } from "@reduxjs/toolkit/dist/query";
 
 // TODO: import to separate module
 const sortBooks = (method: Sort, books: Book[]) => {
@@ -40,7 +42,13 @@ const sortBooks = (method: Sort, books: Book[]) => {
 };
 
 const Books = () => {
-  const { data: books, isLoading, isError } = useGetAllBooksQuery();
+  const [user] = useAuthState(auth);
+  const {
+    data: books,
+    isLoading,
+    isError,
+  } = useGetUserBooksQuery(user?.uid ?? skipToken);
+
   const sort = useSelector((state: RootState) => state.sort.value);
   const showUserSettings = useSelector((state: RootState) => state.toggle.user);
   const showSort = useSelector((state: RootState) => state.toggle.sort);
