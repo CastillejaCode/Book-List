@@ -18,10 +18,7 @@ const Login = () => {
   return (
     <div className="relative flex h-screen flex-col items-center">
       <div className="relative m-4 mb-24 w-fit">
-        <AnimatePresence>
-          <h1 className="text-4xl">BookL:</h1>
-          {error || notif ? <Error key="error" /> : ""}
-        </AnimatePresence>
+        <h1 className="text-4xl">TomeTracker</h1>
       </div>
       <Form>
         {showResetPassword ? (
@@ -32,6 +29,9 @@ const Login = () => {
           <LoginForm />
         )}
       </Form>
+      <AnimatePresence>
+        {error || notif ? <Error key="error" /> : ""}
+      </AnimatePresence>
     </div>
   );
 };
