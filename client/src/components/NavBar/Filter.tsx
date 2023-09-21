@@ -9,7 +9,7 @@ const Filter = ({ showSort }: { showSort: boolean }) => {
 
   return (
     <div
-      className={`absolute left-1/2 -z-10 flex h-fit w-fit -translate-x-1/2 justify-around gap-20 rounded-md border-2 border-gray-700 bg-gray-50 p-4 shadow-md transition-all duration-300
+      className={`absolute left-1/2 -z-10 flex h-fit w-fit -translate-x-1/2 justify-around gap-20 rounded-md border-2 border-gray-700 bg-zinc-50 p-4 shadow-md transition-all duration-300
       ${showSort ? "-bottom-56" : "bottom-2"}
       `}
     >
