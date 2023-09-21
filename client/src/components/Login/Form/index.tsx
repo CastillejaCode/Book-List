@@ -12,8 +12,8 @@ const Form = ({ children }: { children: ReactElement }) => {
     }
   };
   return (
-    <section className="flex flex-col items-center gap-8 ">
-      <div className="flex flex-col items-center rounded-lg border-2 border-zinc-600 bg-zinc-100 p-8 shadow-lg dark:border-none dark:bg-zinc-800">
+    <section className="flex w-full max-w-md flex-col items-center gap-8">
+      <div className="flex w-full flex-col items-center rounded-lg border-2 border-zinc-600 bg-zinc-100 p-8 shadow-lg dark:border-none dark:bg-zinc-800">
         {children}
       </div>
       <Toast />

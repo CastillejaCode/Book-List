@@ -37,14 +37,14 @@ const LoginForm = () => {
   return (
     <>
       <h2 className="mb-6 text-3xl font-medium ">Login</h2>
-      <form className="flex flex-col gap-6" onSubmit={login}>
+      <form className="flex w-full flex-col gap-6" onSubmit={login}>
         <div className="flex flex-col">
           <label htmlFor="email" className="dark:font-medium ">
             email *
           </label>
           <input
             {...email}
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
+            className="w-full rounded-md border-2 border-zinc-600 bg-zinc-200 px-2  py-1 dark:border-none"
             required
           />
         </div>
@@ -54,7 +54,7 @@ const LoginForm = () => {
           </label>
           <input
             {...password}
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
             required
           />
           <button

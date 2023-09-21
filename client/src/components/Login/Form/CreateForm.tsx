@@ -70,14 +70,14 @@ const CreateForm = () => {
   return (
     <>
       <h2 className="mb-6 text-3xl font-medium">Create Account</h2>
-      <form className="flex flex-col gap-6" onSubmit={submitForm}>
+      <form className="flex w-full flex-col gap-6" onSubmit={submitForm}>
         <div className="flex flex-col">
           <label htmlFor="name" className="dark:font-medium dark:text-zinc-200">
             first name
           </label>
           <input
             {...name}
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
           />
         </div>
         <div className="flex flex-col">
@@ -90,7 +90,7 @@ const CreateForm = () => {
           <input
             {...email}
             required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
           />
         </div>
         <div className="mb-4 flex flex-col">
@@ -100,7 +100,7 @@ const CreateForm = () => {
           <input
             {...password}
             required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
           />
         </div>
         <div className="flex flex-col items-center gap-4">

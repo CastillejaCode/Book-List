@@ -27,7 +27,7 @@ const ResetPasswordForm = () => {
   return (
     <>
       <h2 className="mb-6 text-3xl font-medium ">Reset Password</h2>
-      <form onSubmit={resetPassword} className="flex flex-col gap-6">
+      <form onSubmit={resetPassword} className="flex w-full flex-col gap-6">
         <div className="mb-4 flex flex-col">
           <label htmlFor="email" className="dark:font-medium">
             email *
@@ -35,7 +35,7 @@ const ResetPasswordForm = () => {
           <input
             {...email}
             required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none dark:text-zinc-900"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none dark:text-zinc-900"
           />
         </div>
 
