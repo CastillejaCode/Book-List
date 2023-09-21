@@ -18,8 +18,8 @@ const Login = () => {
   return (
     <main className="flex min-h-screen flex-col items-center justify-center p-8">
       {/* Why Didn't I just make this a header instread... */}
-      <h1 className="fixed top-4 text-4xl font-semibold tracking-wide dark:text-slate-100">
-        TomeTracker
+      <h1 className="fixed top-4 text-4xl font-semibold tracking-wide dark:text-zinc-200">
+        tomeTracker
       </h1>
       <Form>
         {showResetPassword ? (

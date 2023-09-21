@@ -5,6 +5,7 @@ import { setToast } from "../../../features/notificationSlice";
 import { FirebaseError } from "firebase/app";
 import auth from "../../../auth/config";
 import { toggleResetPassword } from "../../../features/toggleSlice";
+import SubmitButton from "../../general/SubmitButton";
 
 const ResetPasswordForm = () => {
   const dispatch = useDispatch();
@@ -25,24 +26,24 @@ const ResetPasswordForm = () => {
 
   return (
     <>
-      <h2 className="mb-6 text-3xl font-semibold">Reset Password</h2>
+      <h2 className="mb-6 text-3xl font-medium ">Reset Password</h2>
       <form onSubmit={resetPassword} className="flex flex-col gap-6">
         <div className="mb-4 flex flex-col">
-          <label htmlFor="email">email</label>
+          <label htmlFor="email" className="dark:font-medium">
+            email
+          </label>
           <input
             {...email}
             required
-            className="input-bordered input input-sm bg-gray-200 text-lg"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none dark:text-zinc-900"
           />
         </div>
 
         <div className="flex flex-col items-center gap-4">
-          <button type="submit" className="btn bg-blue-500 text-xl normal-case">
-            Submit
-          </button>
+          <SubmitButton />
           <button
             type="button"
-            className=" btn-outline btn-sm btn w-fit text-lg normal-case"
+            className=" btn-outline btn-sm btn w-fit text-lg normal-case dark:text-red-400"
             onClick={() => dispatch(toggleResetPassword())}
           >
             Cancel

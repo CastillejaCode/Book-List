@@ -5,6 +5,7 @@ import { useField } from "../../../hooks/useField";
 import { toggleCreate } from "../../../features/toggleSlice";
 import { setError, resetError } from "../../../features/notificationSlice";
 import { FirebaseError } from "firebase/app";
+import SubmitButton from "../../general/SubmitButton";
 
 const CreateForm = () => {
   const dispatch = useDispatch();
@@ -71,34 +72,41 @@ const CreateForm = () => {
       <h2 className="mb-6 text-3xl font-medium">Create Account</h2>
       <form className="flex flex-col gap-6" onSubmit={submitForm}>
         <div className="flex flex-col">
-          <label htmlFor="name">first name</label>
+          <label htmlFor="name" className="dark:font-medium dark:text-zinc-200">
+            first name
+          </label>
           <input
             {...name}
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
           />
         </div>
         <div className="flex flex-col">
-          <label htmlFor="email">email</label>
+          <label
+            htmlFor="email"
+            className="dark:font-medium dark:text-zinc-200"
+          >
+            email
+          </label>
           <input
             {...email}
             required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
           />
         </div>
         <div className="mb-4 flex flex-col">
-          <label htmlFor="pwd">password</label>
+          <label htmlFor="pwd" className="dark:font-medium dark:text-zinc-200">
+            password
+          </label>
           <input
             {...password}
             required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg dark:border-none"
           />
         </div>
         <div className="flex flex-col items-center gap-4">
-          <button className="btn bg-blue-500 text-xl normal-case">
-            Submit
-          </button>
+          <SubmitButton />
           <button
-            className="btn-outline btn-sm btn w-fit text-lg normal-case"
+            className="btn-outline btn-sm btn w-fit text-lg normal-case dark:text-red-400 "
             onClick={() => dispatch(toggleCreate())}
           >
             Cancel
