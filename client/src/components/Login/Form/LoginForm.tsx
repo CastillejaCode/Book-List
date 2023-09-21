@@ -40,7 +40,7 @@ const LoginForm = () => {
       <form className="flex flex-col gap-6" onSubmit={login}>
         <div className="flex flex-col">
           <label htmlFor="email" className="dark:font-medium ">
-            email
+            email *
           </label>
           <input
             {...email}
@@ -50,7 +50,7 @@ const LoginForm = () => {
         </div>
         <div className="mb-4 flex flex-col">
           <label htmlFor="pwd" className="dark:font-medium">
-            password
+            password *
           </label>
           <input
             {...password}

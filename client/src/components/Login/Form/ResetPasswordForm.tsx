@@ -30,7 +30,7 @@ const ResetPasswordForm = () => {
       <form onSubmit={resetPassword} className="flex flex-col gap-6">
         <div className="mb-4 flex flex-col">
           <label htmlFor="email" className="dark:font-medium">
-            email
+            email *
           </label>
           <input
             {...email}

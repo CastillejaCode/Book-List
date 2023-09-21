@@ -85,7 +85,7 @@ const CreateForm = () => {
             htmlFor="email"
             className="dark:font-medium dark:text-zinc-200"
           >
-            email
+            email *
           </label>
           <input
             {...email}
@@ -95,7 +95,7 @@ const CreateForm = () => {
         </div>
         <div className="mb-4 flex flex-col">
           <label htmlFor="pwd" className="dark:font-medium dark:text-zinc-200">
-            password
+            password *
           </label>
           <input
             {...password}
