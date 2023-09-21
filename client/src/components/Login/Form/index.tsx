@@ -12,16 +12,18 @@ const Form = ({ children }: { children: ReactElement }) => {
     }
   };
   return (
-    <div className="fixed top-40 flex flex-col items-center rounded-lg border-2 border-slate-600/80 bg-gray-50 p-8  shadow-lg">
-      {children}
+    <section className="flex flex-col items-center gap-8">
+      <div className="flex flex-col items-center rounded-lg border-2 border-zinc-600 bg-zinc-100 p-8 shadow-lg">
+        {children}
+      </div>
+      <Toast />
       <button
-        className="btn absolute -bottom-20 text-lg normal-case shadow-lg"
+        className="btn  w-fit text-lg normal-case shadow-lg"
         onClick={anonymousLogin}
       >
         Demo
       </button>
-      <Toast />
-    </div>
+    </section>
   );
 };
 

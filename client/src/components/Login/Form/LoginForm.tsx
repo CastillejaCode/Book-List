@@ -1,20 +1,13 @@
+import { FirebaseError } from "firebase/app";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
-import { useField } from "../../../hooks/useField";
-import {
-  setError,
-  resetError,
-  setToast,
-} from "../../../features/notificationSlice";
+import auth from "../../../auth/config";
+import { resetError, setError } from "../../../features/notificationSlice";
 import {
   toggleCreate,
   toggleResetPassword,
 } from "../../../features/toggleSlice";
-import {
-  signInWithEmailAndPassword,
-  sendPasswordResetEmail,
-} from "firebase/auth";
-import auth from "../../../auth/config";
-import { FirebaseError } from "firebase/app";
+import { useField } from "../../../hooks/useField";
 
 const LoginForm = () => {
   const dispatch = useDispatch();
@@ -42,13 +35,13 @@ const LoginForm = () => {
 
   return (
     <>
-      <h2 className="mb-6 text-3xl font-semibold">Login</h2>
+      <h2 className="mb-6 text-3xl font-medium ">Login</h2>
       <form className="flex flex-col gap-6" onSubmit={login}>
         <div className="flex flex-col">
           <label htmlFor="email">email</label>
           <input
             {...email}
-            className="input-bordered input input-sm bg-gray-200 text-lg"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg"
             required
           />
         </div>
@@ -56,7 +49,7 @@ const LoginForm = () => {
           <label htmlFor="pwd">password</label>
           <input
             {...password}
-            className="input-bordered input input-sm bg-gray-200 text-lg"
+            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1 text-lg"
             required
           />
           <button

@@ -16,10 +16,11 @@ const Login = () => {
   const notif = useSelector((state: RootState) => state.notification.notif);
 
   return (
-    <div className="relative flex h-screen flex-col items-center">
-      <div className="relative m-4 mb-24 w-fit">
-        <h1 className="text-4xl">TomeTracker</h1>
-      </div>
+    <main className="flex min-h-screen flex-col items-center justify-center p-8">
+      {/* Why Didn't I just make this a header instread... */}
+      <h1 className="fixed top-4 text-4xl font-semibold tracking-wide dark:text-slate-100">
+        TomeTracker
+      </h1>
       <Form>
         {showResetPassword ? (
           <ResetPasswordForm />
@@ -32,7 +33,7 @@ const Login = () => {
       <AnimatePresence>
         {error || notif ? <Error key="error" /> : ""}
       </AnimatePresence>
-    </div>
+    </main>
   );
 };
 
