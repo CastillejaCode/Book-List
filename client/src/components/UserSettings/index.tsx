@@ -13,7 +13,7 @@ const UserSettings = () => {
       <h1 className="mb-10 text-center text-3xl">{name}</h1>
       <Tabs.Root
         defaultValue="tab1"
-        className=" rounded-lg border-2 border-gray-900 bg-gray-50"
+        className=" rounded-lg border-2 border-zinc-700 bg-zinc-200 dark:bg-zinc-900"
       >
         <Tabs.List
           aria-label="tabs"

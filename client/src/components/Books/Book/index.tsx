@@ -64,7 +64,7 @@ const Card = ({ book }: { book: Book }) => {
         ${showReview || showOptions || showImageControls ? "mb-24" : ""}`}
     >
       <div
-        className={`relative flex rounded-lg border-2 border-gray-800 bg-gray-50 p-3 `}
+        className={`relative flex rounded-lg border-2 border-zinc-700 bg-zinc-100 p-3 dark:bg-zinc-800 `}
       >
         {!showEdit ? (
           <ImageContext.Provider value={{ docs, isLoading, isError }}>

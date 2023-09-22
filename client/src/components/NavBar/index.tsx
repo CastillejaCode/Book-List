@@ -42,7 +42,7 @@ const NavBar = () => {
 
   return (
     <div className="fixed top-0 z-20">
-      <header className="sticky flex w-screen items-center justify-between border-b-2 border-gray-900 bg-gray-200 px-4 pb-2 pt-2 shadow-md">
+      <header className="sticky flex w-screen items-center justify-between border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
         <button
           onClick={() => {
             dispatch(resetSearch());

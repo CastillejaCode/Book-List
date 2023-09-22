@@ -37,7 +37,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
 
   return (
     <div
-      className={`menu absolute z-50 w-fit rounded-br-md border-b-2 border-r-2 border-gray-900 bg-base-100 transition-all duration-300
+      className={`menu absolute z-50 w-fit rounded-br-md border-b-2 border-r-2 border-zinc-700 bg-zinc-100 transition-all duration-300 dark:bg-zinc-900
     ${showMenu ? "left-0" : "-left-60"}
     `}
     >
