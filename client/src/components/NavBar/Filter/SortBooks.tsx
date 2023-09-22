@@ -5,11 +5,13 @@ export default function SortBooks() {
   const dispatch = useDispatch();
 
   return (
-    <div className="flex flex-col justify-between">
-      <h2 className="text-center text-2xl ">Sort</h2>
-      <div className="flex flex-col gap-2">
-        <div className="flex items-center gap-2 text-lg">
-          <label htmlFor="recent">Recent</label>
+    <form className="flex flex-col gap-3">
+      <h2 className="text-center text-2xl underline underline-offset-4 ">
+        Sort
+      </h2>
+      <div className="flex flex-1 flex-col justify-between gap-2">
+        <label className="flex items-center justify-between gap-4 ">
+          Recent
           <input
             className="radio h-5 w-5"
             type="radio"
@@ -19,9 +21,12 @@ export default function SortBooks() {
             defaultChecked
             onClick={() => dispatch(setSort("recent"))}
           />
-        </div>
-        <div className="flex items-center justify-between gap-2 text-lg">
-          <label htmlFor="title">Title</label>
+        </label>
+        <label
+          htmlFor="title"
+          className="flex items-center justify-between gap-4 "
+        >
+          Title
           <input
             className="radio h-5 w-5"
             type="radio"
@@ -30,9 +35,9 @@ export default function SortBooks() {
             id="title"
             onClick={() => dispatch(setSort("title"))}
           />
-        </div>
-        <div className="flex items-center justify-between gap-2 text-lg">
-          <label htmlFor="author">Author</label>
+        </label>
+        <label className="flex items-center justify-between gap-4 ">
+          Author
           <input
             className="radio h-5 w-5"
             type="radio"
@@ -41,9 +46,9 @@ export default function SortBooks() {
             id="author"
             onClick={() => dispatch(setSort("author"))}
           />
-        </div>
-        <div className="flex items-center justify-between gap-2 text-lg">
-          <label htmlFor="rating">Rating</label>
+        </label>
+        <label className="flex items-center justify-between gap-4 ">
+          Rating
           <input
             className="radio h-5 w-5"
             type="radio"
@@ -52,8 +57,8 @@ export default function SortBooks() {
             id="rating"
             onClick={() => dispatch(setSort("rating"))}
           />
-        </div>
+        </label>
       </div>
-    </div>
+    </form>
   );
 }
