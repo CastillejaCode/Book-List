@@ -4,12 +4,12 @@ import { Sort } from "../types";
 
 interface Initial {
   value: Sort;
-  filter: { read: boolean; notRead: boolean };
+  filter: { read: boolean | null };
 }
 
 const initialState: Initial = {
   value: "recent",
-  filter: { read: true, notRead: false },
+  filter: { read: true },
 };
 
 export const sortSlice = createSlice({
@@ -19,14 +19,11 @@ export const sortSlice = createSlice({
     setSort: (state: { value: Sort }, action: PayloadAction<Sort>) => {
       state.value = action.payload;
     },
-    toggleRead: (state) => {
-      state.filter.read = !state.filter.read;
-    },
-    toggleNotRead: (state) => {
-      state.filter.notRead = !state.filter.notRead;
+    setRead: (state, action: PayloadAction<boolean | null>) => {
+      state.filter.read = action.payload;
     },
   },
 });
 
-export const { setSort, toggleRead, toggleNotRead } = sortSlice.actions;
+export const { setSort, setRead } = sortSlice.actions;
 export default sortSlice.reducer;
