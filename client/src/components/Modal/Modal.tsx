@@ -14,12 +14,15 @@ const Modal = () => {
         className="fixed inset-0 z-40 bg-black/30 backdrop-blur-sm"
         aria-hidden="true"
       />
-      <div className="fixed inset-0 z-50 flex items-center justify-center p-4 ">
-        <Dialog.Panel className="relative w-fit rounded-md border-2 border-gray-700 bg-gray-50 shadow-lg ">
-          <XCircleIcon
-            className=" absolute right-0 top-0 m-1 h-5 w-5 text-slate-700"
+      <div className="fixed inset-0 z-50 flex items-center justify-center p-8">
+        <Dialog.Panel className="relative w-full max-w-md  rounded-md border-2 border-gray-700 bg-gray-50 shadow-lg">
+          <button
+            className="absolute right-0 top-0 m-2"
             onClick={() => dispatch(toggleModal())}
-          />
+            aria-label="Close form"
+          >
+            <XCircleIcon className=" h-7 text-red-900" />
+          </button>
           <Form toggleOpen={() => dispatch(toggleModal())} />
         </Dialog.Panel>
       </div>

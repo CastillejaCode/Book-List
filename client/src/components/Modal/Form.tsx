@@ -1,12 +1,12 @@
 import React, { useState } from "react";
-import { useAddBookMutation } from "../../services/books";
-import { setUndoStatus } from "../../features/undoSlice";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import auth from "../../auth/config";
-import { useAuthState } from "react-firebase-hooks/auth";
-import { useField } from "../../hooks/useField";
 import { setToast } from "../../features/notificationSlice";
-import Toast from "../UserSettings/Toast";
+import { setUndoStatus } from "../../features/undoSlice";
+import { useField } from "../../hooks/useField";
+import { useAddBookMutation } from "../../services/books";
+import SubmitButton from "../general/SubmitButton";
 
 const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
   const dispatch = useDispatch();
@@ -47,67 +47,66 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
   };
 
   return (
-    <div>
-      <Toast />
-      <form
-        onSubmit={submitForm}
-        className="flex flex-col items-start gap-2 p-4"
-      >
-        <div className="flex flex-col items-start">
-          <label htmlFor="title">title</label>
-          <input
-            className="rounded-md border-2 border-gray-500 pl-2"
-            {...title}
-            required
-            autoFocus
-          />
-        </div>
+    <form
+      onSubmit={submitForm}
+      className="flex flex-col items-center gap-4 p-8 "
+    >
+      <h1 className="text-center text-3xl font-medium">Add Book</h1>
+      <label className="flex w-full flex-col">
+        title *
+        <input
+          className="w-full rounded-md border-2 border-zinc-500 px-2 py-1"
+          {...title}
+          required
+          autoFocus
+        />
+      </label>
 
-        <div className="flex flex-col items-start">
-          <label htmlFor="author">author</label>
+      <label className="flex w-full flex-col">
+        author *
+        <input
+          className="w-full rounded-md border-2 border-zinc-500 px-2 py-1"
+          {...author}
+          required
+        />
+      </label>
+
+      <div className="flex w-full justify-around ">
+        <label className="flex flex-col items-center gap-1">
+          rating *
           <input
-            className="rounded-md border-2 border-gray-500 pl-2"
-            {...author}
+            className="w-16 rounded-md border-2 border-zinc-500 pl-2"
+            {...rating}
+            min="1"
+            max="5"
+            step=".5"
             required
           />
-        </div>
-
-        <div className="flex w-full justify-between align-baseline">
-          <div className="flex flex-col items-start">
-            <label htmlFor="rating">rating</label>
+        </label>
+        <div className=" flex flex-col items-center justify-between">
+          <label className="flex flex-col items-center  gap-1">
+            read?
             <input
-              className="rounded-md border-2 border-gray-500 pl-2"
-              {...rating}
-              min={1}
-              max={5}
-              required
-            />
-          </div>
-          <div className=" flex flex-col items-center justify-between">
-            <label htmlFor="read">read</label>
-            <input
-              className="checkbox bg-slate-700"
+              className="checkbox bg-zinc-200"
               type="checkbox"
               defaultChecked={read}
               onChange={(e) => setRead(e.target.checked)}
             />
-          </div>
+          </label>
         </div>
-        <label htmlFor="review" className="mb-4 flex flex-col items-start">
-          review
-          <textarea
-            className="rounded-md border-2 border-gray-500 pl-2"
-            {...review}
-            cols={20}
-            rows={2}
-          />
-        </label>
-
-        <button type="submit" className="btn self-center bg-slate-700">
-          Add
-        </button>
-      </form>
-    </div>
+      </div>
+      <label className="mb-4 flex h-fit w-full flex-col">
+        review
+        <textarea
+          className="h-36 rounded-md border-2 border-zinc-500 p-2"
+          spellCheck
+          {...review}
+          cols={20}
+          rows={2}
+        />
+      </label>
+      <SubmitButton />
+    </form>
   );
 };
 
