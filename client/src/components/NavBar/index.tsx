@@ -64,10 +64,10 @@ const NavBar = () => {
         <div className="relative">
           <h1
             className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300
-          ${showSearch && "invisible opacity-0"}
-          `}
+            ${showSearch && "invisible opacity-0"}
+            `}
           >
-            BookL:
+            tomeTracker
           </h1>
           <input
             onChange={(event) => dispatch(setSearch(event.target.value))}
