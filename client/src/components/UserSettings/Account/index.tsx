@@ -46,25 +46,16 @@ const Account = ({ handleName }: Props) => {
   };
 
   return (
-    <div className="flex w-fit flex-col items-center gap-4">
-      <div className="w-full">
-        <h2>Make changes to your account here.</h2>
-      </div>
-      <Toast />
+    <div className="flex flex-col items-center gap-4">
+      <h2>Make changes to your account here.</h2>
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={changeAccount}>
         <div className="flex flex-col">
           <label htmlFor="name">first name</label>
-          <input
-            {...name}
-            className="input-sm rounded-sm border border-gray-700 text-lg"
-          />
+          <input {...name} className="input-login" />
         </div>
         <div className="mb-4 flex flex-col">
           <label htmlFor="email">email</label>
-          <input
-            {...email}
-            className="input-sm rounded-sm border border-gray-700 text-lg"
-          />
+          <input {...email} className="input-login" />
         </div>
         <button
           className="btn self-end border-0 bg-green-200 text-lg normal-case text-green-900"
@@ -75,6 +66,7 @@ const Account = ({ handleName }: Props) => {
       </form>
       {user?.isAnonymous && <Upgrade />}
       {((!user?.emailVerified && !user?.isAnonymous) || verified) && <Verify />}
+      <Toast />
     </div>
   );
 };

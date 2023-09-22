@@ -13,7 +13,7 @@ const UserSettings = () => {
       <h1 className="mb-10 text-center text-3xl">{name}</h1>
       <Tabs.Root
         defaultValue="tab1"
-        className=" rounded-lg border-2 border-zinc-700 bg-zinc-200 dark:bg-zinc-900"
+        className=" rounded-lg border-2 border-zinc-700 bg-zinc-100 dark:bg-zinc-900"
       >
         <Tabs.List
           aria-label="tabs"
@@ -38,13 +38,13 @@ const UserSettings = () => {
             Delete
           </Tabs.Trigger>
         </Tabs.List>
-        <Tabs.Content value="tab1" className="px-4 pb-6 pt-4">
+        <Tabs.Content value="tab1" className="p-6">
           <Account handleName={setName} />
         </Tabs.Content>
-        <Tabs.Content value="tab2" className="px-4 pb-6 pt-4">
+        <Tabs.Content value="tab2" className="p-6">
           <Password />
         </Tabs.Content>
-        <Tabs.Content value="tab3" className=" px-4 pb-6 pt-4">
+        <Tabs.Content value="tab3" className=" p-6">
           <Delete />
         </Tabs.Content>
       </Tabs.Root>
