@@ -15,7 +15,7 @@ const Image = ({ title, coverNumber, handleImage }: Props) => {
     return (
       <div className="loading btn-square btn mr-4 aspect-[1/1.5] h-full w-5/12 rounded-md border-2 border-gray-900"></div>
     );
-  if (isError)
+  if (true)
     return (
       <div className="mr-4 flex aspect-[1/1.5] w-5/12 justify-center rounded-md border-2 border-gray-900">
         <BookOpenIcon />
@@ -31,7 +31,7 @@ const Image = ({ title, coverNumber, handleImage }: Props) => {
   return (
     <img
       src={imgSrc}
-      alt={`$Book cover for ${title}`}
+      alt={`Book cover for ${title}`}
       className="mr-4 aspect-[1/1.5] w-5/12 rounded-md border-2 border-gray-700"
       onClick={handleImage}
     />
