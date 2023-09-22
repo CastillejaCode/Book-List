@@ -32,11 +32,7 @@ const ResetPasswordForm = () => {
           <label htmlFor="email" className="dark:font-medium">
             email *
           </label>
-          <input
-            {...email}
-            required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none dark:text-zinc-900"
-          />
+          <input {...email} required className="input-login" />
         </div>
 
         <div className="flex flex-col items-center gap-4">

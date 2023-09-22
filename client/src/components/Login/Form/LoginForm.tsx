@@ -42,21 +42,13 @@ const LoginForm = () => {
           <label htmlFor="email" className="dark:font-medium ">
             email *
           </label>
-          <input
-            {...email}
-            className="w-full rounded-md border-2 border-zinc-600 bg-zinc-200 px-2  py-1 dark:border-none"
-            required
-          />
+          <input {...email} className="input-login" required />
         </div>
         <div className="mb-4 flex flex-col">
           <label htmlFor="pwd" className="dark:font-medium">
             password *
           </label>
-          <input
-            {...password}
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
-            required
-          />
+          <input {...password} className="input-login" required />
           <button
             onClick={() => dispatch(toggleResetPassword())}
             type="button"

@@ -75,33 +75,17 @@ const CreateForm = () => {
           <label htmlFor="name" className="dark:font-medium dark:text-zinc-200">
             first name
           </label>
-          <input
-            {...name}
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
-          />
+          <input {...name} className="input-login" />
         </div>
         <div className="flex flex-col">
-          <label
-            htmlFor="email"
-            className="dark:font-medium dark:text-zinc-200"
-          >
-            email *
-          </label>
-          <input
-            {...email}
-            required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
-          />
+          <label htmlFor="email">email *</label>
+          <input {...email} required className="input-login" />
         </div>
         <div className="mb-4 flex flex-col">
           <label htmlFor="pwd" className="dark:font-medium dark:text-zinc-200">
             password *
           </label>
-          <input
-            {...password}
-            required
-            className="rounded-md border-2 border-zinc-600 bg-zinc-200 px-2 py-1  dark:border-none"
-          />
+          <input {...password} required className="input-login" />
         </div>
         <div className="flex flex-col items-center gap-4">
           <SubmitButton />
