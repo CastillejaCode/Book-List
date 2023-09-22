@@ -1,11 +1,11 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { bookApi, bookSearchApi } from "./services/books.js";
-import toggleReducer from "./features/toggleSlice.js";
-import sortReducer from "./features/sortSlice.js";
-import undoReducer from "./features/undoSlice.js";
-import searchReducer from "./features/searchSlice.js";
-import notificationReducer from "./features/notificationSlice.js";
-import userReducer from "./features/userSlice.js";
+import toggleReducer from "./slices/toggleSlice.js";
+import sortReducer from "./slices/sortSlice.js";
+import undoReducer from "./slices/undoSlice.js";
+import searchReducer from "./slices/searchSlice.js";
+import notificationReducer from "./slices/notificationSlice.js";
+import userReducer from "./slices/userSlice.js";
 
 export const store = configureStore({
   reducer: {

@@ -1,8 +1,8 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "../auth/config";
 import { useDispatch } from "react-redux";
-import { setToast } from "../features/notificationSlice";
-import { setVerification } from "../features/userSlice";
+import { setToast } from "../slices/notificationSlice";
+import { setVerification } from "../slices/userSlice";
 
 const useCheckVerify = () => {
   const dispatch = useDispatch();
