@@ -39,13 +39,13 @@ export default function Info({
         <h2 className="self-start text-2xl font-semibold">{title}</h2>
         <h3 className=" text-xl">{author}</h3>
         <div
-          className="flex flex-grow flex-col justify-end"
+          className="flex flex-grow cursor-pointer flex-col justify-end"
           onClick={handleReview}
         >
           <div className="flex justify-center ">
             <ChevronDownIcon
               className={` aspect-square w-5 self-end transition-transform duration-300 ${
-                showReview ? "rotate-180" : ""
+                showReview && "rotate-180"
               }`}
             />
           </div>
