@@ -1,9 +1,9 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "./auth/config.js";
-import NavBar from "./components/NavBar/NavBar";
-import Books from "./components/Books/index.js";
-import Modal from "./components/Modal/Modal";
-import Login from "./components/Login/index.js";
+import NavBar from "./components/NavBar.js";
+import Books from "./features/Books/components/index.js";
+import Modal from "./components/Modal.js";
+import Login from "./features/Login/components/index.js";
 
 import { ArrowPathIcon } from "@heroicons/react/24/outline";
 import { useSelector } from "react-redux";

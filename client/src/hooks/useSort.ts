@@ -47,9 +47,9 @@ export default function useSort(data: Book[] | undefined) {
 
   const filterBooks = (books: Book[]) =>
     books.filter((book: Book) => {
-      if (filter.read && !filter.notRead) return book.read === true;
-      if (!filter.read && filter.notRead) return book.read === false;
-      else return book;
+      if (filter.read === true) return book.read === true;
+      if (filter.read === false) return book.read === false;
+      return book;
     });
 
   if (!data) return;
