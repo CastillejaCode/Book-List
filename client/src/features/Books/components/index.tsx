@@ -25,7 +25,7 @@ const Books = () => {
 
   return (
     <main
-      className={`flex flex-col items-center transition-all duration-300 lg:grid lg:grid-cols-3 lg:p-8 2xl:grid-cols-4 ${
+      className={`flex flex-col place-items-center items-center transition-all duration-300 lg:grid lg:grid-cols-3 lg:p-8 2xl:grid-cols-4 ${
         showSort ? "mt-72" : "mt-16"
       }`}
     >
