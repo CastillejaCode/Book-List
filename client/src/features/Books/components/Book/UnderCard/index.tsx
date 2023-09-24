@@ -29,7 +29,7 @@ const UnderCard = ({
       }
       ${
         showReview &&
-        "rounded-lg border-2 border-zinc-700 shadow-sm dark:bg-zinc-900"
+        "rounded-lg border-2 border-zinc-700 bg-zinc-100 shadow-sm dark:bg-zinc-900"
       }
       `}
     >

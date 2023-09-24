@@ -22,15 +22,15 @@ const Options = ({ book, toggleEdit }: Props) => {
   };
 
   return (
-    <div className="relative flex justify-center gap-20">
+    <div className="relative flex justify-center gap-20 ">
       <button
-        className="rounded-md border-2 border-gray-700 px-3 py-1 "
+        className="rounded-md border-2 border-gray-700 bg-zinc-100 px-3 py-1"
         onClick={handleDelete}
       >
         Delete
       </button>
       <button
-        className="relative z-50 rounded-md border-2 border-gray-700 px-3 py-1 "
+        className="relative z-50 rounded-md border-2 border-gray-700 bg-zinc-100 px-3 py-1"
         onClick={toggleEdit}
       >
         Edit
