@@ -46,6 +46,7 @@ const Card = ({ book }: { book: Book }) => {
 
   const toggleEdit = () => {
     setShowEdit(!showEdit);
+    setShowOptions(false);
     setShowImageControls(false);
   };
 
