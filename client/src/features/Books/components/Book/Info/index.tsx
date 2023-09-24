@@ -51,16 +51,15 @@ export default function Info({
           </div>
         </div>
       </div>
-      {read && (
-        <CheckCircleIcon className="absolute bottom-10 right-2 aspect-square w-6" />
-      )}
-      <Rating rating={rating} />
-      <button
-        className="absolute right-0 aspect-square w-5"
-        onClick={handleOptions}
-      >
-        <EllipsisVerticalIcon />
-      </button>
+      <div className="flex flex-col justify-between ">
+        <button className="aspect-square w-6 self-end" onClick={handleOptions}>
+          <EllipsisVerticalIcon />
+        </button>
+        <div className="flex flex-col items-end gap-2">
+          {read && <CheckCircleIcon className=" aspect-square w-5" />}
+          <Rating rating={rating} />
+        </div>
+      </div>
     </>
   );
 }
