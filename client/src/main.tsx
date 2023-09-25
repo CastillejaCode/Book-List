@@ -3,13 +3,13 @@ import ReactDOM from "react-dom/client";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
 import { store } from "./store.js";
 import { Provider } from "react-redux";
-import Home from "./features/books/routes/index.js";
 import "./index.css";
+import Landing from "./features/landing/routes/index.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
-    element: <Home/>,
+    element: <Landing />,
   },
 ]);
 
