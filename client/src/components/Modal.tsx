@@ -1,4 +1,4 @@
-import Form from "../features/Books/components/AddForm";
+import Form from "../features/books/components/AddForm";
 import { Dialog } from "@headlessui/react";
 import { XCircleIcon } from "@heroicons/react/20/solid";
 import { useDispatch, useSelector } from "react-redux";

@@ -1,7 +1,7 @@
 import { useSelector } from "react-redux";
-import { useGetUserBooksQuery } from "../../../services/books";
-import { Book } from "../../../types";
-import Card from "./Card";
+import { useGetUserBooksQuery } from "src/services/books";
+import { Book } from "src/types";
+import Card from "src/features/books/components/Card";
 import { RootState } from "../../../store";
 import auth from "../../../auth/config";
 import UserSettings from "../../UserSettings/components";

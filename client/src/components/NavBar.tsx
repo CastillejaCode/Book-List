@@ -4,11 +4,11 @@ import {
   XMarkIcon,
   ArrowUturnDownIcon,
 } from "@heroicons/react/24/solid";
-import Filter from "../features/Books/components/Filter";
+import Filter from "../features/books/components/Filter";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleMenu, toggleSearch, toggleSort } from "../slices/toggleSlice";
 import { RootState } from "../store";
-import Menu from "../features/Books/components/Menu";
+import Menu from "../features/books/components/Menu";
 import { useAddBookMutation } from "../services/books";
 import { toggleUndoStatus } from "../slices/undoSlice";
 import { useRef } from "react";

@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "./auth/config.js";
 import NavBar from "./components/NavBar.js";
-import Books from "./features/Books/components/index.js";
+import Books from "./features/books/routes/index.js";
 import Modal from "./components/Modal.js";
 import Login from "./features/Login/components/index.js";
 
