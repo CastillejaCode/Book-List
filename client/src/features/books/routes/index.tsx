@@ -2,14 +2,14 @@ import { useSelector } from "react-redux";
 import { useGetUserBooksQuery } from "src/services/books";
 import { Book } from "src/types";
 import Card from "src/features/books/components/Card";
-import { RootState } from "../../../store";
-import auth from "../../../auth/config";
-import UserSettings from "../../UserSettings/components";
+import { RootState } from "src/store";
+import auth from "src/auth/config";
+import UserSettings from "src/features/user/components";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { skipToken } from "@reduxjs/toolkit/dist/query";
-import useSort from "../../../hooks/useSort";
+import useSort from "src/hooks/useSort";
 
-const Books = () => {
+export default function Home() {
   const [user] = useAuthState(auth);
   const { data, isLoading, isError } = useGetUserBooksQuery(
     user?.uid ?? skipToken
@@ -43,6 +43,4 @@ const Books = () => {
       )}
     </main>
   );
-};
-
-export default Books;
+}
