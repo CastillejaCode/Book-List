@@ -1,6 +1,7 @@
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import SubmitButton from "src/components/SubmitButton";
 import { useField } from "src/hooks/useField";
@@ -8,6 +9,7 @@ import { resetError, setError } from "src/slices/notificationSlice";
 import { toggleResetPassword } from "src/slices/toggleSlice";
 const LoginForm = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [email, setEmail] = useField({
     id: "email",
     type: "email",
@@ -21,6 +23,7 @@ const LoginForm = () => {
     event.preventDefault();
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
+      navigate("/home");
       setEmail("");
       setPassword("");
     } catch (error) {

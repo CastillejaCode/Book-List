@@ -1,5 +1,6 @@
 import Footer from "src/components/Footer";
 import Header from "src/components/Header";
+import { Link } from "react-router-dom";
 
 export default function Landing() {
   return (
@@ -15,9 +16,13 @@ export default function Landing() {
           </h2>
         </div>
         <div className="flex flex-col items-center gap-4">
-          <button className="btn bg-indigo-600">Get started</button>
+          <button className=" btn-primary btn bg-indigo-600">
+            Get started
+          </button>
           or
-          <button className="btn-outline btn">Try it out</button>
+          <Link to="/home" className="btn-outline btn">
+            Try it out
+          </Link>
         </div>
         {/* <AnimatePresence>
           {error || (notif && <Error key="error" />)}
