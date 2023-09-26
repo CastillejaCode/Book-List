@@ -39,7 +39,7 @@ const LoginForm = () => {
     <>
       <button onClick={handleLogin}>Login</button>
       <dialog className="modal" id="login-modal">
-        <div className="modal-box flex flex-col gap-4 bg-zinc-100">
+        <div className="modal-box flex flex-col gap-4 bg-zinc-100 dark:bg-zinc-900">
           <h1 className="text-center text-3xl font-medium ">Login</h1>
           <form
             className="flex w-full flex-col gap-6"
