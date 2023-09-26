@@ -2,10 +2,10 @@ import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
-import { resetError, setError } from "src/slices/notificationSlice";
-import { toggleCreate, toggleResetPassword } from "src/slices/toggleSlice";
-import { useField } from "src/hooks/useField";
 import SubmitButton from "src/components/SubmitButton";
+import { useField } from "src/hooks/useField";
+import { resetError, setError } from "src/slices/notificationSlice";
+import { toggleResetPassword } from "src/slices/toggleSlice";
 const LoginForm = () => {
   const dispatch = useDispatch();
   const [email, setEmail] = useField({
@@ -39,7 +39,7 @@ const LoginForm = () => {
     <>
       <button onClick={handleLogin}>Login</button>
       <dialog className="modal" id="login-modal">
-        <div className="modal-box flex flex-col gap-4">
+        <div className="modal-box flex flex-col gap-4 bg-zinc-100">
           <h1 className="text-center text-3xl font-medium ">Login</h1>
           <form
             className="flex w-full flex-col gap-6"
@@ -69,7 +69,17 @@ const LoginForm = () => {
               <SubmitButton />
             </div>
           </form>
+          <form method="dialog">
+            {/* if there is a button in form, it will close the modal */}
+            <button className="btn-ghost btn-sm btn-circle btn absolute right-2 top-2">
+              ✕
+            </button>
+          </form>
         </div>
+        {/* This form is to allow for clicking outside to close */}
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
       </dialog>
     </>
   );
