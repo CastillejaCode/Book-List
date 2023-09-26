@@ -1,4 +1,5 @@
 import { Link } from "react-router-dom";
+import LoginForm from "src/features/login/components/Form/Login";
 
 export default function Header() {
   return (
@@ -10,7 +11,7 @@ export default function Header() {
         tomeTracker
       </Link>
       <div className="flex gap-4">
-        <button>Login</button>
+        <LoginForm />
         <button>Sign up </button>
       </div>
     </header>

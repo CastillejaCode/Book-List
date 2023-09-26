@@ -1,5 +1,5 @@
 import CreateForm from "../components/Form/CreateForm";
-import LoginForm from "../components/Form/LoginForm";
+import LoginForm from "../components/Form/Login";
 import ResetPasswordForm from "../components/Form/ResetPasswordForm";
 import Form from "../components/Form";
 import Error from "../components/Error";
@@ -7,7 +7,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "../../../store";
 import { AnimatePresence } from "framer-motion";
 
-export default function Login () {
+export default function Login() {
   const showCreate = useSelector((state: RootState) => state.toggle.create);
   const showResetPassword = useSelector(
     (state: RootState) => state.toggle.resetPassword
@@ -35,5 +35,4 @@ export default function Login () {
       </AnimatePresence>
     </main>
   );
-};
-
+}
