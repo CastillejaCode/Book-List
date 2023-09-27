@@ -5,9 +5,11 @@ import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import SubmitButton from "src/components/SubmitButton";
 import { useField } from "src/hooks/useField";
-import { resetError, setError } from "src/slices/notificationSlice";
+import { resetError, setError, setToast } from "src/slices/notificationSlice";
 import { toggleResetPassword } from "src/slices/toggleSlice";
-const LoginForm = () => {
+import PasswordReset from "./Login/PasswordForm";
+
+export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useField({
@@ -21,6 +23,7 @@ const LoginForm = () => {
 
   const login = async (event: React.SyntheticEvent) => {
     event.preventDefault();
+
     try {
       await signInWithEmailAndPassword(auth, email.value, password.value);
       navigate("/home");
@@ -28,8 +31,8 @@ const LoginForm = () => {
       setPassword("");
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
-      dispatch(setError(error.code));
-      setTimeout(() => dispatch(resetError()), 5000);
+      console.log(error);
+      dispatch(setToast({ message: "stuff", type: "notification" }));
     }
   };
 
@@ -42,13 +45,9 @@ const LoginForm = () => {
     <>
       <button onClick={handleLogin}>Login</button>
       <dialog className="modal" id="login-modal">
-        <div className="modal-box flex flex-col gap-4 bg-zinc-100 dark:bg-zinc-900">
-          <h1 className="text-center text-3xl font-medium ">Login</h1>
-          <form
-            className="flex w-full flex-col gap-6"
-            method="dialog"
-            onSubmit={login}
-          >
+        <div className="modal-box  bg-zinc-100 dark:bg-zinc-900">
+          <form className="flex flex-col gap-6" onSubmit={login}>
+            <h1 className="text-center text-3xl font-medium ">Login</h1>
             <div className="flex flex-col">
               <label htmlFor="email" className="dark:font-medium ">
                 email *
@@ -61,16 +60,14 @@ const LoginForm = () => {
               </label>
               <input {...password} className="input-login" required />
               <button
-                onClick={() => dispatch(toggleResetPassword())}
+                // onClick={() => set(false)}
                 type="button"
                 className="w-fit self-end px-1 py-2 text-center text-sm dark:font-medium dark:text-zinc-400"
               >
                 forgot password?
               </button>
             </div>
-            <div className="flex flex-col items-center gap-4">
-              <SubmitButton />
-            </div>
+            <SubmitButton />
           </form>
           <form method="dialog">
             {/* if there is a button in form, it will close the modal */}
@@ -86,6 +83,4 @@ const LoginForm = () => {
       </dialog>
     </>
   );
-};
-
-export default LoginForm;
+}
