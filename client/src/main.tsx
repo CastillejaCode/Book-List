@@ -5,11 +5,16 @@ import { store } from "./store.js";
 import { Provider } from "react-redux";
 import "./index.css";
 import Landing from "./features/landing/routes/index.js";
+import Books from "./features/books/routes/index.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+  },
+  {
+    path: "/home",
+    element: <Books />,
   },
 ]);
 
