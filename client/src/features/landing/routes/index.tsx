@@ -1,7 +1,6 @@
+import { Link } from "react-router-dom";
 import Footer from "src/components/Footer";
 import Header from "src/components/Header";
-import { Link } from "react-router-dom";
-import Toast from "src/components/Toast";
 
 export default function Landing() {
   return (
@@ -26,7 +25,6 @@ export default function Landing() {
           </Link>
         </div>
       </main>
-      <Toast />
       <Footer />
     </div>
   );
