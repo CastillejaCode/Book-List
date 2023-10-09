@@ -1,5 +1,6 @@
 import { Link } from "react-router-dom";
 import Login from "src/features/login/components/Login";
+import SignUp from "src/features/login/components/SignUp";
 
 export default function Header() {
   return (
@@ -12,7 +13,7 @@ export default function Header() {
       </Link>
       <div className="flex gap-4">
         <Login />
-        <button>Sign up</button>
+        <SignUp />
       </div>
     </header>
   );
