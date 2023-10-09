@@ -1,5 +1,6 @@
 import { FirebaseError } from "firebase/app";
 import { signInWithEmailAndPassword } from "firebase/auth";
+import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
@@ -9,6 +10,7 @@ import { useField } from "src/hooks/useField";
 import { setToast } from "src/slices/notificationSlice";
 
 export default function Login() {
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useField({
@@ -34,15 +36,15 @@ export default function Login() {
     }
   };
 
-  const handleLogin = () => {
-    const modal = document.getElementById("login-modal") as HTMLDialogElement;
-    modal.showModal();
-  };
+  // const handleLogin = () => {
+  //   const modal = document.getElementById("login-modal") as HTMLDialogElement;
+  //   modal.showModal();
+  // };
 
   return (
     <>
-      <button onClick={handleLogin}>Login</button>
-      <dialog className="modal" id="login-modal">
+      <button onClick={() => dialogRef.current?.showModal()}>Login</button>
+      <dialog ref={dialogRef} className="modal" id="login-modal">
         <div className="modal-box  bg-zinc-100 dark:bg-zinc-900">
           <form className="flex flex-col gap-6" onSubmit={login}>
             <h1 className="text-center text-3xl font-medium ">Login</h1>
