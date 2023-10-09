@@ -4,10 +4,9 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import SubmitButton from "src/components/SubmitButton";
+import Toast from "src/components/Toast";
 import { useField } from "src/hooks/useField";
-import { resetError, setError, setToast } from "src/slices/notificationSlice";
-import { toggleResetPassword } from "src/slices/toggleSlice";
-import PasswordReset from "./Login/PasswordForm";
+import { setToast } from "src/slices/notificationSlice";
 
 export default function Login() {
   const dispatch = useDispatch();
@@ -31,8 +30,7 @@ export default function Login() {
       setPassword("");
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
-      console.log(error);
-      dispatch(setToast({ message: "stuff", type: "notification" }));
+      dispatch(setToast({ message: error.code, type: "error" }));
     }
   };
 
@@ -80,6 +78,7 @@ export default function Login() {
         <form method="dialog" className="modal-backdrop">
           <button>close</button>
         </form>
+        <Toast />
       </dialog>
     </>
   );
