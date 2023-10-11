@@ -33,6 +33,10 @@ export default function SignUp() {
         password.value
       );
       await updateProfile(userCredential.user, { displayName: name.value });
+      dialogRef.current?.close();
+      dispatch(
+        setToast({ message: "verification email sent", type: "notification" })
+      );
       setName("");
       setEmail("");
       setPassword("");
@@ -45,7 +49,7 @@ export default function SignUp() {
   return (
     <>
       <button onClick={() => dialogRef.current?.showModal()}>Sign Up</button>
-      <dialog ref={dialogRef} className="modal" id="login-modal">
+      <dialog ref={dialogRef} className="modal" >
         <div className="modal-box  bg-zinc-100 dark:bg-zinc-900">
           <form className="flex flex-col gap-6" onSubmit={signUp}>
             <h1 className="text-center text-3xl font-medium ">Sign up</h1>
