@@ -44,10 +44,11 @@ export default function Login() {
     event.preventDefault();
     try {
       await sendPasswordResetEmail(auth, email.value);
+      dialogRef.current?.close();
       setEmail("");
       dispatch(
         setToast({
-          message: "email sent to change password",
+          message: "email sent to reset password",
           type: "notification",
         })
       );
