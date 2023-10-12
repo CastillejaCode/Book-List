@@ -6,7 +6,7 @@ interface Toast {
 }
 
 const initialState: Toast = {
-  message: "Not working",
+  message: "",
   type: "notification",
 };
 
