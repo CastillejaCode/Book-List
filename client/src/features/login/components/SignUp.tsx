@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { FirebaseError } from "firebase/app";
 import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRef } from "react";
@@ -8,7 +9,11 @@ import Toast from "src/components/Toast";
 import { useField } from "src/hooks/useField";
 import { setToast } from "src/slices/notificationSlice";
 
-export default function SignUp() {
+interface Props {
+  text: "Sign up" | "Get started";
+}
+
+export default function SignUp({ text }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dispatch = useDispatch();
   const [name, setName] = useField({
@@ -48,8 +53,15 @@ export default function SignUp() {
 
   return (
     <>
-      <button onClick={() => dialogRef.current?.showModal()}>Sign Up</button>
-      <dialog ref={dialogRef} className="modal" >
+      <button
+        className={clsx(
+          text === "Get started" && "btn-primary btn bg-indigo-600"
+        )}
+        onClick={() => dialogRef.current?.showModal()}
+      >
+        {text}
+      </button>
+      <dialog ref={dialogRef} className="modal">
         <div className="modal-box  bg-zinc-100 dark:bg-zinc-900">
           <form className="flex flex-col gap-6" onSubmit={signUp}>
             <h1 className="text-center text-3xl font-medium ">Sign up</h1>

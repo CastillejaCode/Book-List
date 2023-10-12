@@ -13,7 +13,7 @@ export default function Header() {
       </Link>
       <div className="flex gap-4">
         <Login />
-        <SignUp />
+        <SignUp text="Sign up" />
       </div>
     </header>
   );
