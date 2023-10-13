@@ -4,15 +4,15 @@ import {
   XMarkIcon,
   ArrowUturnDownIcon,
 } from "@heroicons/react/24/solid";
-import Filter from "../features/books/components/Filter";
+import Filter from "src/features/books/components/Filter";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleMenu, toggleSearch, toggleSort } from "../slices/toggleSlice";
-import { RootState } from "../store";
-import Menu from "../features/books/components/Menu";
-import { useAddBookMutation } from "../services/books";
-import { toggleUndoStatus } from "../slices/undoSlice";
+import { toggleMenu, toggleSearch, toggleSort } from "src/slices/toggleSlice";
+import { RootState } from "src/store";
+import Menu from "src/features/books/components/Menu";
+import { useAddBookMutation } from "src/services/books";
+import { toggleUndoStatus } from "src/slices/undoSlice";
 import { useRef } from "react";
-import { resetSearch, setSearch } from "../slices/searchSlice";
+import { resetSearch, setSearch } from "src/slices/searchSlice";
 
 const NavBar = () => {
   const dispatch = useDispatch();

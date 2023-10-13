@@ -8,6 +8,7 @@ import { useGetUserBooksQuery } from "src/services/books";
 import { RootState } from "src/store";
 import { Book } from "src/types";
 import Menu from "../components/Menu";
+import NavBar from "src/components/NavBar";
 
 export default function Books() {
   const [user] = useAuthState(auth);
@@ -23,7 +24,7 @@ export default function Books() {
 
   return (
     <>
-      <Menu />
+      <NavBar />
       <main
         className={`flex flex-col place-items-center items-center transition-all duration-300 lg:grid lg:grid-cols-3 lg:p-8 2xl:grid-cols-4 ${
           showSort ? "mt-72" : "mt-16"
