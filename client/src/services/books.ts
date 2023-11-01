@@ -67,7 +67,7 @@ export const bookSearchApi = createApi({
     baseUrl: "https://openlibrary.org",
   }),
   endpoints: (builder) => ({
-    getBookId: builder.query({
+    getBookImageURL: builder.query({
       query: ({ title, author }) => {
         const formattedTitle = title.split(" ").join("+").toLowerCase();
         const formattedAuthor = author.toLowerCase();
@@ -82,4 +82,4 @@ export const bookSearchApi = createApi({
   }),
 });
 
-export const { useGetBookIdQuery } = bookSearchApi;
+export const { useGetBookImageURLQuery } = bookSearchApi;

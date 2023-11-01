@@ -1,5 +1,5 @@
 import { useLayoutEffect, useRef, useState } from "react";
-import { useGetBookIdQuery } from "../../../../services/books";
+import { useGetBookImageURLQuery } from "src/services/books";
 import { Book } from "../../../../types";
 import Review from "./UnderCard/Review";
 import Options from "./UnderCard/Options";
@@ -21,7 +21,7 @@ const Card = ({ book }: { book: Book }) => {
     data: docs,
     isLoading,
     isError,
-  } = useGetBookIdQuery({ title, author });
+  } = useGetBookImageURLQuery({ title, author });
 
   // To find out height on paint, to allow for responsive sliding of review card
   const cardRef = useRef<HTMLDivElement>(null);
