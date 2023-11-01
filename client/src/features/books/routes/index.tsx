@@ -8,7 +8,7 @@ import { useGetUserBooksQuery } from "src/services/books";
 import { RootState } from "src/store";
 import { Book } from "src/types";
 import Menu from "../components/Menu";
-import NavBar from "src/components/NavBar";
+import NavBar from "../components/NavBar";
 
 export default function Books() {
   const [user] = useAuthState(auth);
