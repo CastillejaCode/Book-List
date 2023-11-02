@@ -77,7 +77,7 @@ const Card = ({ book }: { book: Book }) => {
         />
       </ImageContext.Provider>
       <dialog ref={dialogRef} className="modal">
-        <Info />
+        <Info book={book} />
       </dialog>
 
       {/* <UnderCard height={height} showReview={showReview}>
