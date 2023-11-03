@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Book } from "../../../../../types";
 import { useUpdateBookMutation } from "../../../../../services/books";
 
@@ -9,6 +9,7 @@ interface Props {
 
 const EditForm = ({ book, toggleEdit }: Props) => {
   const [updateBook] = useUpdateBookMutation();
+  const toggleRef = useRef(null);
 
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
@@ -29,6 +30,8 @@ const EditForm = ({ book, toggleEdit }: Props) => {
     toggleEdit();
     updateBook({ id, body });
   };
+
+  const handleToggle = () => {};
 
   return (
     <form
@@ -93,10 +96,10 @@ const EditForm = ({ book, toggleEdit }: Props) => {
           />
         </label>
       </div>
-      <label className="flex items-center gap-4">
-        <span>Not Read</span>
+      <label className="mt-4 flex w-full items-center justify-between gap-4 ">
+        <span className="flex-1 text-end">Not Read</span>
         <input type="checkbox" className="toggle" />
-        <span>Read</span>
+        <span className="flex-1">Read</span>
       </label>
       <label>
         Review
