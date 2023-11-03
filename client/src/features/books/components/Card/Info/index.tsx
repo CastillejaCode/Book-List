@@ -15,8 +15,12 @@ export default function Info({ book }: Props) {
   return (
     <>
       <div className="first-letter: modal-box flex flex-col gap-4 overflow-auto">
-        <form method="dialog" className="absolute right-2 top-2">
-          <button className="btn-ghost btn-sm btn-circle btn ">✕</button>
+        <form
+          method="dialog"
+          className="absolute right-2 top-2"
+          onSubmit={() => setShowForm(false)}
+        >
+          <button className="btn-ghost btn-sm btn-circle btn">✕</button>
         </form>
         <div className="">
           <h1 className="text-3xl font-semibold">{book.title}</h1>
@@ -62,7 +66,11 @@ export default function Info({ book }: Props) {
           />
         )}
       </div>
-      <form method="dialog" className="modal-backdrop">
+      <form
+        method="dialog"
+        className="modal-backdrop"
+        onSubmit={() => setShowForm(false)}
+      >
         <button>close</button>
       </form>
     </>
