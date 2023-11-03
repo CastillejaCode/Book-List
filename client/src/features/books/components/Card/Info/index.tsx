@@ -1,9 +1,7 @@
 import { useState } from "react";
 import { Book } from "src/types";
-import Rating from "./Rating";
+import EditForm from "./EditForm";
 import moby from "/moby.jpg";
-import { useField } from "src/hooks/useField";
-import EditForm from "../EditForm";
 
 interface Props {
   book: Book;

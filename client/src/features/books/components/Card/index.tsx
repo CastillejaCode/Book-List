@@ -4,7 +4,7 @@ import { Book } from "../../../../types";
 import Review from "./UnderCard/Review";
 import Options from "./UnderCard/Options";
 import UnderCard from "./UnderCard";
-import EditForm from "./EditForm";
+import EditForm from "./Info/EditForm";
 import Content from "./Content";
 import LeftRight from "./UnderCard/LeftRight";
 import { ImageContext } from "./imageContext";
