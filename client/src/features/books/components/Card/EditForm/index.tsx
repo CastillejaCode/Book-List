@@ -33,67 +33,94 @@ const EditForm = ({ book, toggleEdit }: Props) => {
   return (
     <form
       onSubmit={submitEdit}
-      className={` flex  gap-4 transition-all duration-300`}
+      className="flex flex-col gap-4 transition-all duration-300"
     >
-      <div className="flex flex-col justify-between gap-2">
-        <textarea
-          className="w-full rounded-md border-2 border-gray-800/70 pl-2 text-xl"
-          id="title"
-          rows={2}
+      <label>
+        Title
+        <input
+          className="w-full rounded-md border-2 border-gray-800/70 pl-2 "
+          type="text"
           value={title}
           onChange={(event) => setTitle(event.target.value)}
         />
-        {/* <label htmlFor="author">author</label> */}
-        <textarea
-          className="w-full rounded-md border-2 border-gray-800/70 pl-2 text-xl"
+      </label>
+      <label htmlFor="author">
+        Author
+        <input
+          className="w-full rounded-md border-2 border-gray-800/70 pl-2"
           id="author"
           value={author}
           onChange={(event) => setAuthor(event.target.value)}
         />
-        {/* <label htmlFor="rating">rating</label> */}
-        <div className="flex items-center justify-around">
-          <input
-            className="w-8 rounded-md border-2 border-gray-800/70 px-2 text-xl"
-            type="number"
-            min={1}
-            max={5}
-            step={0.5}
-            id="rating"
-            value={rating}
-            onChange={(event) => setRating(Number(event.target.value))}
-          />
-          <input
-            className="checkbox"
-            type="checkbox"
-            id="checkbox"
-            defaultChecked={read}
-            onChange={(event) => setRead(event.target.checked)}
-          />
+      </label>
+      <div>
+        <label className="flex justify-between gap-2" htmlFor="rating">
+          Rating
+          <span>{rating}</span>
+        </label>
+        <input
+          type="range"
+          min="0"
+          max="5"
+          id="rating"
+          value={rating}
+          className="range range-sm"
+          step=".5"
+          onChange={(event) => setRating(Number(event.target.value))}
+        />
+        <div className="flex w-full justify-between px-2 text-xs">
+          <span>|</span>
+          <span>|</span>
+          <span>|</span>
+          <span>|</span>
+          <span>|</span>
+          <span>|</span>
         </div>
       </div>
-      <div className="flex flex-col justify-between">
+      <div className="flex flex-col justify-between gap-4 sm:flex-row">
+        <label className="flex flex-col">
+          Start Date
+          <input
+            type="date"
+            className="w-full rounded-md border-2 border-gray-800/70 pl-2"
+          />
+        </label>
+        <label className="flex flex-col">
+          Finish Date
+          <input
+            type="date"
+            className="w-full rounded-md border-2 border-gray-800/70 pl-2"
+          />
+        </label>
+      </div>
+      <label className="flex items-center gap-4">
+        <span>Not Read</span>
+        <input type="checkbox" className="toggle" />
+        <span>Read</span>
+      </label>
+      <label>
+        Review
         <textarea
-          className="mb-2 w-full rounded-md border-2 border-gray-800/70 pl-2 text-lg"
+          className="mb-2 w-full rounded-md border-2 border-gray-800/70 pl-2"
           id="review"
-          rows={4}
           value={review}
           onChange={(event) => setReview(event.target.value)}
         />
-        <div className="flex justify-center gap-4">
-          <button
-            className="rounded-md border-2 border-gray-900/70 px-3 py-1"
-            type="submit"
-          >
-            Submit
-          </button>
-          <button
-            type="button"
-            className="rounded-md border-2 border-gray-900/70 px-3 py-1"
-            onClick={toggleEdit}
-          >
-            Cancel
-          </button>
-        </div>
+      </label>
+      <div className="flex justify-center gap-4">
+        <button
+          className="rounded-md border-2 border-gray-900/70 px-3 py-1"
+          type="submit"
+        >
+          Submit
+        </button>
+        <button
+          type="button"
+          className="rounded-md border-2 border-gray-900/70 px-3 py-1"
+          onClick={toggleEdit}
+        >
+          Cancel
+        </button>
       </div>
     </form>
   );
