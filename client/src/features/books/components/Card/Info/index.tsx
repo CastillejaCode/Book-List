@@ -2,12 +2,16 @@ import { useState } from "react";
 import { Book } from "src/types";
 import Rating from "./Rating";
 import moby from "/moby.jpg";
+import { useField } from "src/hooks/useField";
+import EditForm from "../EditForm";
 
 interface Props {
   book: Book;
 }
 
 export default function Info({ book }: Props) {
+  const [showForm, setShowForm] = useState(false);
+
   return (
     <>
       <div className="first-letter: modal-box flex flex-col gap-4 overflow-auto">
@@ -36,16 +40,23 @@ export default function Info({ book }: Props) {
         </div>
         <div className="divider my-0"></div>
         <div className=" flex justify-around">
-          <button className="btn-warning  btn-sm btn">Edit</button>
+          <button
+            className="btn-warning  btn-sm btn"
+            onClick={() => setShowForm(true)}
+          >
+            Edit
+          </button>
           <button className="btn-error btn-sm btn">Delete</button>
         </div>
         <div className="divider my-0"></div>
-
-        <img
-          src={moby}
-          alt={`Cover of ${book.title}`}
-          className="max-w-[16rem] self-center"
-        />
+        {showForm && <EditForm book={book} />}
+        {!showForm && (
+          <img
+            src={moby}
+            alt={`Cover of ${book.title}`}
+            className="max-w-[16rem] self-center"
+          />
+        )}
       </div>
       <form method="dialog" className="modal-backdrop">
         <button>close</button>
