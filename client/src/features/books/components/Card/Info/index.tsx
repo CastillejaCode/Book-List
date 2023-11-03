@@ -39,17 +39,21 @@ export default function Info({ book }: Props) {
           </p>
         </div>
         <div className="divider my-0"></div>
-        <div className=" flex justify-around">
-          <button
-            className="btn-warning  btn-sm btn"
-            onClick={() => setShowForm(true)}
-          >
-            Edit
-          </button>
-          <button className="btn-error btn-sm btn">Delete</button>
-        </div>
-        <div className="divider my-0"></div>
-        {showForm && <EditForm book={book} />}
+        {!showForm && (
+          <>
+            <div className=" flex justify-around">
+              <button
+                className="btn-warning  btn-sm btn"
+                onClick={() => setShowForm(true)}
+              >
+                Edit
+              </button>
+              <button className="btn-error btn-sm btn">Delete</button>
+            </div>
+            <div className="divider my-0"></div>
+          </>
+        )}
+        {showForm && <EditForm book={book} setShowForm={setShowForm} />}
         {!showForm && (
           <img
             src={moby}
