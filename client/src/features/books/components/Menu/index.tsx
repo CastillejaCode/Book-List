@@ -16,6 +16,7 @@ import {
   ArrowLeftOnRectangleIcon,
 } from "@heroicons/react/20/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { Link } from "react-router-dom";
 
 interface Props {
   showMenu: boolean;
@@ -27,6 +28,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
   const [user] = useAuthState(auth);
   if (!user) return <></>;
 
+  // Only allows adding books if user is verified or if user is doing a demo and has gone over the 24 hour limit for "testing" out the app
   const verifyTimeLimit = () => {
     const timeCreated = user.metadata.creationTime as string;
     const timeDifference = Date.now() - new Date(timeCreated).getTime();
@@ -44,10 +46,10 @@ const Menu = ({ showMenu, focusInput }: Props) => {
       {/* Doesn't look nice b/c had to conform to DaisyUI */}
       <ul className="menu text-xl">
         <li onClick={() => dispatch(toggleUser())}>
-          <a>
+          <Link to="/account">
             <UserCircleIcon className="aspect-square w-6" />
-            {auth.currentUser?.displayName || "Lorem"}
-          </a>
+            {auth.currentUser?.displayName || "Account"}
+          </Link>
         </li>
         {!verifyTimeLimit() && (
           <li onClick={() => dispatch(toggleModal())}>

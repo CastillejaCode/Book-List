@@ -6,6 +6,7 @@ import { Provider } from "react-redux";
 import "./index.css";
 import Landing from "./features/landing/routes/index.js";
 import Books from "./features/books/routes/index.js";
+import Account from "./features/user/routes/index.js";
 
 const router = createBrowserRouter([
   {
@@ -15,6 +16,10 @@ const router = createBrowserRouter([
   {
     path: "/home",
     element: <Books />,
+  },
+  {
+    path: "/account",
+    element: <Account />,
   },
 ]);
 
