@@ -45,12 +45,20 @@ const Password = () => {
       <Toast />
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={resetPassword}>
         <div className="flex flex-col">
-          <label htmlFor="name">password</label>
-          <input {...password} className="input-login" />
+          <label htmlFor="pwd">password</label>
+          <input
+            {...password}
+            autoComplete="new-password"
+            className="input-login"
+          />
         </div>
         <div className="mb-4 flex flex-col">
-          <label htmlFor="email">confirm password</label>
-          <input {...passwordConfirm} className="input-login" />
+          <label htmlFor="pwdConfirm">confirm password</label>
+          <input
+            {...passwordConfirm}
+            autoComplete="new-password"
+            className="input-login"
+          />
         </div>
         <button className="btn self-end border-0 bg-green-200 text-lg normal-case text-green-900">
           Change Password

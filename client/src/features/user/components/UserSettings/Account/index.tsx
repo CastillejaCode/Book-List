@@ -51,11 +51,11 @@ const Account = ({ handleName }: Props) => {
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={changeAccount}>
         <div className="flex flex-col">
           <label htmlFor="name">first name</label>
-          <input {...name} className="input-login" />
+          <input {...name} className="input-login" autoComplete="name" />
         </div>
         <div className="mb-4 flex flex-col">
           <label htmlFor="email">email</label>
-          <input {...email} className="input-login" />
+          <input {...email} className="input-login" autoComplete="email" />
         </div>
         <button
           className="btn self-end border-0 bg-green-200 text-lg normal-case text-green-900"

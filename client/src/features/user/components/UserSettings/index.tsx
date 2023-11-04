@@ -1,4 +1,4 @@
-import auth from "../../../../auth/config";
+import auth from "src/auth/config";
 import * as Tabs from "@radix-ui/react-tabs";
 import Account from "./Account";
 import Password from "./Password";
@@ -21,19 +21,19 @@ const UserSettings = () => {
         >
           <Tabs.Trigger
             value="tab1"
-            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline"
+            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline dark:text-gray-200 dark:focus:text-gray-100"
           >
             Account
           </Tabs.Trigger>
           <Tabs.Trigger
             value="tab2"
-            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline"
+            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline dark:text-gray-200 dark:focus:text-gray-100"
           >
             Password
           </Tabs.Trigger>
           <Tabs.Trigger
             value="tab3"
-            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline"
+            className="text-gray-700 underline-offset-4 focus:text-gray-900 data-[state=active]:underline dark:text-gray-200 dark:focus:text-gray-100"
           >
             Delete
           </Tabs.Trigger>
