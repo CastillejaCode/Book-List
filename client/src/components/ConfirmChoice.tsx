@@ -1,16 +1,29 @@
-import React, { SetStateAction, useEffect, useRef } from "react";
+import React, { FormEvent, SetStateAction, useEffect, useRef } from "react";
 
 interface Props {
   visible: boolean;
   setVisible: React.Dispatch<SetStateAction<boolean>>;
+  confirmAction: any;
 }
 
-export default function ConfirmChoice({ visible, setVisible }: Props) {
+// TODO: Add error handling
+
+export default function ConfirmChoice({
+  visible,
+  setVisible,
+  confirmAction,
+}: Props) {
   const choiceRef = useRef<HTMLDialogElement>(null);
   useEffect(() => {
     if (visible) choiceRef.current?.showModal();
     else choiceRef.current?.close();
   }, [visible]);
+
+  const submitForm = (event: FormEvent) => {
+    event.preventDefault();
+    confirmAction();
+    setVisible(false);
+  };
 
   return (
     <dialog id="my_modal_2" className="modal " ref={choiceRef}>
@@ -19,7 +32,10 @@ export default function ConfirmChoice({ visible, setVisible }: Props) {
           <h1 className="text-2xl">Are you sure?</h1>
           <h2 className="text-lg font-light">This action cannot be undone.</h2>
         </div>
-        <form className="flex flex-col justify-between gap-4 sm:flex-row ">
+        <form
+          className="flex flex-col justify-between gap-4 sm:flex-row"
+          onSubmit={submitForm}
+        >
           <button type="submit" className="btn-warning btn">
             Yes, please Delete
           </button>
