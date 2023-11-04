@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { Book } from "src/types";
 import EditForm from "./EditForm";
 import moby from "/moby.jpg";
+import ConfirmChoice from "src/components/ConfirmChoice";
 
 interface Props {
   book: Book;
@@ -9,6 +10,8 @@ interface Props {
 
 export default function Info({ book }: Props) {
   const [showForm, setShowForm] = useState(false);
+  const [showConfirmChoice, setShowConfirmChoice] = useState(false)
+  const dialogRef = useRef(null);
 
   return (
     <>
@@ -50,7 +53,13 @@ export default function Info({ book }: Props) {
               >
                 Edit
               </button>
-              <button className="btn-error btn-sm btn">Delete</button>
+              <button
+                className="btn-error btn-sm btn"
+                onClick={() => setShowConfirmChoice(true)}
+              >
+                Delete
+              </button>
+              <ConfirmChoice visible={showConfirmChoice} setVisible={setShowConfirmChoice}/>
             </div>
             <div className="divider my-0"></div>
           </>
@@ -64,6 +73,7 @@ export default function Info({ book }: Props) {
           />
         )}
       </div>
+
       <form
         method="dialog"
         className="modal-backdrop"
