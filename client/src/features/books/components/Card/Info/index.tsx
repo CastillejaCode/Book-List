@@ -1,17 +1,18 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
+import ConfirmChoice from "src/components/ConfirmChoice";
+import { useDeleteBookMutation } from "src/services/books";
 import { Book } from "src/types";
 import EditForm from "./EditForm";
 import moby from "/moby.jpg";
-import ConfirmChoice from "src/components/ConfirmChoice";
 
 interface Props {
   book: Book;
 }
 
 export default function Info({ book }: Props) {
+  const [deleteBook] = useDeleteBookMutation();
   const [showForm, setShowForm] = useState(false);
-  const [showConfirmChoice, setShowConfirmChoice] = useState(false)
-  const dialogRef = useRef(null);
+  const [showConfirmChoice, setShowConfirmChoice] = useState(false);
 
   return (
     <>
@@ -59,7 +60,11 @@ export default function Info({ book }: Props) {
               >
                 Delete
               </button>
-              <ConfirmChoice visible={showConfirmChoice} setVisible={setShowConfirmChoice}/>
+              <ConfirmChoice
+                visible={showConfirmChoice}
+                setVisible={setShowConfirmChoice}
+                confirmAction={() => deleteBook(book.id)}
+              />
             </div>
             <div className="divider my-0"></div>
           </>
