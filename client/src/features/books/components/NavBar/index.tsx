@@ -1,18 +1,19 @@
 import {
-  Bars3Icon,
   AdjustmentsHorizontalIcon,
-  XMarkIcon,
   ArrowUturnDownIcon,
+  Bars3Icon,
+  XMarkIcon,
 } from "@heroicons/react/24/solid";
-import Filter from "src/features/books/components/Filter";
+import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { toggleMenu, toggleSearch, toggleSort } from "src/slices/toggleSlice";
-import { RootState } from "src/store";
+import { Link } from "react-router-dom";
+import Filter from "src/features/books/components/Filter";
 import Menu from "src/features/books/components/Menu";
 import { useAddBookMutation } from "src/services/books";
-import { toggleUndoStatus } from "src/slices/undoSlice";
-import { useRef } from "react";
 import { resetSearch, setSearch } from "src/slices/searchSlice";
+import { toggleMenu, toggleSearch, toggleSort } from "src/slices/toggleSlice";
+import { toggleUndoStatus } from "src/slices/undoSlice";
+import { RootState } from "src/store";
 
 const NavBar = () => {
   const dispatch = useDispatch();
@@ -33,7 +34,7 @@ const NavBar = () => {
   };
 
   const focusInput = () => {
-    inputRef.current.focus();
+    inputRef.current?.focus();
   };
 
   return (
@@ -58,13 +59,14 @@ const NavBar = () => {
           />
         </button>
         <div className="relative">
-          <h1
+          <Link
+            to="/home"
             className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300
             ${showSearch && "invisible opacity-0"}
             `}
           >
             tomeTracker
-          </h1>
+          </Link>
           <input
             onChange={(event) => dispatch(setSearch(event.target.value))}
             value={searchTerm}
