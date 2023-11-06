@@ -16,6 +16,7 @@ import {
 } from "@heroicons/react/20/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { Link, useNavigate } from "react-router-dom";
+import { setToast } from "src/slices/notificationSlice";
 
 interface Props {
   showMenu: boolean;
@@ -79,6 +80,9 @@ const Menu = ({ showMenu, focusInput }: Props) => {
             onClick={() => {
               signOut(auth);
               navigate("/");
+              dispatch(
+                setToast({ message: "Signed out", type: "notification" })
+              );
               dispatch(toggleMenu());
               dispatch(setUser(false));
             }}
