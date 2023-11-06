@@ -1,22 +1,21 @@
+import { signOut } from "firebase/auth";
 import { useDispatch } from "react-redux";
+import auth from "src/auth/config";
 import {
   setUser,
   toggleMenu,
   toggleModal,
   toggleSearch,
   toggleUser,
-} from "../../../../slices/toggleSlice";
-import { signOut } from "firebase/auth";
-import auth from "../../../../auth/config";
-
+} from "src/slices/toggleSlice";
 import {
-  PlusIcon,
-  MagnifyingGlassIcon,
-  UserCircleIcon,
   ArrowLeftOnRectangleIcon,
+  MagnifyingGlassIcon,
+  PlusIcon,
+  UserCircleIcon,
 } from "@heroicons/react/20/solid";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 interface Props {
   showMenu: boolean;
@@ -25,7 +24,9 @@ interface Props {
 
 const Menu = ({ showMenu, focusInput }: Props) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
+
   if (!user) return <></>;
 
   // Only allows adding books if user is verified or if user is doing a demo and has gone over the 24 hour limit for "testing" out the app
@@ -77,6 +78,7 @@ const Menu = ({ showMenu, focusInput }: Props) => {
           <a
             onClick={() => {
               signOut(auth);
+              navigate("/");
               dispatch(toggleMenu());
               dispatch(setUser(false));
             }}
