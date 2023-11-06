@@ -1,24 +1,31 @@
 import React from "react";
 import ReactDOM from "react-dom/client";
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import { store } from "./store.js";
 import { Provider } from "react-redux";
-import "./index.css";
-import Landing from "./features/landing/routes/index.js";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import ErrorPage from "./components/Error/ErrorPage.js";
 import Books from "./features/books/routes/index.js";
+import Landing from "./features/landing/routes/index.js";
 import Account from "./features/user/routes/index.js";
+import { store } from "./store.js";
+import "./index.css";
+import { checkAuth } from "./utils/checkAuth.js";
 
 const router = createBrowserRouter([
   {
     path: "/",
     element: <Landing />,
+    errorElement: <ErrorPage />,
   },
   {
     path: "/home",
+    loader: checkAuth,
+    errorElement: <ErrorPage />,
     element: <Books />,
   },
   {
     path: "/account",
+    loader: checkAuth,
+    errorElement: <ErrorPage />,
     element: <Account />,
   },
 ]);
