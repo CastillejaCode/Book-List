@@ -8,7 +8,7 @@ import Landing from "./features/landing/routes/index.js";
 import Account from "./features/user/routes/index.js";
 import { store } from "./store.js";
 import "./index.css";
-import { checkAuth } from "./utils/checkAuth.js";
+import CheckAuth from "./components/Error/CheckAuth.js";
 
 const router = createBrowserRouter([
   {
@@ -18,15 +18,21 @@ const router = createBrowserRouter([
   },
   {
     path: "/home",
-    loader: checkAuth,
     errorElement: <ErrorPage />,
-    element: <Books />,
+    element: (
+      <CheckAuth>
+        <Books />
+      </CheckAuth>
+    ),
   },
   {
     path: "/account",
-    loader: checkAuth,
     errorElement: <ErrorPage />,
-    element: <Account />,
+    element: (
+      <CheckAuth>
+        <Account />
+      </CheckAuth>
+    ),
   },
 ]);
 
