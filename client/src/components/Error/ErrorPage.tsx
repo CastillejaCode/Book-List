@@ -1,6 +1,10 @@
 import { isRouteErrorResponse, useRouteError } from "react-router-dom";
 
-export default function ErrorPage() {
+interface Props {
+  suppliedError?: string;
+}
+
+export default function ErrorPage({ suppliedError }: Props) {
   const error = useRouteError();
   console.error(error);
 
@@ -11,7 +15,10 @@ export default function ErrorPage() {
     >
       <h1 className="text-4xl">Oops 🫤</h1>
       <p>Sorry, an unexpected error has occurred.</p>
-      <p>{isRouteErrorResponse(error) && (error.statusText || error.data)}</p>
+      <p>
+        {suppliedError ||
+          (isRouteErrorResponse(error) && (error.statusText || error.data))}
+      </p>
     </div>
   );
 }
