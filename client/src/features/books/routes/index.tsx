@@ -7,7 +7,6 @@ import useSort from "src/hooks/useSort";
 import { useGetUserBooksQuery } from "src/services/books";
 import { RootState } from "src/store";
 import { Book } from "src/types";
-import Menu from "../components/Menu";
 import NavBar from "../components/NavBar";
 
 export default function Books() {
