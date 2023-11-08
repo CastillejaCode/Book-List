@@ -1,37 +1,26 @@
 import { createSlice } from "@reduxjs/toolkit";
 
+interface Toast {
+  message: string;
+  type: "error" | "notification";
+}
+
+const initialState: Toast = {
+  message: "",
+  type: "notification",
+};
+
 export const notificationSlice = createSlice({
   name: "notification",
-  initialState: { error: "", notif: "", toast: "" },
+  initialState,
   reducers: {
-    setError: (state, action) => {
-      state.error = action.payload;
-    },
-    resetError: (state) => {
-      state.error = "";
-    },
-    setNotif: (state, action) => {
-      state.notif = action.payload;
-    },
-    resetNotif: (state) => {
-      state.notif = "";
-    },
-    setToast: (state, action) => {
-      state.toast = action.payload;
-    },
+    setToast: (state, action) => action.payload,
     resetToast: (state) => {
-      state.toast = "";
+      state.message = "";
     },
   },
 });
 
-export const {
-  setError,
-  resetError,
-  setNotif,
-  resetNotif,
-  setToast,
-  resetToast,
-} = notificationSlice.actions;
+export const { setToast, resetToast } = notificationSlice.actions;
 
 export default notificationSlice.reducer;
