@@ -9,6 +9,7 @@ import Account from "./features/user/routes/index.js";
 import "./index.css";
 import { store } from "./store.js";
 import NavBar from "./features/books/components/NavBar/index.js";
+import CheckAuth from "./components/Error/CheckAuth.js";
 
 const router = createBrowserRouter([
   {
@@ -20,20 +21,20 @@ const router = createBrowserRouter([
     path: "/home",
     errorElement: <ErrorPage />,
     element: (
-      <>
-        <NavBar />
-        <Books />,
-      </>
+      <CheckAuth>
+
+        <Books />
+      </CheckAuth>
     ),
   },
   {
     path: "/account",
     errorElement: <ErrorPage />,
     element: (
-      <>
-        <NavBar />
-        <Account />,
-      </>
+      <CheckAuth>
+
+        <Account />
+      </CheckAuth>
     ),
   },
 ]);
