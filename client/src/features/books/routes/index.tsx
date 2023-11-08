@@ -31,9 +31,10 @@ export default function Books() {
           showSort ? "mt-72" : "mt-16"
         }`}
       >
-        {books.map((book: Book) => {
-          return <Card book={book} key={book.id} />;
-        })}
+        {books &&
+          books.map((book: Book) => {
+            return <Card book={book} key={book.id} />;
+          })}
       </main>
     </>
   );

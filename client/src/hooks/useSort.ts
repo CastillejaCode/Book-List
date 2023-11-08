@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { Book } from "../types";
 import { RootState } from "../store";
 
-export default function useSort(data: Book[] | undefined) {
+export default function useSort(data: Book[]) {
   const sort = useSelector((state: RootState) => state.sort.value);
   const filter = useSelector((state: RootState) => state.sort.filter);
   const searchTerm = useSelector((state: RootState) =>
