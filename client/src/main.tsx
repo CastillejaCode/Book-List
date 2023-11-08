@@ -2,14 +2,13 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { Provider } from "react-redux";
 import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import CheckAuth from "./components/Error/CheckAuth.js";
 import ErrorPage from "./components/Error/ErrorPage.js";
 import Books from "./features/books/routes/index.js";
 import Landing from "./features/landing/routes/index.js";
 import Account from "./features/user/routes/index.js";
 import "./index.css";
 import { store } from "./store.js";
-import NavBar from "./features/books/components/NavBar/index.js";
-import CheckAuth from "./components/Error/CheckAuth.js";
 
 const router = createBrowserRouter([
   {
@@ -22,7 +21,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     element: (
       <CheckAuth>
-
         <Books />
       </CheckAuth>
     ),
@@ -32,7 +30,6 @@ const router = createBrowserRouter([
     errorElement: <ErrorPage />,
     element: (
       <CheckAuth>
-
         <Account />
       </CheckAuth>
     ),
