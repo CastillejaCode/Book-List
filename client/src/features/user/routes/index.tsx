@@ -1,13 +1,12 @@
-import NavBar from "src/features/books/components/NavBar";
+import CheckAuth from "src/components/Error/CheckAuth";
 import UserSettings from "../components/UserSettings";
 
 export default function Account() {
   return (
-    <>
-      <NavBar />
+    <CheckAuth>
       <main className="grid min-h-screen place-content-center">
         <UserSettings />
       </main>
-    </>
+    </CheckAuth>
   );
 }

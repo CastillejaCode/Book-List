@@ -6,9 +6,9 @@ import ErrorPage from "./components/Error/ErrorPage.js";
 import Books from "./features/books/routes/index.js";
 import Landing from "./features/landing/routes/index.js";
 import Account from "./features/user/routes/index.js";
-import { store } from "./store.js";
 import "./index.css";
-import CheckAuth from "./components/Error/CheckAuth.js";
+import { store } from "./store.js";
+import NavBar from "./features/books/components/NavBar/index.js";
 
 const router = createBrowserRouter([
   {
@@ -20,18 +20,20 @@ const router = createBrowserRouter([
     path: "/home",
     errorElement: <ErrorPage />,
     element: (
-      <CheckAuth>
-        <Books />
-      </CheckAuth>
+      <>
+        <NavBar />
+        <Books />,
+      </>
     ),
   },
   {
     path: "/account",
     errorElement: <ErrorPage />,
     element: (
-      <CheckAuth>
-        <Account />
-      </CheckAuth>
+      <>
+        <NavBar />
+        <Account />,
+      </>
     ),
   },
 ]);
