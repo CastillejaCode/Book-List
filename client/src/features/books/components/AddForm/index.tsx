@@ -1,14 +1,18 @@
 import React, { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
-import auth from "../../../../auth/config";
-import { setToast } from "../../../../slices/notificationSlice";
-import { setUndoStatus } from "../../../../slices/undoSlice";
-import { useField } from "../../../../hooks/useField";
-import { useAddBookMutation } from "../../../../services/books";
-import SubmitButton from "../../../../components/SubmitButton";
+import auth from "src/auth/config";
+import SubmitButton from "src/components/SubmitButton";
+import { useField } from "src/hooks/useField";
+import { useAddBookMutation } from "src/services/books";
+import { setToast } from "src/slices/notificationSlice";
+import { setUndoStatus } from "src/slices/undoSlice";
 
-const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
+interface Props {
+  toggleOpen: () => void;
+}
+
+export default function AddForm({ toggleOpen }: Props) {
   const dispatch = useDispatch();
 
   const [title, setTitle] = useField({ id: "title", type: "text" });
@@ -108,6 +112,4 @@ const Form = ({ toggleOpen }: { toggleOpen: () => void }) => {
       <SubmitButton />
     </form>
   );
-};
-
-export default Form;
+}
