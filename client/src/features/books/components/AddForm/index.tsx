@@ -1,10 +1,8 @@
 import clsx from "clsx";
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
-import SubmitButton from "src/components/SubmitButton";
-import { useField } from "src/hooks/useField";
 import { useAddBookMutation } from "src/services/books";
 import { setToast } from "src/slices/notificationSlice";
 import { setUndoStatus } from "src/slices/undoSlice";
@@ -23,6 +21,7 @@ export default function AddForm({ toggleOpen }: Props) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [read, setRead] = useState(false);
+  const inputReadRef = useRef<HTMLInputElement>(null);
 
   const [user] = useAuthState(auth);
   const [addBook] = useAddBookMutation();
@@ -51,6 +50,14 @@ export default function AddForm({ toggleOpen }: Props) {
     setReview("");
     toggleOpen();
     dispatch(setUndoStatus(false));
+  };
+
+  const handleEndDate = (event: React.FormEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+    setEndDate(value);
+    setRead(Boolean(value));
+    if (!inputReadRef.current) return;
+    inputReadRef.current.disabled = Boolean(value);
   };
 
   return (
@@ -116,7 +123,7 @@ export default function AddForm({ toggleOpen }: Props) {
           <input
             type="date"
             value={endDate}
-            onChange={(event) => setEndDate(event.target.value)}
+            onChange={handleEndDate}
             className="w-full rounded-md border-2 border-gray-800/70 pl-2"
           />
         </label>
@@ -126,6 +133,7 @@ export default function AddForm({ toggleOpen }: Props) {
         <input
           type="checkbox"
           checked={read}
+          ref={inputReadRef}
           onChange={(event) => setRead(event.target.checked)}
           className="toggle"
         />
