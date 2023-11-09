@@ -9,6 +9,7 @@ import Content from "./Content";
 import LeftRight from "./UnderCard/LeftRight";
 import { ImageContext } from "./imageContext";
 import Info from "./Info";
+import Dialog from "src/components/Dialog";
 
 const Card = ({ book }: { book: Book }) => {
   const [showReview, setShowReview] = useState(false);
@@ -76,9 +77,9 @@ const Card = ({ book }: { book: Book }) => {
           showReview={showReview}
         />
       </ImageContext.Provider>
-      <dialog ref={dialogRef} className="modal">
+      <Dialog ref={dialogRef}>
         <Info book={book} />
-      </dialog>
+      </Dialog>
 
       {/* <UnderCard height={height} showReview={showReview}>
         <Review review={book.review} />
