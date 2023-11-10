@@ -161,7 +161,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
       <label>
         Review
         <textarea
-          className="mb-2 w-full rounded-md border-2 border-gray-800/70 px-2"
+          className=" w-full rounded-md border-2 border-gray-800/70 p-2"
           id="review"
           rows={8}
           value={review}
