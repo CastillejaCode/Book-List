@@ -1,22 +1,25 @@
-import { signOut } from "firebase/auth";
-import { useDispatch } from "react-redux";
-import auth from "src/auth/config";
-import {
-  setUser,
-  toggleMenu,
-  toggleModal,
-  toggleSearch,
-  toggleUser,
-} from "src/slices/toggleSlice";
 import {
   ArrowLeftOnRectangleIcon,
   MagnifyingGlassIcon,
   PlusIcon,
   UserCircleIcon,
 } from "@heroicons/react/20/solid";
+import { signOut } from "firebase/auth";
+import { useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
+import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import auth from "src/auth/config";
+import Dialog from "src/components/Dialog";
 import { setToast } from "src/slices/notificationSlice";
+import {
+  setShowAddForm,
+  setUser,
+  toggleMenu,
+  toggleSearch,
+  toggleUser,
+} from "src/slices/toggleSlice";
+import AddForm from "../AddForm";
 
 interface Props {
   showMenu: boolean;
@@ -26,6 +29,7 @@ interface Props {
 const Menu = ({ showMenu, focusInput }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [user] = useAuthState(auth);
 
   if (!user) return <></>;
@@ -54,8 +58,8 @@ const Menu = ({ showMenu, focusInput }: Props) => {
           </Link>
         </li>
         {!verifyTimeLimit() && (
-          <li onClick={() => dispatch(toggleModal())}>
-            <a>
+          <li onClick={() => dispatch(setShowAddForm(true))}>
+            <a onClick={() => dialogRef.current?.showModal()}>
               <PlusIcon className="aspect-square w-6" />
               <p>Add Book</p>
             </a>
@@ -92,6 +96,9 @@ const Menu = ({ showMenu, focusInput }: Props) => {
           </a>
         </li>
       </ul>
+      <Dialog ref={dialogRef}>
+        <AddForm />
+      </Dialog>
     </div>
   );
 };
