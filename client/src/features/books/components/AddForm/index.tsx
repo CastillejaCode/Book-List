@@ -22,7 +22,7 @@ const Book = z.object({
 
 export default function AddForm() {
   const dispatch = useDispatch();
-  const [addBook, data] = useAddBookMutation();
+  const [addBook] = useAddBookMutation();
   const inputReadRef = useRef<HTMLInputElement>(null);
   const [user] = useAuthState(auth);
 
@@ -52,19 +52,13 @@ export default function AddForm() {
       });
 
       await addBook(formData);
-      if (data.isSuccess)
-        dispatch(setToast({ type: "notification", message: "Book added" }));
+      dispatch(setToast({ type: "notification", message: "Book added" }));
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
         dispatch(setToast(error.message));
       }
     }
-
-    setTitle("");
-    setAuthor("");
-    setRating(0);
-    setReview("");
   };
 
   const handleEndDate = (event: React.FormEvent<HTMLInputElement>) => {
