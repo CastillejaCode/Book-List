@@ -14,8 +14,27 @@ export default function Info({ book }: Props) {
   const [showForm, setShowForm] = useState(false);
   const [showConfirmChoice, setShowConfirmChoice] = useState(false);
 
+  const formatDate = (rawDate: Date | null) => {
+    if (!rawDate) return "";
+
+    const date = new Date(rawDate);
+    const day = date.getDate();
+    const month = date.getMonth() + 1;
+    const year = date.getFullYear();
+
+    return `${month}/${day}/${year}`;
+  };
+
+  const subtractDates = (date1: Date | null, date2: Date | null) => {
+    if (!date1 || !date2) return "";
+
+    const getUnix = (date: Date) => new Date(date).valueOf();
+
+    return Math.abs(getUnix(date1) - getUnix(date2)) / (1000 * 60 * 60 * 24);
+  };
+
   return (
-    <div className="flex flex-col gap-4 overflow-auto">
+    <div className="flex flex-col gap-4 ">
       <div>
         <h1 className="text-3xl font-semibold">{book.title}</h1>
         <h2 className="text-2xl">{book.author}</h2>
@@ -26,10 +45,10 @@ export default function Info({ book }: Props) {
         </h3>
         <div className="flex flex-col items-center">
           <h3 className="text-xl" aria-label="Start and End Dates">
-            10/12/23 ⇀ 10/19/23
+            {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
           </h3>
           <p className="text-lg" aria-label="Duration">
-            7 days
+            {`${subtractDates(book.endDate, book.startDate)} days`}
           </p>
         </div>
         <p aria-label="Review" className="text-lg">
