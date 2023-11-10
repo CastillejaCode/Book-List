@@ -4,7 +4,7 @@ import { Toggle } from "../types";
 const initialState: Toggle = {
   sort: false,
   menu: false,
-  modal: false,
+  addForm: false,
   search: false,
   create: false,
   user: false,
@@ -24,8 +24,8 @@ export const toggleSlice = createSlice({
       state.sort = false;
       state.search = false;
     },
-    toggleModal: (state) => {
-      state.modal = !state.modal;
+    setShowAddForm: (state, action) => {
+      state.addForm = action.payload;
       state.menu = false;
     },
     toggleSearch: (state) => {
@@ -51,7 +51,7 @@ export const toggleSlice = createSlice({
 export const {
   toggleSort,
   toggleMenu,
-  toggleModal,
+  setShowAddForm,
   toggleSearch,
   toggleCreate,
   toggleUser,
