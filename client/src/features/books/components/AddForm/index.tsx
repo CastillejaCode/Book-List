@@ -5,7 +5,6 @@ import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
 import { useAddBookMutation } from "src/services/books";
 import { setToast } from "src/slices/notificationSlice";
-import { setUndoStatus } from "src/slices/undoSlice";
 import { z } from "zod";
 
 const Book = z.object({
@@ -35,8 +34,7 @@ export default function AddForm() {
   const [endDate, setEndDate] = useState("");
   const [read, setRead] = useState(false);
 
-  const submitForm = async (event: React.SyntheticEvent) => {
-    event.preventDefault();
+  const submitForm = async () => {
     if (!user) return;
 
     try {
@@ -80,6 +78,7 @@ export default function AddForm() {
 
   return (
     <form
+      method="dialog"
       onSubmit={submitForm}
       className="flex flex-col gap-4 text-base transition-all duration-300"
     >
