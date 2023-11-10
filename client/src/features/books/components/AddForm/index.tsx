@@ -8,12 +8,24 @@ import { setToast } from "src/slices/notificationSlice";
 import { setUndoStatus } from "src/slices/undoSlice";
 import { z } from "zod";
 
-interface Props {
-  toggleOpen: () => void;
-}
+const Book = z.object({
+  title: z.string().max(50),
+  author: z.string().max(50),
+  rating: z.number().min(0).max(5),
+  read: z.boolean(),
+  startDate: z.date().nullable(),
+  endDate: z.date().nullable(),
+  review: z.string().max(8000),
+  date: z.date(),
+  uid: z.string(),
+  coverNumber: z.number(),
+});
 
-export default function AddForm({ toggleOpen }: Props) {
+export default function AddForm() {
   const dispatch = useDispatch();
+  const [addBook, data] = useAddBookMutation();
+  const inputReadRef = useRef<HTMLInputElement>(null);
+  const [user] = useAuthState(auth);
 
   const [title, setTitle] = useState("");
   const [author, setAuthor] = useState("");
@@ -22,43 +34,26 @@ export default function AddForm({ toggleOpen }: Props) {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [read, setRead] = useState(false);
-  const inputReadRef = useRef<HTMLInputElement>(null);
 
-  const [user] = useAuthState(auth);
-  const [addBook, data] = useAddBookMutation();
-
-  const submitForm = (event: React.SyntheticEvent) => {
+  const submitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (!user) return;
-    try {
-      const Book = z.object({
-        title: z.string().max(50),
-        author: z.string().max(50),
-        rating: z.number().min(0).max(5),
-        read: z.boolean(),
-        startDate: z.date().nullable(),
-        endDate: z.date().nullable(),
-        review: z.string().max(8000),
-        date: z.date(),
-        uid: z.string(),
-        coverNumber: z.number(),
-      });
 
+    try {
       const formData = Book.parse({
         title,
         author,
         rating,
         read,
         review,
-        startDate: new Date(startDate),
-        endDate: new Date(endDate),
-        date: new Date(Date.now()),
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
+        date: new Date(),
         uid: user?.uid,
         coverNumber: 0,
       });
 
-      addBook(formData);
-      console.log(123);
+      await addBook(formData);
       if (data.isSuccess)
         dispatch(setToast({ type: "notification", message: "Book added" }));
     } catch (error) {
@@ -68,17 +63,17 @@ export default function AddForm({ toggleOpen }: Props) {
       }
     }
 
-    // setTitle("");
-    // setAuthor("");
-    // setRating(0);
-    // setReview("");
-    // dispatch(setUndoStatus(false));
+    setTitle("");
+    setAuthor("");
+    setRating(0);
+    setReview("");
   };
 
   const handleEndDate = (event: React.FormEvent<HTMLInputElement>) => {
     const value = event.currentTarget.value;
     setEndDate(value);
     setRead(Boolean(value));
+
     if (!inputReadRef.current) return;
     inputReadRef.current.disabled = Boolean(value);
   };
