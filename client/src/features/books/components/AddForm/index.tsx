@@ -6,6 +6,7 @@ import auth from "src/auth/config";
 import { useAddBookMutation } from "src/services/books";
 import { setToast } from "src/slices/notificationSlice";
 import { setUndoStatus } from "src/slices/undoSlice";
+import { z } from "zod";
 
 interface Props {
   toggleOpen: () => void;
@@ -24,32 +25,54 @@ export default function AddForm({ toggleOpen }: Props) {
   const inputReadRef = useRef<HTMLInputElement>(null);
 
   const [user] = useAuthState(auth);
-  const [addBook] = useAddBookMutation();
+  const [addBook, data] = useAddBookMutation();
 
   const submitForm = (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (!user) return;
     try {
-      addBook({
+      const Book = z.object({
+        title: z.string().max(50),
+        author: z.string().max(50),
+        rating: z.number().min(0).max(5),
+        read: z.boolean(),
+        startDate: z.date().nullable(),
+        endDate: z.date().nullable(),
+        review: z.string().max(8000),
+        date: z.date(),
+        uid: z.string(),
+        coverNumber: z.number(),
+      });
+
+      const formData = Book.parse({
         title,
         author,
         rating,
         read,
         review,
-        date: Date.now(),
+        startDate: new Date(startDate),
+        endDate: new Date(endDate),
+        date: new Date(Date.now()),
         uid: user?.uid,
         coverNumber: 0,
       });
+
+      addBook(formData);
+      console.log(123);
+      if (data.isSuccess)
+        dispatch(setToast({ type: "notification", message: "Book added" }));
     } catch (error) {
-      if (error instanceof Error) dispatch(setToast(error.message));
+      if (error instanceof Error) {
+        console.log(error.message);
+        dispatch(setToast(error.message));
+      }
     }
 
-    setTitle("");
-    setAuthor("");
-    setRating(0);
-    setReview("");
-    toggleOpen();
-    dispatch(setUndoStatus(false));
+    // setTitle("");
+    // setAuthor("");
+    // setRating(0);
+    // setReview("");
+    // dispatch(setUndoStatus(false));
   };
 
   const handleEndDate = (event: React.FormEvent<HTMLInputElement>) => {
@@ -72,6 +95,7 @@ export default function AddForm({ toggleOpen }: Props) {
           className="w-full rounded-md border-2 border-gray-800/70 pl-2 "
           type="text"
           value={title}
+          required
           onChange={(event) => setTitle(event.target.value)}
         />
       </label>
@@ -81,6 +105,7 @@ export default function AddForm({ toggleOpen }: Props) {
           className="w-full rounded-md border-2 border-gray-800/70 pl-2"
           id="author"
           value={author}
+          required
           onChange={(event) => setAuthor(event.target.value)}
         />
       </label>
@@ -129,7 +154,14 @@ export default function AddForm({ toggleOpen }: Props) {
         </label>
       </div>
       <label className="mt-4 flex w-full items-center justify-between gap-4 ">
-        <span className={clsx("flex-1 text-end")}>Not Read</span>
+        <span
+          className={clsx(
+            "flex-1 text-end transition-all duration-150",
+            !read && " font-bold"
+          )}
+        >
+          Not Read
+        </span>
         <input
           type="checkbox"
           checked={read}
@@ -137,7 +169,14 @@ export default function AddForm({ toggleOpen }: Props) {
           onChange={(event) => setRead(event.target.checked)}
           className="toggle"
         />
-        <span className="flex-1">Read</span>
+        <span
+          className={clsx(
+            "flex-1 transition-all  duration-150",
+            read && " font-bold"
+          )}
+        >
+          Read
+        </span>
       </label>
       <label>
         Review
@@ -149,6 +188,9 @@ export default function AddForm({ toggleOpen }: Props) {
           onChange={(event) => setReview(event.target.value)}
         />
       </label>
+      <button type="submit" className="btn">
+        Submit
+      </button>
     </form>
   );
 }

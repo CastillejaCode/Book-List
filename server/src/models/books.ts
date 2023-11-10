@@ -4,11 +4,13 @@ const bookSchema = new mongoose.Schema({
 	title: String,
 	author: String,
 	rating: Number,
+	read: Boolean,
 	review: String,
-	date: Number,
+	startDate: Date,
+	endDate: Date,
+	date: String,
 	uid: String,
 	coverNumber: Number,
-	read: Boolean,
 });
 
 bookSchema.set('toJSON', {
