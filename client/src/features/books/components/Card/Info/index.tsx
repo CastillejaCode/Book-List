@@ -30,7 +30,10 @@ export default function Info({ book }: Props) {
 
     const getUnix = (date: Date) => new Date(date).valueOf();
 
-    return Math.abs(getUnix(date1) - getUnix(date2)) / (1000 * 60 * 60 * 24);
+    const days =
+      Math.abs(getUnix(date1) - getUnix(date2)) / (1000 * 60 * 60 * 24);
+
+    return `${days} ${days === 1 ? "day" : "days"}`;
   };
 
   return (
@@ -48,11 +51,11 @@ export default function Info({ book }: Props) {
             {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
           </h3>
           <p className="text-lg" aria-label="Duration">
-            {`${subtractDates(book.endDate, book.startDate)} days`}
+            {`${subtractDates(book.endDate, book.startDate)}`}
           </p>
         </div>
         <p aria-label="Review" className="text-lg">
-          "{book.review}"
+          {book.review}
         </p>
       </div>
       <div className="divider my-0"></div>
