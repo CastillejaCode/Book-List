@@ -56,6 +56,7 @@ export default function Info({ book }: Props) {
             </p>
           </div>
         )}
+        {!book.endDate && book.read && <h3 className="text-lg">Finished</h3>}
         <p aria-label="Review" className="text-lg">
           {book.review}
         </p>
