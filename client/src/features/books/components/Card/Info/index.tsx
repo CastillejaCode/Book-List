@@ -42,18 +42,20 @@ export default function Info({ book }: Props) {
         <h1 className="text-3xl font-semibold">{book.title}</h1>
         <h2 className="text-2xl">{book.author}</h2>
       </div>
-      <div className="flex flex-col items-center gap-4">
-        <h3 className="text-3xl" aria-label="Rating">
+      <div className="flex flex-col items-center gap-6">
+        <h3 className="text-2xl" aria-label="Rating">
           {book.rating}
         </h3>
-        <div className="flex flex-col items-center">
-          <h3 className="text-xl" aria-label="Start and End Dates">
-            {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
-          </h3>
-          <p className="text-lg" aria-label="Duration">
-            {`${subtractDates(book.endDate, book.startDate)}`}
-          </p>
-        </div>
+        {(book.startDate || book.endDate) && (
+          <div className="flex flex-col items-center">
+            <h3 className="text-xl" aria-label="Start and End Dates">
+              {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
+            </h3>
+            <p className="text-lg" aria-label="Duration">
+              {`${subtractDates(book.endDate, book.startDate)}`}
+            </p>
+          </div>
+        )}
         <p aria-label="Review" className="text-lg">
           {book.review}
         </p>
