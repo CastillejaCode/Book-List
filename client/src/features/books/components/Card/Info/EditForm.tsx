@@ -62,6 +62,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
           Submit
         </button>
         <button
+          type="button"
           className="btn-error btn-sm btn"
           onClick={() => setShowForm(false)}
         >
