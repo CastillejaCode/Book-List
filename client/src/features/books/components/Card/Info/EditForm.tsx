@@ -1,4 +1,4 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useUpdateBookMutation } from "src/services/books";
 import { Book } from "src/types";
 import { useRef } from "react";
@@ -25,6 +25,11 @@ const EditForm = ({ book, setShowForm }: Props) => {
     book.endDate?.toString().split("T")[0]
   );
   const [read, setRead] = useState(book.read);
+
+  useEffect(() => {
+    if (!inputReadRef.current) return;
+    if (endDate) inputReadRef.current.disabled = true;
+  }, []);
 
   const submitForm = (event: React.SyntheticEvent) => {
     event.preventDefault();
