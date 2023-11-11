@@ -167,13 +167,25 @@ const EditForm = ({ book, setShowForm }: Props) => {
       <label>
         Review
         <textarea
-          className=" w-full rounded-md border-2 border-gray-800/70 p-2"
+          className=" mb-4 w-full rounded-md border-2 border-gray-800/70 p-2"
           id="review"
           rows={8}
           value={review}
           onChange={(event) => setReview(event.target.value)}
         />
       </label>
+      <div className=" flex justify-around">
+        <button className="btn-success  btn-sm btn" type="submit">
+          Submit
+        </button>
+        <button
+          type="button"
+          className="btn-error btn-sm btn"
+          onClick={() => setShowForm(false)}
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };
