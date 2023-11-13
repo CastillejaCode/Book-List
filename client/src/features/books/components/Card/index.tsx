@@ -60,8 +60,6 @@ const Card = ({ book }: { book: Book }) => {
   };
 
   return (
-    // Extra div to allow for Review to hide behind main card
-
     <article
       onClick={() => dialogRef.current?.showModal()}
       className={
@@ -80,16 +78,6 @@ const Card = ({ book }: { book: Book }) => {
       <Dialog ref={dialogRef}>
         <Info book={book} />
       </Dialog>
-
-      {/* <UnderCard height={height} showReview={showReview}>
-        <Review review={book.review} />
-      </UnderCard>
-      <UnderCard height={height} showOptions={showOptions}>
-        <Options book={book} toggleEdit={toggleEdit} />
-      </UnderCard>
-      <UnderCard height={height} showImageControls={showImageControls}>
-        <LeftRight id={book.id} coverNumber={book.coverNumber} docs={docs} />
-      </UnderCard> */}
     </article>
   );
 };
