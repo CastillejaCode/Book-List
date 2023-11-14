@@ -14,7 +14,7 @@ export const notificationSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    setToast: (state, action) => action.payload,
+    setToast: (_state, action) => action.payload,
     resetToast: (state) => {
       state.message = "";
     },
