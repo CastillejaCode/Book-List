@@ -10,7 +10,7 @@ interface Initial {
 
 const initialState: Initial = {
   sort: "Title",
-  filter: true,
+  filter: "All",
   order: true,
 };
 
@@ -21,10 +21,10 @@ export const categorizeSliceSlice = createSlice({
     setSort: (state, action: PayloadAction<Sort>) => {
       state.sort = action.payload;
     },
-    setFilter: (state, action: PayloadAction<boolean | null>) => {
+    setFilter: (state, action: PayloadAction<Filter>) => {
       state.filter = action.payload;
     },
-    setOrder: (state, action: PayloadAction<boolean>) => {
+    setOrder: (state, action: PayloadAction<Order>) => {
       state.order = action.payload;
     },
   },
