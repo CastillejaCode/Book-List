@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
-import { setSort } from "src/slices/sortSlice";
+import { setSort } from "src/slices/categorizeSlicve";
 
 export default function SortBooks() {
   const dispatch = useDispatch();
 
   return (
     <form className="flex flex-col gap-3">
-      <h2 className="text-center text-2xl underline underline-offset-4 ">
+      {/* <h2 className="text-center text-2xl underline underline-offset-4 ">
         Sort
       </h2>
       <div className="flex flex-1 flex-col justify-between gap-2">
@@ -58,7 +58,7 @@ export default function SortBooks() {
             onClick={() => dispatch(setSort("rating"))}
           />
         </label>
-      </div>
+      </div> */}
     </form>
   );
 }

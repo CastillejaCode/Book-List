@@ -1,12 +1,12 @@
 import { useDispatch } from "react-redux";
-import { setRead } from "src/slices/sortSlice";
+import { setRead } from "src/slices/categorizeSlicve";
 
 export default function FilterBooks() {
   const dispatch = useDispatch();
 
   return (
     <form className="flex flex-col gap-3">
-      <h2 className="text-center text-2xl underline underline-offset-4">
+      {/* <h2 className="text-center text-2xl underline underline-offset-4">
         Filter
       </h2>
       <div className="flex flex-1 flex-col justify-between">
@@ -39,7 +39,7 @@ export default function FilterBooks() {
             onClick={() => dispatch(setRead(null))}
           />
         </label>
-      </div>
+      </div> */}
     </form>
   );
 }
