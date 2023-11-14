@@ -46,19 +46,30 @@ export default function useSort({ data, sort, filter, order }: Args) {
     }
   };
 
-  const searchBooks = (books: Book[]) =>
-    books.filter((book: Book) =>
-      book.title.toLowerCase().startsWith(searchTerm)
-    );
+  // const searchBooks = (books: Book[]) =>
+  //   books.filter((book: Book) =>
+  //     book.title.toLowerCase().startsWith(searchTerm)
+  //   );
 
-  const filterBooks = (books: Book[]) =>
-    books.filter((book: Book) => {
-      if (filter === true) return book.read === true;
-      if (filter === false) return book.read === false;
+  console.log(filter);
+
+  const filterBooks = (books: Book[]) => {
+    if (filter === "All") return books;
+
+    return books.filter((book: Book) => {
+      if (filter === "Read") return book.read === true;
+      if (filter === "Not Read") return book.read === false;
       return book;
     });
+  };
+
+  const categorizeBooks = (data: Book[]) => {
+    const sorted = sortBooks(data);
+    const filtered = filterBooks(sorted);
+    return filtered;
+  };
 
   if (!data) return;
 
-  return searchBooks(filterBooks(sortBooks(data)));
+  return categorizeBooks(data);
 }
