@@ -1,21 +1,27 @@
 import { useSelector } from "react-redux";
 import { Book } from "../types";
 import { RootState } from "../store";
+import { Sort, Filter, Order } from "../types";
 
-export default function useSort(data: Book[]) {
-  const sort = useSelector((state: RootState) => state.sort.value);
-  const filter = useSelector((state: RootState) => state.sort.filter);
+interface Args {
+  data: Book[];
+  sort: Sort;
+  filter: Filter;
+  order: Order;
+}
+
+export default function useSort({ data, sort, filter, order }: Args) {
   const searchTerm = useSelector((state: RootState) =>
     state.search.value.toLowerCase()
   );
 
   const sortBooks = (books: Book[]) => {
     switch (sort) {
-      case "recent":
+      case "Date":
         return [...books].sort((a, b) => {
           return b.date - a.date;
         });
-      case "title":
+      case "Title":
         return [...books].sort((a, b) => {
           const nameA = a.title.toLowerCase();
           const nameB = b.title.toLowerCase();
@@ -23,7 +29,7 @@ export default function useSort(data: Book[]) {
           if (nameA > nameB) return 1;
           return 0;
         });
-      case "author":
+      case "Author":
         return [...books].sort((a, b) => {
           const authorA = a.author.toLowerCase();
           const AuthorB = b.author.toLowerCase();
@@ -31,7 +37,7 @@ export default function useSort(data: Book[]) {
           if (authorA > AuthorB) return 1;
           return 0;
         });
-      case "rating":
+      case "Rating":
         return [...books].sort((a, b) => {
           return b.rating - a.rating;
         });
@@ -47,8 +53,8 @@ export default function useSort(data: Book[]) {
 
   const filterBooks = (books: Book[]) =>
     books.filter((book: Book) => {
-      if (filter.read === true) return book.read === true;
-      if (filter.read === false) return book.read === false;
+      if (filter === true) return book.read === true;
+      if (filter === false) return book.read === false;
       return book;
     });
 
