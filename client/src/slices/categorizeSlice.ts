@@ -1,11 +1,11 @@
 import { createSlice } from "@reduxjs/toolkit";
 import type { PayloadAction } from "@reduxjs/toolkit";
-import { Sort } from "../types";
+import { Filter, Order, Sort } from "../types";
 
 interface Initial {
   sort: Sort;
-  filter: boolean | null;
-  order: boolean;
+  filter: Filter;
+  order: Order;
 }
 
 const initialState: Initial = {

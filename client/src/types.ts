@@ -35,3 +35,7 @@ export interface BookSearchAPI {
 export type Docs = { cover_i: number }[] | undefined;
 
 export type Sort = "Title" | "Author" | "Rating" | "Date";
+
+export type Filter = boolean | null;
+
+export type Order = boolean;
