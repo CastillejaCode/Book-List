@@ -93,7 +93,6 @@ const NavBar = () => {
         </button>
       </header>
       <Menu showMenu={showMenu} focusInput={focusInput} />
-      <Filter showSort={showSort} />
     </div>
   );
 };
