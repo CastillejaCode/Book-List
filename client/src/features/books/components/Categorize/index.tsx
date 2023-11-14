@@ -1,4 +1,5 @@
-import { SetStateAction } from "react";
+import clsx from "clsx";
+import React, { SetStateAction } from "react";
 import { Filter, Order, Sort } from "src/types";
 
 interface Props {
@@ -21,30 +22,45 @@ export default function Categorize({ state, setState }: Props) {
     setState.setFilter(value);
   };
 
+  const handleOrder = (event: React.FormEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.checked as Order;
+    setState.setOrder(value);
+  };
+
   return (
-    <form className="flex w-full justify-between gap-4">
+    <form className="flex w-full items-center justify-between gap-4">
       <select
         className="select w-full max-w-xs"
         value={state.sort}
         onChange={handleSort}
       >
-        <option disabled selected>
-          Sort
-        </option>
+        <option disabled>Sort</option>
         <option>Title</option>
         <option>Author</option>
         <option>Rating</option>
         <option>Date</option>
       </select>
-      <input type="checkbox" className="toggle" checked />
+      <div className="flex flex-col items-center gap-2">
+        <label htmlFor="toggle" className={clsx(state.order && "font-bold")}>
+          Asc.
+        </label>
+        <input
+          type="checkbox"
+          id="toggle"
+          className="toggle"
+          onChange={handleOrder}
+          checked={state.order}
+        />
+        <label htmlFor="toggle" className={clsx(!state.order && "font-bold")}>
+          Desc.
+        </label>
+      </div>
       <select
         className="select w-full max-w-xs"
         value={state.filter}
         onChange={handleFilter}
       >
-        <option disabled selected>
-          Filter
-        </option>
+        <option disabled>Filter</option>
         <option>All</option>
         <option>Read</option>
         <option>Not Read</option>
@@ -52,12 +68,3 @@ export default function Categorize({ state, setState }: Props) {
     </form>
   );
 }
-
-// <div
-//   className={`absolute left-1/2 -z-10 flex h-fit w-fit -translate-x-1/2 justify-around gap-20 rounded-md border-2 border-zinc-700 bg-zinc-100 p-4 shadow-md transition-all duration-300 dark:bg-zinc-800
-//   ${showSort ? "-bottom-56" : "bottom-2"}
-//   `}
-// >
-//   <FilterBooks />
-//   <SortBooks />
-// </div>
