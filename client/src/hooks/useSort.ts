@@ -24,7 +24,10 @@ export default function useSort({ data, sort, filter, order }: Args) {
     switch (sort) {
       case "Date":
         return [...books].sort((a, b) => {
-          return b.date - a.date;
+          return (
+            Number(b.endDate && new Date(b.endDate).getTime()) -
+            Number(a.endDate && new Date(a.endDate).getTime())
+          );
         });
       case "Title":
         return [...books].sort((a, b) => {
@@ -65,9 +68,9 @@ export default function useSort({ data, sort, filter, order }: Args) {
     // searching supersedes categorizing books
     if (searchTerm) return searchBooks(data);
 
-    const sorted = sortBooks(data);
-    const filtered = filterBooks(sorted);
-    return filtered;
+    const filtered = filterBooks(data);
+    const sorted = sortBooks(filtered);
+    return sorted;
   };
 
   if (!data) return;
