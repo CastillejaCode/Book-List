@@ -15,6 +15,11 @@ export default function useSort({ data, sort, filter, order }: Args) {
     state.search.value.toLowerCase()
   );
 
+  const searchBooks = (books: Book[]) =>
+    books.filter((book: Book) =>
+      book.title.toLowerCase().startsWith(searchTerm)
+    );
+
   const sortBooks = (books: Book[]) => {
     switch (sort) {
       case "Date":
@@ -46,13 +51,6 @@ export default function useSort({ data, sort, filter, order }: Args) {
     }
   };
 
-  // const searchBooks = (books: Book[]) =>
-  //   books.filter((book: Book) =>
-  //     book.title.toLowerCase().startsWith(searchTerm)
-  //   );
-
-  console.log(filter);
-
   const filterBooks = (books: Book[]) => {
     if (filter === "All") return books;
 
@@ -64,6 +62,9 @@ export default function useSort({ data, sort, filter, order }: Args) {
   };
 
   const categorizeBooks = (data: Book[]) => {
+    // searching supersedes categorizing books
+    if (searchTerm) return searchBooks(data);
+
     const sorted = sortBooks(data);
     const filtered = filterBooks(sorted);
     return filtered;
