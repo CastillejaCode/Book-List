@@ -1,6 +1,8 @@
-import { SetStateAction, useState } from "react";
+import { SetStateAction, useEffect, useState } from "react";
 import { useUpdateBookMutation } from "src/services/books";
 import { Book } from "src/types";
+import { useRef } from "react";
+import clsx from "clsx";
 
 interface Props {
   book: Book;
@@ -9,37 +11,63 @@ interface Props {
 
 const EditForm = ({ book, setShowForm }: Props) => {
   const [updateBook] = useUpdateBookMutation();
+  const inputReadRef = useRef<HTMLInputElement>(null);
 
   const [title, setTitle] = useState(book.title);
   const [author, setAuthor] = useState(book.author);
   const [rating, setRating] = useState(book.rating);
   const [review, setReview] = useState(book.review);
+  // Remove time to allow default date value
+  const [startDate, setStartDate] = useState(
+    book.startDate?.toString().split("T")[0]
+  );
+  const [endDate, setEndDate] = useState(
+    book.endDate?.toString().split("T")[0]
+  );
   const [read, setRead] = useState(book.read);
 
-  const submitEdit = (event: React.SyntheticEvent) => {
+  useEffect(() => {
+    if (!inputReadRef.current) return;
+    if (endDate) inputReadRef.current.disabled = true;
+  }, []);
+
+  const submitForm = (event: React.SyntheticEvent) => {
     event.preventDefault();
     const body = {
       title,
       author,
       rating,
-      review,
+      startDate: startDate ? new Date(startDate) : null,
+      endDate: endDate ? new Date(endDate) : null,
       read,
+      review,
     };
     const { id } = book;
     setShowForm(false);
     updateBook({ id, body });
   };
 
+  const handleEndDate = (event: React.FormEvent<HTMLInputElement>) => {
+    const value = event.currentTarget.value;
+    setEndDate(value);
+    setRead(Boolean(value));
+
+    if (!inputReadRef.current) return;
+    inputReadRef.current.disabled = Boolean(value);
+  };
+
   return (
     <form
-      onSubmit={submitEdit}
-      className="flex flex-col gap-4 transition-all duration-300"
+      method="dialog"
+      onSubmit={submitForm}
+      className="flex flex-col gap-4 text-base transition-all duration-300"
     >
       <div className=" flex justify-around">
         <button className="btn-success  btn-sm btn" type="submit">
           Submit
         </button>
         <button
+          type="button"
           className="btn-error btn-sm btn"
           onClick={() => setShowForm(false)}
         >
@@ -53,6 +81,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
           className="w-full rounded-md border-2 border-gray-800/70 pl-2 "
           type="text"
           value={title}
+          required
           onChange={(event) => setTitle(event.target.value)}
         />
       </label>
@@ -62,6 +91,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
           className="w-full rounded-md border-2 border-gray-800/70 pl-2"
           id="author"
           value={author}
+          required
           onChange={(event) => setAuthor(event.target.value)}
         />
       </label>
@@ -94,6 +124,8 @@ const EditForm = ({ book, setShowForm }: Props) => {
           Start Date
           <input
             type="date"
+            value={startDate}
+            onChange={(event) => setStartDate(event.target.value)}
             className="w-full rounded-md border-2 border-gray-800/70 pl-2"
           />
         </label>
@@ -101,25 +133,59 @@ const EditForm = ({ book, setShowForm }: Props) => {
           Finish Date
           <input
             type="date"
+            value={endDate}
+            onChange={handleEndDate}
             className="w-full rounded-md border-2 border-gray-800/70 pl-2"
           />
         </label>
       </div>
       <label className="mt-4 flex w-full items-center justify-between gap-4 ">
-        <span className="flex-1 text-end">Not Read</span>
-        <input type="checkbox" className="toggle" />
-        <span className="flex-1">Read</span>
+        <span
+          className={clsx(
+            "flex-1 text-end transition-all duration-150",
+            !read && " font-bold"
+          )}
+        >
+          Not Read
+        </span>
+        <input
+          type="checkbox"
+          checked={read}
+          ref={inputReadRef}
+          onChange={(event) => setRead(event.target.checked)}
+          className="toggle"
+        />
+        <span
+          className={clsx(
+            "flex-1 transition-all  duration-150",
+            read && " font-bold"
+          )}
+        >
+          Read
+        </span>
       </label>
       <label>
         Review
         <textarea
-          className="mb-2 w-full rounded-md border-2 border-gray-800/70 px-2"
+          className=" mb-4 w-full rounded-md border-2 border-gray-800/70 p-2"
           id="review"
           rows={8}
           value={review}
           onChange={(event) => setReview(event.target.value)}
         />
       </label>
+      <div className=" flex justify-around">
+        <button className="btn-success  btn-sm btn" type="submit">
+          Submit
+        </button>
+        <button
+          type="button"
+          className="btn-error btn-sm btn"
+          onClick={() => setShowForm(false)}
+        >
+          Cancel
+        </button>
+      </div>
     </form>
   );
 };

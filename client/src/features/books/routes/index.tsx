@@ -10,6 +10,7 @@ import { RootState } from "src/store";
 import { Book } from "src/types";
 import NavBar from "../components/NavBar";
 import ErrorPage from "src/components/Error/ErrorPage";
+import Toast from "src/components/Toast";
 
 export default function Books() {
   const [user] = useAuthState(auth);
@@ -36,6 +37,7 @@ export default function Books() {
             return <Card book={book} key={book.id} />;
           })}
       </main>
+      <Toast />
     </>
   );
 }

@@ -3,7 +3,7 @@ import React, { FormEvent, SetStateAction, useEffect, useRef } from "react";
 interface Props {
   visible: boolean;
   setVisible: React.Dispatch<SetStateAction<boolean>>;
-  confirmAction: any;
+  confirmAction: () => void;
 }
 
 // TODO: Add error handling

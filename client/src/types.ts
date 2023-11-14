@@ -2,18 +2,20 @@ export interface Book {
   title: string;
   author: string;
   rating: number;
+  read: boolean;
+  startDate: Date | null;
+  endDate: Date | null;
   review: string;
+  date: Date;
   id?: string;
-  date: number;
   uid: string;
   coverNumber: number;
-  read: boolean;
 }
 
 export interface Toggle {
   sort: boolean;
   menu: boolean;
-  modal: boolean;
+  addForm: boolean;
   search: boolean;
   create: boolean;
   user: boolean;
