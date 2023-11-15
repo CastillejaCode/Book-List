@@ -36,12 +36,12 @@ export default function ConfirmChoice({
           className="flex flex-col justify-between gap-4 sm:flex-row"
           onSubmit={submitForm}
         >
-          <button type="submit" className="btn-warning btn">
+          <button type="submit" className="btn-error btn">
             Yes, please Delete
           </button>
           <button
             type="button"
-            className="btn-error btn"
+            className="btn-warning btn"
             onClick={() => setVisible(false)}
           >
             No, go back
