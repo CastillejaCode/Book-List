@@ -1,23 +1,14 @@
-import { useLayoutEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import Dialog from "src/components/Dialog";
 import { useGetBookImageURLQuery } from "src/services/books";
 import { Book } from "../../../../types";
-import Review from "./UnderCard/Review";
-import Options from "./UnderCard/Options";
-import UnderCard from "./UnderCard";
-import EditForm from "./Info/EditForm";
 import Content from "./Content";
-import LeftRight from "./UnderCard/LeftRight";
-import { ImageContext } from "./imageContext";
 import Info from "./Info";
-import Dialog from "src/components/Dialog";
+import { ImageContext } from "./imageContext";
 
 const Card = ({ book }: { book: Book }) => {
-  const [showReview, setShowReview] = useState(false);
-  const [showOptions, setShowOptions] = useState(false);
-  const [showEdit, setShowEdit] = useState(false);
-  const [showImageControls, setShowImageControls] = useState(false);
   const dialogRef = useRef<HTMLDialogElement>(null);
-  // const [height, setHeight] = useState(52);
+  const [showImageControls, setShowImageControls] = useState(false);
 
   const { title, author } = book;
   const {
@@ -26,37 +17,8 @@ const Card = ({ book }: { book: Book }) => {
     isError,
   } = useGetBookImageURLQuery({ title, author });
 
-  // To find out height on paint, to allow for responsive sliding of review card
-  // const cardRef = useRef<HTMLDivElement>(null);
-  // useLayoutEffect(() => {
-  //   if (!cardRef.current) throw Error("ref is not assigned");
-  //   setHeight(cardRef.current.clientHeight);
-  // }, []);
-
-  // toggling for each card that can't be dones with redux
-  const toggleReview = () => {
-    setShowReview(!showReview);
-    setShowOptions(false);
-    setShowImageControls(false);
-  };
-
-  const toggleOptions = () => {
-    setShowOptions(!showOptions);
-    setShowReview(false);
-    setShowEdit(false);
-    setShowImageControls(false);
-  };
-
-  const toggleEdit = () => {
-    setShowEdit(!showEdit);
-    setShowOptions(false);
-    setShowImageControls(false);
-  };
-
   const toggleImageControls = () => {
     setShowImageControls(!showImageControls);
-    setShowOptions(false);
-    setShowReview(false);
   };
 
   return (
@@ -67,13 +29,7 @@ const Card = ({ book }: { book: Book }) => {
       }
     >
       <ImageContext.Provider value={{ docs, isLoading, isError }}>
-        <Content
-          {...book}
-          handleReview={toggleReview}
-          handleOptions={toggleOptions}
-          handleImage={toggleImageControls}
-          showReview={showReview}
-        />
+        <Content {...book} handleImage={toggleImageControls} />
       </ImageContext.Provider>
       <Dialog ref={dialogRef}>
         <Info book={book} />
