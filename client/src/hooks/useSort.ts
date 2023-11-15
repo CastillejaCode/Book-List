@@ -46,10 +46,10 @@ export default function useSort({ data, sort, filter, order }: Args) {
         });
       case "Date":
         return [...books].sort((a, b) => {
-          return (
-            Number(b.endDate && new Date(b.endDate).getTime()) -
-            Number(a.endDate && new Date(a.endDate).getTime())
-          );
+          const getUnix = (date: Date | null) => {
+            return date ? new Date(date).getTime() : 0;
+          };
+          return getUnix(b.endDate) - getUnix(a.endDate);
         });
       default:
         return books;
