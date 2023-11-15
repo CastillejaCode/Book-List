@@ -15,6 +15,8 @@ export default function useSort({ data, sort, filter, order }: Args) {
     state.search.value.toLowerCase()
   );
 
+  if (!data) return;
+
   const searchBooks = (books: Book[]) =>
     books.filter((book: Book) =>
       book.title.toLowerCase().startsWith(searchTerm)
@@ -22,13 +24,6 @@ export default function useSort({ data, sort, filter, order }: Args) {
 
   const sortBooks = (books: Book[]) => {
     switch (sort) {
-      case "Date":
-        return [...books].sort((a, b) => {
-          return (
-            Number(b.endDate && new Date(b.endDate).getTime()) -
-            Number(a.endDate && new Date(a.endDate).getTime())
-          );
-        });
       case "Title":
         return [...books].sort((a, b) => {
           const nameA = a.title.toLowerCase();
@@ -48,6 +43,13 @@ export default function useSort({ data, sort, filter, order }: Args) {
       case "Rating":
         return [...books].sort((a, b) => {
           return b.rating - a.rating;
+        });
+      case "Date":
+        return [...books].sort((a, b) => {
+          return (
+            Number(b.endDate && new Date(b.endDate).getTime()) -
+            Number(a.endDate && new Date(a.endDate).getTime())
+          );
         });
       default:
         return books;
@@ -70,10 +72,8 @@ export default function useSort({ data, sort, filter, order }: Args) {
 
     const filtered = filterBooks(data);
     const sorted = sortBooks(filtered);
-    return sorted;
+    return order ? sorted : sorted.reverse();
   };
-
-  if (!data) return;
 
   return categorizeBooks(data);
 }
