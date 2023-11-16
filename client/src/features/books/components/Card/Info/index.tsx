@@ -4,12 +4,21 @@ import { useDeleteBookMutation } from "src/services/books";
 import { Book } from "src/types";
 import EditForm from "./EditForm";
 import moby from "/moby.jpg";
+import { useImageContext } from "../imageContext";
+import Cover from "../common/Cover";
 
 interface Props {
   book: Book;
 }
 
 export default function Info({ book }: Props) {
+  const { docs, isLoading, isError } = useImageContext();
+
+  const value = docs?.at(book.coverNumber)?.cover_i;
+  const key = "id";
+  const size = "L";
+  const imgSrc = `https://covers.openlibrary.org/b/${key}/${value}-${size}.jpg`;
+
   const [deleteBook] = useDeleteBookMutation();
   const [showForm, setShowForm] = useState(false);
   const [showConfirmChoice, setShowConfirmChoice] = useState(false);
@@ -88,11 +97,9 @@ export default function Info({ book }: Props) {
       )}
       {showForm && <EditForm book={book} setShowForm={setShowForm} />}
       {!showForm && (
-        <img
-          src={moby}
-          alt={`Cover of ${book.title}`}
-          className="max-w-[16rem] self-center"
-        />
+        <div className="w-full">
+          <Cover title={book.title} coverNumber={book.coverNumber} size="L" />
+        </div>
       )}
     </div>
   );

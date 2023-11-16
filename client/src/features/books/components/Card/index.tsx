@@ -19,14 +19,14 @@ const Card = ({ book }: { book: Book }) => {
   return (
     <article
       onClick={() => dialogRef.current?.showModal()}
-      className="relative  rounded-lg border-2 border-zinc-700 bg-zinc-100 p-3 dark:bg-zinc-800"
+      className="relative max-w-lg rounded-lg border-2 border-zinc-700 bg-zinc-100 p-3 dark:bg-zinc-800"
     >
       <ImageContext.Provider value={{ docs, isLoading, isError }}>
         <Content {...book} />
+        <Dialog ref={dialogRef}>
+          <Info book={book} />
+        </Dialog>
       </ImageContext.Provider>
-      <Dialog ref={dialogRef}>
-        <Info book={book} />
-      </Dialog>
     </article>
   );
 };
