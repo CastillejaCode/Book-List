@@ -35,14 +35,14 @@ export default function Books() {
   if (isError) return <ErrorPage suppliedError="Can't find your books" />;
 
   return (
-    <>
+    <div>
       <NavBar>
         <Categorize
           state={{ sort, filter, order }}
           setState={{ setSort, setFilter, setOrder }}
         />
       </NavBar>
-      <main className="mt-14 flex min-h-screen flex-col place-items-center items-center gap-4 p-4 transition-all duration-300 ">
+      <main className="flex flex-col p-8">
         <div className="grid grid-flow-row gap-4">
           {books &&
             books.map((book: Book) => {
@@ -51,6 +51,6 @@ export default function Books() {
         </div>
       </main>
       <Toast />
-    </>
+    </div>
   );
 }
