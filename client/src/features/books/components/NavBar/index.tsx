@@ -47,8 +47,11 @@ const NavBar = ({ children }: Props) => {
 
   return (
     <div className="fixed top-0 z-20">
-      <header className="flex w-screen flex-col  gap-2 border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
-        <div ref={clickOutsideRef} className="flex justify-between">
+      <header
+        ref={clickOutsideRef}
+        className="flex w-screen flex-col  gap-2 border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900"
+      >
+        <div className="flex justify-between">
           <button
             onClick={() => {
               dispatch(resetSearch());
