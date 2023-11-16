@@ -9,6 +9,7 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Menu from "src/features/books/components/Menu";
+import useClickOutside from "src/hooks/useClickOutside";
 import { useAddBookMutation } from "src/services/books";
 import { resetSearch, setSearch } from "src/slices/searchSlice";
 import { toggleMenu, toggleSearch } from "src/slices/toggleSlice";
@@ -22,15 +23,18 @@ interface Props {
 const NavBar = ({ children }: Props) => {
   const dispatch = useDispatch();
   const [showCategorize, setShowCategorize] = useState(false);
+
   const showMenu = useSelector((state: RootState) => state.toggle.menu);
   const showUndo = useSelector((state: RootState) => state.undo.status);
   const showSearch = useSelector((state: RootState) => state.toggle.search);
+  const searchTerm = useSelector((state: RootState) => state.search.value);
+  const undoBook = useSelector((state: RootState) => state.undo.value);
 
   const inputRef = useRef(null);
+  const clickOutsideRef = useRef<HTMLDivElement>(null);
+  useClickOutside(() => setShowCategorize(false), clickOutsideRef);
 
   const [addBook] = useAddBookMutation();
-  const undoBook = useSelector((state: RootState) => state.undo.value);
-  const searchTerm = useSelector((state: RootState) => state.search.value);
 
   const addUndoBook = () => {
     addBook(undoBook);
@@ -43,8 +47,8 @@ const NavBar = ({ children }: Props) => {
 
   return (
     <div className="fixed top-0 z-20">
-      <header className="flex w-screen flex-col gap-2 border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
-        <div className="flex justify-between">
+      <header className="flex w-screen flex-col  gap-2 border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
+        <div ref={clickOutsideRef} className="flex justify-between">
           <button
             onClick={() => {
               dispatch(resetSearch());
@@ -91,7 +95,7 @@ const NavBar = ({ children }: Props) => {
           >
             <AdjustmentsHorizontalIcon
               className={clsx(
-                "aspect-square w-8 transition-all duration-300",
+                "aspect-square w-8 transition-all duration-200",
                 showCategorize && "-rotate-90"
               )}
             />
@@ -104,7 +108,11 @@ const NavBar = ({ children }: Props) => {
             <ArrowUturnDownIcon />
           </button>
         </div>
-        <div className={clsx(!showCategorize && "hidden")}>{children}</div>
+        <div
+          className={clsx("flex justify-center", !showCategorize && "hidden")}
+        >
+          {children}
+        </div>
       </header>
       <Menu showMenu={showMenu} focusInput={focusInput} />
     </div>

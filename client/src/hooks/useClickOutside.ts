@@ -1,18 +1,20 @@
-// import { useEffect, useRef, useState } from "react";
+import { useEffect } from "react";
 
-// export const useClickOutside = (initial: boolean, type: string) => {
-//   const ref = useRef<type>(null);
+const useClickOutside = (
+  action: () => void,
+  ref: React.RefObject<HTMLElement>
+) => {
+  const handleClickOutside = (e: MouseEvent) => {
+    const event = e.target as Node;
+    if (ref.current && !ref.current.contains(event)) action();
+  };
 
-//   const handleClickOutside = (event: React.SyntheticEvent) => {
-//     console.log(123);
-//     if (ref.current && !ref.current?.contains(event.target)) console.log(123);
-//     ref.current.close();
-//   };
+  useEffect(() => {
+    document.addEventListener("click", handleClickOutside);
+    return () => {
+      document.removeEventListener("click", handleClickOutside);
+    };
+  }, []);
+};
 
-//   useEffect(() => {
-//     document.addEventListener("mousedown", handleClickOutside, true);
-//     return document.removeEventListener("mousedown", handleClickOutside, true);
-//   }, []);
-
-//   return { ref };
-// };
+export default useClickOutside;
