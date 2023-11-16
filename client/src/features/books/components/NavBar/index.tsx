@@ -9,7 +9,7 @@ import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Menu from "src/features/books/components/Menu";
-import useClickOutside from "src/hooks/useClickOutside";
+import useExit from "src/hooks/useExit";
 import { useAddBookMutation } from "src/services/books";
 import { resetSearch, setSearch } from "src/slices/searchSlice";
 import { toggleMenu, toggleSearch } from "src/slices/toggleSlice";
@@ -31,8 +31,10 @@ const NavBar = ({ children }: Props) => {
   const undoBook = useSelector((state: RootState) => state.undo.value);
 
   const inputRef = useRef(null);
+
   const clickOutsideRef = useRef<HTMLDivElement>(null);
-  useClickOutside(() => setShowCategorize(false), clickOutsideRef);
+  const handleExit = () => setShowCategorize(false);
+  useExit(handleExit, clickOutsideRef);
 
   const [addBook] = useAddBookMutation();
 
@@ -46,7 +48,7 @@ const NavBar = ({ children }: Props) => {
   };
 
   return (
-    <div className="fixed top-0 z-20">
+    <div className="sticky top-0 z-20">
       <header
         ref={clickOutsideRef}
         className="flex w-screen flex-col  gap-2 border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900"
