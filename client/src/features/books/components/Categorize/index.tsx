@@ -15,20 +15,23 @@ export default function Categorize({ state, setState }: Props) {
   const handleSort = (event: React.FormEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value as Sort;
     setState.setSort(value);
+    localStorage.setItem("sort", value);
   };
 
   const handleFilter = (event: React.FormEvent<HTMLSelectElement>) => {
     const value = event.currentTarget.value as Filter;
     setState.setFilter(value);
+    localStorage.setItem("filter", value);
   };
 
   const handleOrder = (event: React.FormEvent<HTMLInputElement>) => {
     const value = event.currentTarget.checked as Order;
     setState.setOrder(value);
+    localStorage.setItem("order", value ? "true" : "");
   };
 
   return (
-    <form className="flex w-full items-center justify-between gap-4">
+    <form className="top-20 flex w-full max-w-sm items-center justify-between gap-4 lg:absolute">
       <select
         className="select w-full max-w-xs"
         value={state.sort}

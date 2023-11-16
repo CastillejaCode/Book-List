@@ -15,9 +15,15 @@ import NavBar from "../components/NavBar";
 export default function Books() {
   const [user] = useAuthState(auth);
 
-  const [sort, setSort] = useState<Sort>("Title");
-  const [filter, setFilter] = useState<Filter>("All");
-  const [order, setOrder] = useState<Order>(true);
+  const [sort, setSort] = useState<Sort>(
+    (localStorage.getItem("sort") as Sort) ?? "Title"
+  );
+  const [filter, setFilter] = useState<Filter>(
+    (localStorage.getItem("filter") as Filter) ?? "All"
+  );
+  const [order, setOrder] = useState<Order>(
+    Boolean(localStorage.getItem("order"))
+  );
 
   const { data, isLoading, isError } = useGetUserBooksQuery(
     user?.uid ?? skipToken
