@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useRef } from "react";
 import Dialog from "src/components/Dialog";
 import { useGetBookImageURLQuery } from "src/services/books";
 import { Book } from "../../../../types";
@@ -8,7 +8,6 @@ import { ImageContext } from "./imageContext";
 
 const Card = ({ book }: { book: Book }) => {
   const dialogRef = useRef<HTMLDialogElement>(null);
-  const [showImageControls, setShowImageControls] = useState(false);
 
   const { title, author } = book;
   const {
@@ -17,19 +16,13 @@ const Card = ({ book }: { book: Book }) => {
     isError,
   } = useGetBookImageURLQuery({ title, author });
 
-  const toggleImageControls = () => {
-    setShowImageControls(!showImageControls);
-  };
-
   return (
     <article
       onClick={() => dialogRef.current?.showModal()}
-      className={
-        "relative flex rounded-lg border-2 border-zinc-700 bg-zinc-100 p-3 dark:bg-zinc-800"
-      }
+      className="relative  rounded-lg border-2 border-zinc-700 bg-zinc-100 p-3 dark:bg-zinc-800"
     >
       <ImageContext.Provider value={{ docs, isLoading, isError }}>
-        <Content {...book} handleImage={toggleImageControls} />
+        <Content {...book} />
       </ImageContext.Provider>
       <Dialog ref={dialogRef}>
         <Info book={book} />
