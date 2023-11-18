@@ -97,7 +97,7 @@ export default function AddForm() {
           onChange={(event) => setAuthor(event.target.value)}
         />
       </label>
-      <div>
+      <div className="flex flex-col gap-1">
         <label className="flex justify-between gap-2" htmlFor="rating">
           Rating
           <span>{rating}</span>
