@@ -95,10 +95,10 @@ const EditForm = ({ book, setShowForm }: Props) => {
           onChange={(event) => setAuthor(event.target.value)}
         />
       </label>
-      <div>
+      <div className="flex flex-col gap-2">
         <label className="flex justify-between gap-2" htmlFor="rating">
           Rating
-          <span>{rating}</span>
+          <span className="pr-1">{rating}</span>
         </label>
         <input
           type="range"
