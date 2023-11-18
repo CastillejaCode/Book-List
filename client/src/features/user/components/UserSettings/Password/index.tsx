@@ -3,7 +3,7 @@ import { updatePassword, signOut } from "firebase/auth";
 import { useField } from "src/hooks/useField";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 import Toast from "src/components/Toast";
 
 const Password = () => {

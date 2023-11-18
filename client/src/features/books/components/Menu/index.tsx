@@ -12,7 +12,7 @@ import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import Dialog from "src/components/Dialog";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 import { setUser } from "src/slices/toggleSlice";
 import AddForm from "../AddForm";
 import { useAddBookMutation } from "src/services/books";

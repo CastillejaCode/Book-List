@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
 import { useAddBookMutation } from "src/services/books";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 import { z } from "zod";
 
 const Book = z.object({

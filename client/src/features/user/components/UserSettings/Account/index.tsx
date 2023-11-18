@@ -6,7 +6,7 @@ import Toast from "src/components/Toast";
 import Verify from "./Verify";
 import Upgrade from "./Upgrade";
 import { useDispatch, useSelector } from "react-redux";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 import { RootState } from "src/store";
 interface Props {
   handleName: React.Dispatch<string>;

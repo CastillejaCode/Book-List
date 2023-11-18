@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { FirebaseError } from "firebase/app";
 import {
   sendPasswordResetEmail,
@@ -10,8 +11,7 @@ import auth from "src/auth/config";
 import SubmitButton from "src/components/SubmitButton";
 import Toast from "src/components/Toast";
 import { useField } from "src/hooks/useField";
-import { setToast } from "src/slices/notificationSlice";
-import clsx from "clsx";
+import { setToast } from "src/slices/toastSlice";
 
 export default function Login() {
   const dialogRef = useRef<HTMLDialogElement>(null);
