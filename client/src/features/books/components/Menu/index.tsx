@@ -3,6 +3,7 @@ import {
   MagnifyingGlassIcon,
   PlusIcon,
   UserCircleIcon,
+  ArrowUturnDownIcon,
 } from "@heroicons/react/20/solid";
 import { signOut } from "firebase/auth";
 import { SetStateAction, useRef } from "react";
@@ -14,6 +15,10 @@ import Dialog from "src/components/Dialog";
 import { setToast } from "src/slices/notificationSlice";
 import { setUser } from "src/slices/toggleSlice";
 import AddForm from "../AddForm";
+import { useAddBookMutation } from "src/services/books";
+import { useSelector } from "react-redux";
+import { RootState } from "src/store";
+import { saveUndo } from "src/slices/undoSlice";
 
 interface Props {
   showMenu: boolean;
@@ -24,8 +29,12 @@ interface Props {
 const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const dialogRef = useRef<HTMLDialogElement>(null);
   const [user] = useAuthState(auth);
+  const dialogRef = useRef<HTMLDialogElement>(null);
+
+  const [addBook, { isError, isSuccess }] = useAddBookMutation();
+
+  const undoBook = useSelector((state: RootState) => state.undo.value);
 
   // Only allows adding books if user is verified or if user is doing a demo and has gone over the 24 hour limit for "testing" out the app
   const verifyTimeLimit = () => {
@@ -47,6 +56,20 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
     dispatch(setToast({ message: "Signed out", type: "notification" }));
     setShowMenu(false);
     dispatch(setUser(false));
+  };
+
+  const handleUndo = async () => {
+    try {
+      if (!undoBook) throw new Error("Can't find book to undelete");
+      await addBook(undoBook);
+      if (isError) throw new Error("Couldn't undo deletion");
+      dispatch(saveUndo(null));
+    } catch (err) {
+      if (err instanceof Error) {
+        const { message } = err;
+        dispatch(setToast({ type: "error", message }));
+      }
+    }
   };
 
   return (
@@ -71,18 +94,26 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
             </a>
           </li>
         )}
-        <li tabIndex={0} className="mb-4">
+        <li tabIndex={0}>
           <button onClick={handleSearch}>
             <MagnifyingGlassIcon className="aspect-square w-6" />
             Search
           </button>
         </li>
-        <li>
+        <li className="mt-4">
           <a onClick={handleSignOut}>
             <ArrowLeftOnRectangleIcon className="aspect-square w-6" />
             Sign Out
           </a>
         </li>
+        {undoBook && (
+          <li className="mt-4">
+            <button onClick={handleUndo} aria-label="Undelete book">
+              <ArrowUturnDownIcon className="aspect-square w-6" />
+              Undo
+            </button>
+          </li>
+        )}
       </ul>
       <Dialog ref={dialogRef}>
         <AddForm />

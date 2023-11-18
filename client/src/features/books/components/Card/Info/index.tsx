@@ -1,18 +1,23 @@
+import clsx from "clsx";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
 import ConfirmChoice from "src/components/ConfirmChoice";
 import { useDeleteBookMutation } from "src/services/books";
+import { setToast } from "src/slices/notificationSlice";
+import { saveUndo } from "src/slices/undoSlice";
 import { Book } from "src/types";
 import Cover from "../common/Cover";
-import EditForm from "./EditForm";
 import CoverControls from "./CoverControls";
-import clsx from "clsx";
+import EditForm from "./EditForm";
 
 interface Props {
   book: Book;
 }
 
 export default function Info({ book }: Props) {
-  const [deleteBook] = useDeleteBookMutation();
+  const dispatch = useDispatch();
+  const [deleteBook, { isError }] = useDeleteBookMutation();
+
   const [showForm, setShowForm] = useState(false);
   const [showConfirmChoice, setShowConfirmChoice] = useState(false);
 
@@ -38,6 +43,23 @@ export default function Info({ book }: Props) {
     return `${days} ${days === 1 ? "day" : "days"}`;
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteBook(book.id);
+      if (isError) throw new Error("Couldn't delete book");
+
+      dispatch(saveUndo(book));
+      setTimeout(() => {
+        dispatch(saveUndo(null));
+      }, 60000);
+    } catch (error) {
+      if (error instanceof Error) {
+        const { message } = error;
+        dispatch(setToast({ type: "error", message }));
+      }
+    }
+  };
+
   const heartColors = [
     "bg-red-600/10",
     "bg-red-600/20",
@@ -53,7 +75,7 @@ export default function Info({ book }: Props) {
   ];
 
   return (
-    <div className="flex flex-col gap-4">
+    <div className="flex flex-col gap-4 ">
       <div>
         <h1 className="text-3xl font-semibold">{book.title}</h1>
         <h2 className="text-2xl">{book.author}</h2>
@@ -106,7 +128,7 @@ export default function Info({ book }: Props) {
             <ConfirmChoice
               visible={showConfirmChoice}
               setVisible={setShowConfirmChoice}
-              confirmAction={() => deleteBook(book.id)}
+              confirmAction={handleDelete}
             />
           </div>
           <div className="divider my-0"></div>
@@ -116,7 +138,10 @@ export default function Info({ book }: Props) {
       {!showForm && (
         <div className="flex w-full flex-col gap-4">
           <Cover title={book.title} coverNumber={book.coverNumber} size="L" />
-          <CoverControls coverNumber={book.coverNumber} id={book.id} />
+          <CoverControls
+            coverNumber={book.coverNumber}
+            id={book.id as string}
+          />
         </div>
       )}
     </div>

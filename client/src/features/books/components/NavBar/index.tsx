@@ -1,6 +1,5 @@
 import {
   AdjustmentsHorizontalIcon,
-  ArrowUturnDownIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
@@ -10,9 +9,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
 import Menu from "src/features/books/components/Menu";
 import useExit from "src/hooks/useExit";
-import { useAddBookMutation } from "src/services/books";
 import { setSearch } from "src/slices/searchSlice";
-import { toggleUndoStatus } from "src/slices/undoSlice";
 import { RootState } from "src/store";
 
 interface Props {
@@ -21,11 +18,8 @@ interface Props {
 
 const NavBar = ({ children }: Props) => {
   const dispatch = useDispatch();
-  const [addBook] = useAddBookMutation();
 
-  const showUndo = useSelector((state: RootState) => state.undo.status);
-  const undoBook = useSelector((state: RootState) => state.undo.value);
-  const searchTerm = useSelector((state: string) => state.search.value);
+  const searchTerm = useSelector((state: RootState) => state.search.value);
 
   const [showCategorize, setShowCategorize] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
@@ -38,11 +32,6 @@ const NavBar = ({ children }: Props) => {
     setShowMenu(false);
   };
   useExit(handleExit, clickOutsideRef);
-
-  const addUndoBook = () => {
-    addBook(undoBook);
-    dispatch(toggleUndoStatus());
-  };
 
   return (
     <header
@@ -102,13 +91,6 @@ const NavBar = ({ children }: Props) => {
               showCategorize && "-rotate-90"
             )}
           />
-        </button>
-        <button
-          onClick={addUndoBook}
-          className={`absolute right-16 aspect-square w-8 transition-all duration-300
-              ${showUndo ? "visible opacity-100" : "invisible opacity-0"}`}
-        >
-          <ArrowUturnDownIcon />
         </button>
       </div>
       <div className={clsx("flex justify-center", !showCategorize && "hidden")}>
