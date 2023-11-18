@@ -53,12 +53,12 @@ export default function Info({ book }: Props) {
   ];
 
   return (
-    <div className="flex flex-col gap-4 ">
+    <div className="flex flex-col gap-4">
       <div>
         <h1 className="text-3xl font-semibold">{book.title}</h1>
         <h2 className="text-2xl">{book.author}</h2>
       </div>
-      <div className="flex flex-col items-center gap-6">
+      <div className="flex flex-col items-center gap-1">
         <h3 className="flex items-center gap-2 text-2xl" aria-label="Rating">
           {book.rating}
           <div
@@ -68,6 +68,7 @@ export default function Info({ book }: Props) {
             )}
           ></div>
         </h3>
+        <div className="divider my-0 w-1/2 self-center"></div>
         {(book.startDate || book.endDate) && (
           <div className="flex flex-col items-center">
             <h3 className="text-xl" aria-label="Start and End Dates">
@@ -79,11 +80,14 @@ export default function Info({ book }: Props) {
           </div>
         )}
         {!book.endDate && book.read && <h3 className="text-lg">Finished</h3>}
+        <div className="divider my-0 w-1/2 self-center"></div>
+
         <p aria-label="Review" className="text-lg">
           {book.review}
         </p>
       </div>
       <div className="divider my-0"></div>
+
       {!showForm && (
         <>
           <div className=" flex justify-around">
