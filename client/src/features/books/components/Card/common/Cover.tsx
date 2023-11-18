@@ -19,7 +19,7 @@ export default function Cover({ title, coverNumber, size }: Props) {
       src={isError ? "book-open.svg" : imgSrc}
       alt={`Book cover for ${title}`}
       className={clsx(
-        "aspect-[1/1.5] rounded-md border-2 border-gray-700",
+        "aspect-[1/1.5] min-w-[7rem] rounded-md border-2 border-gray-700",
         isLoading && "loading"
       )}
     />
