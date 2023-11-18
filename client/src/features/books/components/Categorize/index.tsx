@@ -31,7 +31,7 @@ export default function Categorize({ state, setState }: Props) {
   };
 
   return (
-    <form className="top-20 flex w-full max-w-sm items-center justify-between gap-4 lg:absolute">
+    <form className="top-20 flex w-full max-w-sm items-center justify-between gap-4">
       <select
         className="select w-full max-w-xs"
         value={state.sort}
