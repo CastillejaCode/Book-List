@@ -5,6 +5,7 @@ import { Book } from "src/types";
 import Cover from "../common/Cover";
 import EditForm from "./EditForm";
 import CoverControls from "./CoverControls";
+import clsx from "clsx";
 
 interface Props {
   book: Book;
@@ -37,6 +38,20 @@ export default function Info({ book }: Props) {
     return `${days} ${days === 1 ? "day" : "days"}`;
   };
 
+  const heartColors = [
+    "bg-red-600/10",
+    "bg-red-600/20",
+    "bg-red-600/30",
+    "bg-red-600/40",
+    "bg-red-600/50",
+    "bg-red-600/60",
+    "bg-red-600/70",
+    "bg-red-600/80",
+    "bg-red-600/90",
+    "bg-red-600",
+    "bg-green-600",
+  ];
+
   return (
     <div className="flex flex-col gap-4 ">
       <div>
@@ -44,8 +59,14 @@ export default function Info({ book }: Props) {
         <h2 className="text-2xl">{book.author}</h2>
       </div>
       <div className="flex flex-col items-center gap-6">
-        <h3 className="text-2xl" aria-label="Rating">
+        <h3 className="flex items-center gap-2 text-2xl" aria-label="Rating">
           {book.rating}
+          <div
+            className={clsx(
+              "mask mask-heart h-5 w-5",
+              heartColors.at(book.rating * 2)
+            )}
+          ></div>
         </h3>
         {(book.startDate || book.endDate) && (
           <div className="flex flex-col items-center">
