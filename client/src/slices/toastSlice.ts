@@ -10,7 +10,7 @@ const initialState: Toast = {
   message: "",
 };
 
-export const notificationSlice = createSlice({
+export const toastSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
@@ -27,6 +27,6 @@ export const notificationSlice = createSlice({
   },
 });
 
-export const { setToast, resetToast } = notificationSlice.actions;
+export const { setToast, resetToast } = toastSlice.actions;
 
-export default notificationSlice.reducer;
+export default toastSlice.reducer;
