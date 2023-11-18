@@ -16,10 +16,10 @@ export const notificationSlice = createSlice({
   reducers: {
     setToast: (state, action) => {
       const { type, message } = action.payload;
-      state = {
-        message: message ?? "notification",
-        type,
-      };
+      return (state = {
+        type: type ?? "notification",
+        message,
+      });
     },
     resetToast: (state) => {
       state.message = "";
