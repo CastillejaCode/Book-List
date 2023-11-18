@@ -29,10 +29,10 @@ interface Props {
 const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [user] = useAuthState(auth);
-  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [addBook, { isError }] = useAddBookMutation();
 
-  const [addBook, { isError, isSuccess }] = useAddBookMutation();
+  const dialogRef = useRef<HTMLDialogElement>(null);
+  const [user] = useAuthState(auth);
 
   const undoBook = useSelector((state: RootState) => state.undo.value);
 
@@ -43,6 +43,11 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
     const timeLimit = 24 * 3600;
     if (user?.emailVerified) return false;
     return timeDifference > timeLimit;
+  };
+
+  const handleOpenAddbook = () => {
+    dialogRef.current?.showModal();
+    setShowMenu(false);
   };
 
   const handleSearch = () => {
@@ -88,7 +93,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
         </li>
         {!verifyTimeLimit() && (
           <li>
-            <a onClick={() => dialogRef.current?.showModal()}>
+            <a onClick={handleOpenAddbook}>
               <PlusIcon className="aspect-square w-6" />
               <p>Add Book</p>
             </a>
