@@ -23,23 +23,21 @@ import AddForm from "../AddForm";
 
 interface Props {
   showMenu: boolean;
-  focusInput: () => void;
 }
 
-const Menu = ({ showMenu, focusInput }: Props) => {
+const Menu = ({ showMenu }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const dialogRef = useRef<HTMLDialogElement>(null);
+  const clickOutsideRef = useRef(null);
   const [user] = useAuthState(auth);
-
-  if (!user) return <></>;
 
   // Only allows adding books if user is verified or if user is doing a demo and has gone over the 24 hour limit for "testing" out the app
   const verifyTimeLimit = () => {
-    const timeCreated = user.metadata.creationTime as string;
+    const timeCreated = user?.metadata.creationTime as string;
     const timeDifference = Date.now() - new Date(timeCreated).getTime();
     const timeLimit = 24 * 3600;
-    if (user.emailVerified) return false;
+    if (user?.emailVerified) return false;
     return timeDifference > timeLimit;
   };
 
@@ -66,18 +64,14 @@ const Menu = ({ showMenu, focusInput }: Props) => {
           </li>
         )}
         <li tabIndex={0} className="mb-4">
-          <a
+          <button
             onClick={() => {
               dispatch(toggleSearch());
-              // Janky way of waiting for input element to exist before focusing on it
-              setTimeout(() => {
-                focusInput();
-              }, 50);
             }}
           >
             <MagnifyingGlassIcon className="aspect-square w-6" />
             Search
-          </a>
+          </button>
         </li>
         <li>
           <a

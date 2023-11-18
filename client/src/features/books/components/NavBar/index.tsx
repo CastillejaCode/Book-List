@@ -30,8 +30,6 @@ const NavBar = ({ children }: Props) => {
   const searchTerm = useSelector((state: RootState) => state.search.value);
   const undoBook = useSelector((state: RootState) => state.undo.value);
 
-  const inputRef = useRef(null);
-
   const clickOutsideRef = useRef<HTMLDivElement>(null);
   const handleExit = () => setShowCategorize(false);
   useExit(handleExit, clickOutsideRef);
@@ -41,10 +39,6 @@ const NavBar = ({ children }: Props) => {
   const addUndoBook = () => {
     addBook(undoBook);
     dispatch(toggleUndoStatus());
-  };
-
-  const focusInput = () => {
-    inputRef.current?.focus();
   };
 
   return (
@@ -75,23 +69,23 @@ const NavBar = ({ children }: Props) => {
             />
           </button>
           <div className="relative">
-            <Link
-              to="/home"
-              className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300
-              ${showSearch && "invisible opacity-0"}
-              `}
-            >
-              tomeTracker
-            </Link>
-            <input
-              onChange={(event) => dispatch(setSearch(event.target.value))}
-              value={searchTerm}
-              type="text"
-              ref={inputRef}
-              className={`w- input-bordered input absolute left-1/2 top-0 h-full w-52 -translate-x-1/2 text-lg transition-all duration-300
-              ${!showSearch && "invisible opacity-0"}
-              `}
-            />
+            {!showSearch && (
+              <Link
+                to="/home"
+                className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300`}
+              >
+                tomeTracker
+              </Link>
+            )}
+            {showSearch && (
+              <input
+                onChange={(event) => dispatch(setSearch(event.target.value))}
+                value={searchTerm}
+                type="text"
+                autoFocus={true}
+                className={`w- input-bordered input absolute left-1/2 top-0 h-full w-52 -translate-x-1/2 text-lg transition-all duration-300`}
+              />
+            )}
           </div>
           <button
             onClick={() => {
@@ -119,7 +113,7 @@ const NavBar = ({ children }: Props) => {
           {children}
         </div>
       </header>
-      <Menu showMenu={showMenu} focusInput={focusInput} />
+      <Menu showMenu={showMenu} />
     </div>
   );
 };
