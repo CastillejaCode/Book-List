@@ -8,7 +8,7 @@ interface Props {
 }
 
 export default function Cover({ title, coverNumber, size }: Props) {
-  const { docs, isLoading, isError } = useImageContext();
+  const { docs, isLoading } = useImageContext();
 
   const value = docs?.at(coverNumber)?.cover_i;
   const key = "id";
@@ -16,10 +16,10 @@ export default function Cover({ title, coverNumber, size }: Props) {
 
   return (
     <img
-      src={isError ? "book-open.svg" : imgSrc}
+      src={value ? imgSrc : "mstile-310x310.png"}
       alt={`Book cover for ${title}`}
       className={clsx(
-        "aspect-[1/1.5] min-w-[7rem] rounded-md border-2 border-gray-700",
+        "aspect-[1/1.5]  rounded-md border-2 border-gray-700",
         isLoading && "loading"
       )}
     />
