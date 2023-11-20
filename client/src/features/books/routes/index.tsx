@@ -42,13 +42,17 @@ export default function Books() {
           setState={{ setSort, setFilter, setOrder }}
         />
       </NavBar>
-      <main className="flex flex-col p-8">
-        <div className="grid grid-flow-row gap-4">
-          {books &&
-            books.map((book: Book) => {
-              return <Card book={book} key={book.id} />;
-            })}
-        </div>
+      <main
+        className=" gap-4 p-8"
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(17rem , 1fr))",
+        }}
+      >
+        {books &&
+          books.map((book: Book) => {
+            return <Card book={book} key={book.id} />;
+          })}
       </main>
       <Toast />
     </div>

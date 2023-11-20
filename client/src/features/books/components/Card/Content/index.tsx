@@ -13,10 +13,8 @@ export default function Content({
   coverNumber,
 }: Book) {
   return (
-    <div className="flex justify-between gap-2">
-      <div className="max-w-[8rem]">
-        <Image title={title} coverNumber={coverNumber} size="M" />
-      </div>
+    <div className="flex gap-2">
+      <Image title={title} coverNumber={coverNumber} size="M" />
       <div className="flex flex-auto flex-col text-center transition-all duration-300">
         <h2 className=" text-2xl font-semibold">{title}</h2>
         <h3 className=" text-xl">{author}</h3>
