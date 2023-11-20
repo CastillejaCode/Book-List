@@ -19,8 +19,10 @@ export default function Cover({ title, coverNumber, size }: Props) {
       src={value ? imgSrc : "book-open.svg"}
       alt={`Book cover for ${title}`}
       className={clsx(
-        "aspect-[1/1.5] w-[8rem] rounded-md border-2 border-gray-700",
-        isLoading && "loading"
+        "aspect-[1/1.5] rounded-md border-2 border-gray-700",
+        isLoading && "loading",
+        // I'm throwing this here so I don't have to add more props to fix the sizing issue
+        size === "M" && "w-[8rem]"
       )}
     />
   );
