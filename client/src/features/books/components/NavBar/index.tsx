@@ -31,7 +31,16 @@ const NavBar = ({ children }: Props) => {
     setShowSearch(false);
     setShowMenu(false);
   };
+
+  // Executes action when clicking outside ref or hitting the escape key
   useExit(handleExit, clickOutsideRef);
+
+  const handleMenu = () => {
+    if (!showMenu && showSearch) {
+      dispatch(setSearch(""));
+      setShowSearch(false);
+    } else setShowMenu(!showMenu);
+  };
 
   return (
     <header
@@ -44,13 +53,7 @@ const NavBar = ({ children }: Props) => {
         setShowSearch={setShowSearch}
       />
       <div className="flex justify-between">
-        <button
-          onClick={() => {
-            dispatch(setSearch(""));
-            setShowMenu(!showMenu);
-          }}
-          className="relative"
-        >
+        <button onClick={handleMenu} className="relative">
           <Bars3Icon
             className={` aspect-square w-10 transition-all duration-300
               ${(showMenu || showSearch) && "invisible rotate-90 opacity-0"}`}

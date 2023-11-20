@@ -26,6 +26,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
   );
   const [read, setRead] = useState(book.read);
 
+  // Set Read toggle based on endDate
   useEffect(() => {
     if (!inputReadRef.current) return;
     if (endDate) inputReadRef.current.disabled = true;
@@ -151,6 +152,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
         <input
           type="checkbox"
           checked={read}
+          disabled={Boolean(endDate)}
           ref={inputReadRef}
           onChange={(event) => setRead(event.target.checked)}
           className="toggle"
