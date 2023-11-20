@@ -43,7 +43,7 @@ export default function Books() {
         />
       </NavBar>
       <main
-        className=" gap-4 p-8"
+        className=" place-items-center gap-4 p-6 "
         style={{
           display: "grid",
           gridTemplateColumns: "repeat(auto-fit, minmax(17rem , 1fr))",

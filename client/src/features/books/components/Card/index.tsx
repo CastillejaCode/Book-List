@@ -19,7 +19,7 @@ const Card = ({ book }: { book: Book }) => {
   return (
     <article
       onClick={() => dialogRef.current?.showModal()}
-      className="relative w-full rounded-lg border-2 border-zinc-700 bg-zinc-100 p-3 dark:bg-zinc-800"
+      className="relative w-full max-w-lg  self-center rounded-lg border-2 border-zinc-700 bg-zinc-100 p-3 dark:bg-zinc-800"
     >
       <ImageContext.Provider value={{ docs, isLoading, isError }}>
         <Content {...book} />
