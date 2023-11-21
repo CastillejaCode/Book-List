@@ -43,63 +43,67 @@ const NavBar = ({ children }: Props) => {
   };
 
   return (
-    <header
-      ref={clickOutsideRef}
-      className="flex w-screen flex-col  gap-2 border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900"
-    >
+    <div className="sticky top-0 z-10">
+      <header
+        ref={clickOutsideRef}
+        className="flex w-screen flex-col border-b border-gray-900 bg-zinc-200 px-4 py-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900"
+      >
+        <div className="flex justify-between ">
+          <button onClick={handleMenu} className="relative">
+            <Bars3Icon
+              className={` aspect-square w-10 transition-all duration-300
+              ${(showMenu || showSearch) && "invisible rotate-90 opacity-0"}`}
+            />
+            <XMarkIcon
+              className={`absolute left-0 top-0 aspect-square w-10 transition-all duration-300
+              ${!(showMenu || showSearch) && "invisible -rotate-90 opacity-0"}
+              `}
+            />
+          </button>
+          <div className="relative">
+            {!showSearch && (
+              <Link
+                to="/home"
+                className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300`}
+              >
+                tomeTracker
+              </Link>
+            )}
+            {showSearch && (
+              <input
+                onChange={(event) => dispatch(setSearch(event.target.value))}
+                value={searchTerm}
+                type="text"
+                autoFocus={true}
+                className={`w- input-bordered input absolute left-1/2 top-0 h-full w-52 -translate-x-1/2 text-lg transition-all duration-300`}
+              />
+            )}
+          </div>
+          <button
+            onClick={() => {
+              setShowCategorize(!showCategorize);
+            }}
+          >
+            <AdjustmentsHorizontalIcon
+              className={clsx(
+                "aspect-square w-8 transition-all duration-200",
+                showCategorize && "-rotate-90"
+              )}
+            />
+          </button>
+        </div>
+        <div
+          className={clsx("flex justify-center", !showCategorize && "hidden")}
+        >
+          {children}
+        </div>
+      </header>
       <Menu
         showMenu={showMenu}
         setShowMenu={setShowMenu}
         setShowSearch={setShowSearch}
       />
-      <div className="flex justify-between">
-        <button onClick={handleMenu} className="relative">
-          <Bars3Icon
-            className={` aspect-square w-10 transition-all duration-300
-              ${(showMenu || showSearch) && "invisible rotate-90 opacity-0"}`}
-          />
-          <XMarkIcon
-            className={`absolute left-0 top-0 aspect-square w-10 transition-all duration-300
-              ${!(showMenu || showSearch) && "invisible -rotate-90 opacity-0"}
-              `}
-          />
-        </button>
-        <div className="relative">
-          {!showSearch && (
-            <Link
-              to="/home"
-              className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300`}
-            >
-              tomeTracker
-            </Link>
-          )}
-          {showSearch && (
-            <input
-              onChange={(event) => dispatch(setSearch(event.target.value))}
-              value={searchTerm}
-              type="text"
-              autoFocus={true}
-              className={`w- input-bordered input absolute left-1/2 top-0 h-full w-52 -translate-x-1/2 text-lg transition-all duration-300`}
-            />
-          )}
-        </div>
-        <button
-          onClick={() => {
-            setShowCategorize(!showCategorize);
-          }}
-        >
-          <AdjustmentsHorizontalIcon
-            className={clsx(
-              "aspect-square w-8 transition-all duration-200",
-              showCategorize && "-rotate-90"
-            )}
-          />
-        </button>
-      </div>
-      <div className={clsx("flex justify-center", !showCategorize && "hidden")}>
-        {children}
-      </div>
-    </header>
+    </div>
   );
 };
 

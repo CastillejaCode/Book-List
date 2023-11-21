@@ -79,7 +79,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
 
   return (
     <div
-      className={`menu absolute top-16 z-50 w-fit rounded-br-md border-b-2 border-r-2 border-zinc-700 bg-zinc-100 transition-all duration-300 dark:bg-zinc-900
+      className={`menu absolute w-fit rounded-br-md border-b-2 border-r-2 border-zinc-700 bg-zinc-100 transition-all duration-200 dark:bg-zinc-900
     ${showMenu ? "left-0" : "-left-60"}
     `}
     >
