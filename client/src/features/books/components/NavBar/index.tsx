@@ -46,7 +46,11 @@ const NavBar = ({ children }: Props) => {
     <div ref={clickOutsideRef} className="sticky top-0 z-10">
       <header className="flex w-screen flex-col border-b border-gray-900 bg-zinc-200 px-4 py-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
         <div className="flex justify-between ">
-          <button onClick={handleMenu} className="relative">
+          <button
+            onClick={handleMenu}
+            className="relative"
+            aria-label="Toggle Menu"
+          >
             <Bars3Icon
               className={` aspect-square w-10 transition-all duration-300
               ${(showMenu || showSearch) && "invisible rotate-90 opacity-0"}`}
@@ -77,6 +81,7 @@ const NavBar = ({ children }: Props) => {
             )}
           </div>
           <button
+            aria-label="Toggle open form for filtering and sorting books"
             onClick={() => {
               setShowCategorize(!showCategorize);
             }}
@@ -90,7 +95,10 @@ const NavBar = ({ children }: Props) => {
           </button>
         </div>
         <div
-          className={clsx("flex justify-center", !showCategorize && "hidden")}
+          className={clsx(
+            "flex justify-center md:visible",
+            !showCategorize && "hidden"
+          )}
         >
           {children}
         </div>

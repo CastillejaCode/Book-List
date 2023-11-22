@@ -81,7 +81,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   return (
     <div
       className={`menu absolute w-fit rounded-br-md border-b-2 border-r-2 border-zinc-700 bg-zinc-100 transition-all duration-200 dark:bg-zinc-900
-    ${showMenu ? "left-0" : "-left-60"}
+    ${showMenu ? "left-0" : "invisible -left-60"}
     `}
     >
       <ul className="menu text-xl">
@@ -116,10 +116,10 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
           </button>
         </li>
         <li className="mt-4">
-          <a onClick={handleSignOut}>
+          <button onClick={handleSignOut}>
             <ArrowLeftOnRectangleIcon className="aspect-square w-6" />
             Sign Out
-          </a>
+          </button>
         </li>
         {undoBook && (
           <li className="mt-4">

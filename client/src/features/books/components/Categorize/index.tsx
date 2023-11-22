@@ -33,6 +33,7 @@ export default function Categorize({ state, setState }: Props) {
   return (
     <form className="top-20 flex w-full max-w-sm items-center justify-between gap-4">
       <select
+        aria-label="Sort"
         className="select w-full max-w-xs"
         value={state.sort}
         onChange={handleSort}
@@ -43,10 +44,11 @@ export default function Categorize({ state, setState }: Props) {
         <option>Rating</option>
         <option>Date</option>
       </select>
-      <div className="flex flex-col items-center gap-2">
-        <label htmlFor="toggle" className={clsx(state.order && "font-bold")}>
-          Asc.
-        </label>
+      <label
+        aria-label="Order books"
+        className="flex cursor-pointer flex-col items-center gap-2"
+      >
+        <span className={clsx(state.order && "font-bold")}>Asc.</span>
         <input
           type="checkbox"
           id="toggle"
@@ -54,11 +56,10 @@ export default function Categorize({ state, setState }: Props) {
           onChange={handleOrder}
           checked={state.order}
         />
-        <label htmlFor="toggle" className={clsx(!state.order && "font-bold")}>
-          Desc.
-        </label>
-      </div>
+        <span className={clsx(!state.order && "font-bold")}>Desc.</span>
+      </label>
       <select
+        aria-label="Filter"
         className="select w-full max-w-xs"
         value={state.filter}
         onChange={handleFilter}

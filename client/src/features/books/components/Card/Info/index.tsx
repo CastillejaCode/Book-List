@@ -94,12 +94,12 @@ export default function Info({ book }: Props) {
         {(book.startDate || book.endDate) && (
           <>
             <div className="flex flex-col items-center">
-              <span className="text-xl" aria-label="Start and End Dates">
+              <p className="text-xl">
                 {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
-              </span>
-              <span className="text-lg" aria-label="Duration">
+              </p>
+              <p className="text-lg">
                 {`${subtractDates(book.endDate, book.startDate)}`}
-              </span>
+              </p>
             </div>
             <div className="divider my-0 w-1/2 self-center"></div>
           </>
