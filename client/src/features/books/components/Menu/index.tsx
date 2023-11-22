@@ -11,7 +11,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
-import Dialog from "src/components/Dialog";
+import Dialog from "src/components/function/Dialog";
 import { setToast } from "src/slices/toastSlice";
 import { setUser } from "src/slices/toggleSlice";
 import AddForm from "../AddForm";

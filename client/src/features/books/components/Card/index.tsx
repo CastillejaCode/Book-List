@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import Dialog from "src/components/Dialog";
+import Dialog from "src/components/function/Dialog";
 import { useGetBookImageURLQuery } from "src/services/books";
 import { Book } from "../../../../types";
 import Content from "./Content";

@@ -1,7 +1,7 @@
-import Toast from "src/components/Toast";
+import Toast from "src/components/ui/Toast";
 import { Link } from "react-router-dom";
-import Footer from "src/components/Footer";
-import Header from "src/components/Header";
+import Footer from "src/components/ui/Footer";
+import Header from "src/components/ui/Header";
 import SignUp from "src/features/login/components/SignUp";
 
 export default function Landing() {

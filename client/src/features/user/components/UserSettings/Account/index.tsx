@@ -2,7 +2,7 @@ import { useField } from "src/hooks/useField";
 import { updateEmail, updateProfile } from "firebase/auth";
 import auth from "src/auth/config";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Toast from "src/components/Toast";
+import Toast from "src/components/ui/Toast";
 import Verify from "./Verify";
 import Upgrade from "./Upgrade";
 import { useDispatch, useSelector } from "react-redux";

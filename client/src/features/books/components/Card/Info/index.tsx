@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useState } from "react";
 import { useDispatch } from "react-redux";
-import ConfirmChoice from "src/components/ConfirmChoice";
+import ConfirmChoice from "src/components/ui/ConfirmChoice";
 import { useDeleteBookMutation } from "src/services/books";
 import { setToast } from "src/slices/toastSlice";
 import { saveUndo } from "src/slices/undoSlice";
