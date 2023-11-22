@@ -5,7 +5,7 @@ export default function Account() {
   return (
     <>
       <NavBar />
-      <main className="grid min-h-screen place-content-center">
+      <main className="grid place-content-center">
         <UserSettings />
       </main>
     </>

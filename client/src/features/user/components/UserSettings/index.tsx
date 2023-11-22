@@ -9,7 +9,7 @@ const UserSettings = () => {
   const [name, setName] = useState(auth.currentUser?.displayName);
 
   return (
-    <div className="mt-10 flex flex-col">
+    <div className="mt-10 flex w-full flex-col">
       <h1 className="mb-10 text-center text-3xl">{name}</h1>
       <Tabs.Root
         defaultValue="tab1"

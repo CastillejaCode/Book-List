@@ -21,7 +21,6 @@ const Password = () => {
   const resetPassword = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (!user) return;
-    console.log(password.value, passwordConfirm.value);
     try {
       if (passwordConfirm.value !== password.value)
         throw Error("Passwords do not match");
@@ -30,8 +29,10 @@ const Password = () => {
       setPassword("");
       setPasswordConfirm("");
       signOut(auth);
+      dispatch(setToast({ message: "Password reset" }));
     } catch (error) {
-      if (error instanceof Error) dispatch(setToast(error.message));
+      if (error instanceof Error)
+        dispatch(setToast({ type: "error", message: error.message }));
       setPassword("");
       setPasswordConfirm("");
     }
@@ -40,27 +41,27 @@ const Password = () => {
   return (
     <div className="flex flex-col items-center gap-4">
       <h2>
-        Reset your password here. <br /> You will then be signed out.
+        Reset your password. <br /> You will then be signed out.
       </h2>
       <Toast />
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={resetPassword}>
-        <div className="flex flex-col">
-          <label htmlFor="pwd">password</label>
+        <label className="flex flex-col">
+          Password
           <input
             {...password}
             autoComplete="new-password"
             className="input-login"
           />
-        </div>
-        <div className="mb-4 flex flex-col">
-          <label htmlFor="pwdConfirm">confirm password</label>
+        </label>
+        <label className="mb-4 flex flex-col">
+          Confirm password
           <input
             {...passwordConfirm}
             autoComplete="new-password"
             className="input-login"
           />
-        </div>
-        <button className="btn self-end border-0 bg-green-200 text-lg normal-case text-green-900">
+        </label>
+        <button className="btn self-end  bg-green-200 text-green-900">
           Change Password
         </button>
       </form>

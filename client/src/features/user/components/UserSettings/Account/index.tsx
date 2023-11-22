@@ -33,32 +33,32 @@ const Account = ({ handleName }: Props) => {
       await updateProfile(user, { displayName: name.value });
       handleName(name.value);
       setNameValue("");
-      dispatch(setToast("name changed"));
+      dispatch(setToast({ message: "name changed" }));
     }
     if (email.value) {
       await updateEmail(user, email.value);
       setEmailValue("");
-      dispatch(setToast("email changed"));
+      dispatch(setToast({ message: "email changed" }));
     }
     if (email.value && name.value) {
-      dispatch(setToast("name and email changed"));
+      dispatch(setToast({ message: "name and email changed" }));
     }
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <h2>Make changes to your account here.</h2>
+    <div className="flex w-full max-w-xs flex-col items-center gap-4">
+      <h2>Make changes to your account.</h2>
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={changeAccount}>
-        <div className="flex flex-col">
-          <label htmlFor="name">first name</label>
+        <label className="flex flex-col">
+          First name
           <input {...name} className="input-login" autoComplete="name" />
-        </div>
-        <div className="mb-4 flex flex-col">
-          <label htmlFor="email">email</label>
+        </label>
+        <label className="mb-4 flex flex-col">
+          Email
           <input {...email} className="input-login" autoComplete="email" />
-        </div>
+        </label>
         <button
-          className="btn self-end border-0 bg-green-200 text-lg normal-case text-green-900"
+          className="btn self-end bg-green-200 text-green-900"
           type="submit"
         >
           Save Changes
