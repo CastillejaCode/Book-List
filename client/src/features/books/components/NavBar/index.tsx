@@ -13,7 +13,7 @@ import { setSearch } from "src/slices/searchSlice";
 import { RootState } from "src/store";
 
 interface Props {
-  children: React.ReactNode;
+  children?: React.ReactNode;
 }
 
 const NavBar = ({ children }: Props) => {
