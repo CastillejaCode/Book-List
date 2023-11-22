@@ -63,13 +63,13 @@ const EditForm = ({ book, setShowForm }: Props) => {
       onSubmit={submitForm}
       className="flex flex-col gap-4 text-base transition-all duration-300"
     >
-      <div className=" flex justify-around">
-        <button className="btn-success  btn-sm btn" type="submit">
+      <div className=" mt-4 flex justify-center gap-8 px-4">
+        <button className="btn-success btn-sm btn flex-1" type="submit">
           Submit
         </button>
         <button
           type="button"
-          className="btn-error btn-sm btn"
+          className="btn-error btn-sm btn flex-1"
           onClick={() => setShowForm(false)}
         >
           Cancel

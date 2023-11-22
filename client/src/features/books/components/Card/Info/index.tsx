@@ -75,8 +75,8 @@ export default function Info({ book }: Props) {
   ];
 
   return (
-    <div className="flex flex-col gap-4 ">
-      <div>
+    <div className="flex flex-col">
+      <div className="mb-4">
         <h1 className="text-3xl font-semibold">{book.title}</h1>
         <h2 className="text-2xl">{book.author}</h2>
       </div>
@@ -92,35 +92,35 @@ export default function Info({ book }: Props) {
         </h3>
         <div className="divider my-0 w-1/2 self-center"></div>
         {(book.startDate || book.endDate) && (
-          <div className="flex flex-col items-center">
-            <h3 className="text-xl" aria-label="Start and End Dates">
-              {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
-            </h3>
-            <p className="text-lg" aria-label="Duration">
-              {`${subtractDates(book.endDate, book.startDate)}`}
-            </p>
-          </div>
+          <>
+            <div className="flex flex-col items-center">
+              <span className="text-xl" aria-label="Start and End Dates">
+                {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
+              </span>
+              <span className="text-lg" aria-label="Duration">
+                {`${subtractDates(book.endDate, book.startDate)}`}
+              </span>
+            </div>
+            <div className="divider my-0 w-1/2 self-center"></div>
+          </>
         )}
         {!book.endDate && book.read && <h3 className="text-lg">Finished</h3>}
-        <div className="divider my-0 w-1/2 self-center"></div>
-
-        <p aria-label="Review" className="text-lg">
-          {book.review}
+        <p aria-label="Review" className="mb-2 text-lg">
+          {book.review || "..."}
         </p>
       </div>
       <div className="divider my-0"></div>
-
       {!showForm && (
         <>
-          <div className=" flex justify-around">
+          <div className=" my-4 flex gap-8 px-4">
             <button
-              className="btn-warning  btn-sm btn"
+              className="btn-warning btn-sm  btn flex-1"
               onClick={() => setShowForm(true)}
             >
               Edit
             </button>
             <button
-              className="btn-error btn-sm btn"
+              className="btn-error btn-sm btn flex-1"
               onClick={() => setShowConfirmChoice(true)}
             >
               Delete
@@ -136,12 +136,12 @@ export default function Info({ book }: Props) {
       )}
       {showForm && <EditForm book={book} setShowForm={setShowForm} />}
       {!showForm && (
-        <div className="flex w-full flex-col gap-4">
-          <Cover title={book.title} coverNumber={book.coverNumber} size="L" />
+        <div className="mt-4 flex w-full flex-col gap-4">
           <CoverControls
             coverNumber={book.coverNumber}
             id={book.id as string}
           />
+          <Cover title={book.title} coverNumber={book.coverNumber} size="L" />
         </div>
       )}
     </div>
