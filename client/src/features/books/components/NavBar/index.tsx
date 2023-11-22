@@ -43,11 +43,8 @@ const NavBar = ({ children }: Props) => {
   };
 
   return (
-    <div className="sticky top-0 z-10">
-      <header
-        ref={clickOutsideRef}
-        className="flex w-screen flex-col border-b border-gray-900 bg-zinc-200 px-4 py-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900"
-      >
+    <div ref={clickOutsideRef} className="sticky top-0 z-10">
+      <header className="flex w-screen flex-col border-b border-gray-900 bg-zinc-200 px-4 py-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
         <div className="flex justify-between ">
           <button onClick={handleMenu} className="relative">
             <Bars3Icon
@@ -75,7 +72,7 @@ const NavBar = ({ children }: Props) => {
                 value={searchTerm}
                 type="text"
                 autoFocus={true}
-                className={`w- input-bordered input absolute left-1/2 top-0 h-full w-52 -translate-x-1/2 text-lg transition-all duration-300`}
+                className={`input-bordered input absolute left-1/2 top-0 h-full max-w-lg -translate-x-1/2 text-lg transition-all duration-300`}
               />
             )}
           </div>

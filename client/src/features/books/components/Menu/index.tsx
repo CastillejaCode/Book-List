@@ -52,8 +52,8 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   };
 
   const handleSearch = () => {
-    setShowMenu(false);
     setShowSearch(true);
+    setShowMenu(false);
   };
 
   const handleSignOut = () => {
