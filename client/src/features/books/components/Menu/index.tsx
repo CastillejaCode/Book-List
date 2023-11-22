@@ -1,24 +1,24 @@
 import {
   ArrowLeftOnRectangleIcon,
+  ArrowUturnDownIcon,
   MagnifyingGlassIcon,
   PlusIcon,
   UserCircleIcon,
-  ArrowUturnDownIcon,
 } from "@heroicons/react/20/solid";
+import { BookOpenIcon } from "@heroicons/react/24/outline";
 import { signOut } from "firebase/auth";
 import { SetStateAction, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import Dialog from "src/components/function/Dialog";
+import { useAddBookMutation } from "src/services/books";
 import { setToast } from "src/slices/toastSlice";
 import { setUser } from "src/slices/toggleSlice";
-import AddForm from "../AddForm";
-import { useAddBookMutation } from "src/services/books";
-import { useSelector } from "react-redux";
-import { RootState } from "src/store";
 import { saveUndo } from "src/slices/undoSlice";
+import { RootState } from "src/store";
+import AddForm from "../AddForm";
 
 interface Props {
   showMenu: boolean;
@@ -29,6 +29,7 @@ interface Props {
 const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
   const [addBook, { isError }] = useAddBookMutation();
 
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -83,14 +84,23 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
     ${showMenu ? "left-0" : "-left-60"}
     `}
     >
-      {/* Doesn't look nice b/c had to conform to DaisyUI */}
       <ul className="menu text-xl">
-        <li>
-          <Link to="/account">
-            <UserCircleIcon className="aspect-square w-6" />
-            {auth.currentUser?.displayName ?? "Account"}
-          </Link>
-        </li>
+        {location.pathname !== "/account" && (
+          <li>
+            <Link to="/account">
+              <UserCircleIcon className="aspect-square w-6" />
+              {auth.currentUser?.displayName ?? "Account"}
+            </Link>
+          </li>
+        )}
+        {location.pathname !== "/home" && (
+          <li>
+            <Link to="/home">
+              <BookOpenIcon className="aspect-square w-6" />
+              Books
+            </Link>
+          </li>
+        )}
         {!verifyTimeLimit() && (
           <li>
             <a onClick={handleOpenAddbook}>
