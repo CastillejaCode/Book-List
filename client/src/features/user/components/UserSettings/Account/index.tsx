@@ -1,5 +1,5 @@
 import { useField } from "src/hooks/useField";
-import { updateEmail, updateProfile } from "firebase/auth";
+import { AuthError, updateEmail, updateProfile } from "firebase/auth";
 import auth from "src/auth/config";
 import { useAuthState } from "react-firebase-hooks/auth";
 import Toast from "src/components/ui/Toast";
@@ -29,19 +29,24 @@ const Account = ({ handleName }: Props) => {
   const changeAccount = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (!user) return;
-    if (name.value) {
-      await updateProfile(user, { displayName: name.value });
-      handleName(name.value);
-      setNameValue("");
-      dispatch(setToast({ message: "name changed" }));
-    }
-    if (email.value) {
-      await updateEmail(user, email.value);
-      setEmailValue("");
-      dispatch(setToast({ message: "email changed" }));
-    }
-    if (email.value && name.value) {
-      dispatch(setToast({ message: "name and email changed" }));
+    try {
+      if (name.value) {
+        await updateProfile(user, { displayName: name.value });
+        handleName(name.value);
+        setNameValue("");
+        dispatch(setToast({ message: "name changed" }));
+      }
+      if (email.value) {
+        await updateEmail(user, email.value);
+        setEmailValue("");
+        dispatch(setToast({ message: "email changed" }));
+      }
+      if (email.value && name.value) {
+        dispatch(setToast({ message: "name and email changed" }));
+      }
+    } catch (error) {
+      const { message } = error as AuthError;
+      dispatch(setToast({ message, type: "error" }));
     }
   };
 
