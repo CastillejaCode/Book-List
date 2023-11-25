@@ -1,7 +1,13 @@
 import clsx from "clsx";
 import { FirebaseError } from "firebase/app";
-import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
+import {
+  EmailAuthProvider,
+  createUserWithEmailAndPassword,
+  linkWithCredential,
+  updateProfile,
+} from "firebase/auth";
 import { useRef } from "react";
+import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
 import SubmitButton from "src/components/ui/SubmitButton";
@@ -16,6 +22,8 @@ interface Props {
 export default function SignUp({ text }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dispatch = useDispatch();
+  const [user] = useAuthState(auth);
+
   const [name, setName] = useField({
     id: "name",
     type: "text",
@@ -32,16 +40,25 @@ export default function SignUp({ text }: Props) {
   const signUp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     try {
-      const userCredential = await createUserWithEmailAndPassword(
-        auth,
-        email.value,
-        password.value
-      );
-      await updateProfile(userCredential.user, { displayName: name.value });
+      if (user?.isAnonymous) {
+        const credential = EmailAuthProvider.credential(
+          email.value,
+          password.value
+        );
+        await linkWithCredential(user, credential);
+        dispatch(
+          setToast({ message: "Anonymous account successfully upgraded" })
+        );
+      } else {
+        const userCredential = await createUserWithEmailAndPassword(
+          auth,
+          email.value,
+          password.value
+        );
+        await updateProfile(userCredential.user, { displayName: name.value });
+      }
       dialogRef.current?.close();
-      dispatch(
-        setToast({ message: "verification email sent", type: "notification" })
-      );
+      // dispatch(setToast({ message: "verification email sent" }));
       setName("");
       setEmail("");
       setPassword("");
@@ -64,7 +81,9 @@ export default function SignUp({ text }: Props) {
       <dialog ref={dialogRef} className="modal">
         <div className="modal-box  bg-zinc-100 dark:bg-zinc-900">
           <form className="flex flex-col gap-6" onSubmit={signUp}>
-            <h1 className="text-center text-3xl font-medium ">Sign up</h1>
+            <h1 className="text-center text-3xl font-medium ">
+              {user?.isAnonymous ? "Upgrade Demo Account" : "Sign Up"}
+            </h1>
             <div className="flex flex-col">
               <label htmlFor="name" className="dark:font-medium ">
                 first name
