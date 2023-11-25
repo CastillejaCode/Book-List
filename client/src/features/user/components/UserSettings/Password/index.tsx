@@ -1,10 +1,9 @@
-import auth from "src/auth/config";
-import { updatePassword, signOut } from "firebase/auth";
-import { useField } from "src/hooks/useField";
+import { signOut, updatePassword } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
+import auth from "src/auth/config";
+import { useField } from "src/hooks/useField";
 import { setToast } from "src/slices/toastSlice";
-import Toast from "src/components/ui/Toast";
 
 const Password = () => {
   const dispatch = useDispatch();
@@ -43,7 +42,6 @@ const Password = () => {
       <h2>
         Reset your password. <br /> You will then be signed out.
       </h2>
-      <Toast />
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={resetPassword}>
         <label className="flex flex-col">
           Password
@@ -61,8 +59,11 @@ const Password = () => {
             className="input-login"
           />
         </label>
-        <button className="btn self-end  bg-green-200 text-green-900">
-          Change Password
+        <button
+          className="btn self-end  bg-green-200 text-green-900"
+          disabled={Boolean(user?.isAnonymous)}
+        >
+          {user?.isAnonymous ? "Not Verified" : "Change Password"}
         </button>
       </form>
     </div>
