@@ -38,9 +38,9 @@ const Password = () => {
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
+    <div className="flex flex-col  gap-4">
       <h2>
-        Reset your password. <br /> You will then be signed out.
+        Reset your password. <br /> You will be signed out.
       </h2>
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={resetPassword}>
         <label className="flex flex-col">
@@ -63,7 +63,7 @@ const Password = () => {
           className="btn self-end  bg-green-200 text-green-900"
           disabled={Boolean(user?.isAnonymous)}
         >
-          {user?.isAnonymous ? "Not Verified" : "Change Password"}
+          {user?.isAnonymous ? "No Account" : "Change Password"}
         </button>
       </form>
     </div>
