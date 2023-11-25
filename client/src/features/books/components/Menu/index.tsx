@@ -42,7 +42,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
     const timeCreated = user?.metadata.creationTime as string;
     const timeDifference = Date.now() - new Date(timeCreated).getTime();
     const timeLimit = 24 * 3600;
-    if (user?.emailVerified) return false;
+    if (user?.emailVerified || user?.isAnonymous) return false;
     return timeDifference > timeLimit;
   };
 
