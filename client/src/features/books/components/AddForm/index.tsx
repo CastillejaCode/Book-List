@@ -4,7 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
 import { useAddBookMutation } from "src/services/books";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 import { z } from "zod";
 
 const Book = z.object({
@@ -52,11 +52,19 @@ export default function AddForm() {
       });
 
       await addBook(formData);
-      dispatch(setToast({ type: "notification", message: "Book added" }));
+      setTitle("");
+      setAuthor("");
+      setRating(0);
+      setReview("");
+      setStartDate("");
+      setEndDate("");
+      setRead(false);
+      dispatch(setToast({ message: "Book added" }));
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
-        dispatch(setToast(error.message));
+        const { message } = error;
+        dispatch(setToast({ type: "error", message }));
       }
     }
   };
@@ -78,7 +86,7 @@ export default function AddForm() {
     >
       <h1 className="self-center text-2xl">Add Book</h1>
       <label>
-        Title
+        Title*
         <input
           className="w-full rounded-md border-2 border-gray-800/70 pl-2 "
           type="text"
@@ -88,7 +96,7 @@ export default function AddForm() {
         />
       </label>
       <label htmlFor="author">
-        Author
+        Author*
         <input
           className="w-full rounded-md border-2 border-gray-800/70 pl-2"
           id="author"
@@ -97,7 +105,7 @@ export default function AddForm() {
           onChange={(event) => setAuthor(event.target.value)}
         />
       </label>
-      <div>
+      <div className="flex flex-col gap-1">
         <label className="flex justify-between gap-2" htmlFor="rating">
           Rating
           <span>{rating}</span>

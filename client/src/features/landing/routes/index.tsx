@@ -1,7 +1,7 @@
-import Toast from "src/components/Toast";
-import { Link } from "react-router-dom";
-import Footer from "src/components/Footer";
-import Header from "src/components/Header";
+import Footer from "src/components/ui/Footer";
+import Header from "src/components/ui/Header";
+import Toast from "src/components/ui/Toast";
+import AnonLogin from "src/features/login/components/AnonLogin";
 import SignUp from "src/features/login/components/SignUp";
 
 export default function Landing() {
@@ -20,9 +20,7 @@ export default function Landing() {
         <div className="flex flex-col items-center gap-4">
           <SignUp text="Get started" />
           or
-          <Link to="/home" className="btn-outline btn">
-            Try it out
-          </Link>
+          <AnonLogin />
         </div>
       </main>
       <Toast />

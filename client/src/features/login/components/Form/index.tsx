@@ -1,7 +1,7 @@
 import { ReactElement } from "react";
 import { signInAnonymously } from "firebase/auth";
 import auth from "src/auth/config";
-import Toast from "src/components/Toast";
+import Toast from "src/components/ui/Toast";
 
 const Form = ({ children }: { children: ReactElement }) => {
   const anonymousLogin = async () => {

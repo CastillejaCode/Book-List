@@ -26,6 +26,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
   );
   const [read, setRead] = useState(book.read);
 
+  // Set Read toggle based on endDate
   useEffect(() => {
     if (!inputReadRef.current) return;
     if (endDate) inputReadRef.current.disabled = true;
@@ -62,13 +63,13 @@ const EditForm = ({ book, setShowForm }: Props) => {
       onSubmit={submitForm}
       className="flex flex-col gap-4 text-base transition-all duration-300"
     >
-      <div className=" flex justify-around">
-        <button className="btn-success  btn-sm btn" type="submit">
+      <div className=" mt-4 flex justify-center gap-8 px-4">
+        <button className="btn-success btn-sm btn flex-1" type="submit">
           Submit
         </button>
         <button
           type="button"
-          className="btn-error btn-sm btn"
+          className="btn-error btn-sm btn flex-1"
           onClick={() => setShowForm(false)}
         >
           Cancel
@@ -95,10 +96,10 @@ const EditForm = ({ book, setShowForm }: Props) => {
           onChange={(event) => setAuthor(event.target.value)}
         />
       </label>
-      <div>
+      <div className="flex flex-col gap-2">
         <label className="flex justify-between gap-2" htmlFor="rating">
           Rating
-          <span>{rating}</span>
+          <span className="pr-1">{rating}</span>
         </label>
         <input
           type="range"
@@ -151,6 +152,7 @@ const EditForm = ({ book, setShowForm }: Props) => {
         <input
           type="checkbox"
           checked={read}
+          disabled={Boolean(endDate)}
           ref={inputReadRef}
           onChange={(event) => setRead(event.target.checked)}
           className="toggle"

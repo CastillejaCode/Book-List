@@ -1,12 +1,12 @@
 import { useField } from "src/hooks/useField";
-import { updateEmail, updateProfile } from "firebase/auth";
+import { AuthError, updateEmail, updateProfile } from "firebase/auth";
 import auth from "src/auth/config";
 import { useAuthState } from "react-firebase-hooks/auth";
-import Toast from "src/components/Toast";
+import Toast from "src/components/ui/Toast";
 import Verify from "./Verify";
 import Upgrade from "./Upgrade";
 import { useDispatch, useSelector } from "react-redux";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 import { RootState } from "src/store";
 interface Props {
   handleName: React.Dispatch<string>;
@@ -29,36 +29,41 @@ const Account = ({ handleName }: Props) => {
   const changeAccount = async (event: React.SyntheticEvent) => {
     event.preventDefault();
     if (!user) return;
-    if (name.value) {
-      await updateProfile(user, { displayName: name.value });
-      handleName(name.value);
-      setNameValue("");
-      dispatch(setToast("name changed"));
-    }
-    if (email.value) {
-      await updateEmail(user, email.value);
-      setEmailValue("");
-      dispatch(setToast("email changed"));
-    }
-    if (email.value && name.value) {
-      dispatch(setToast("name and email changed"));
+    try {
+      if (name.value) {
+        await updateProfile(user, { displayName: name.value });
+        handleName(name.value);
+        setNameValue("");
+        dispatch(setToast({ message: "name changed" }));
+      }
+      if (email.value) {
+        await updateEmail(user, email.value);
+        setEmailValue("");
+        dispatch(setToast({ message: "email changed" }));
+      }
+      if (email.value && name.value) {
+        dispatch(setToast({ message: "name and email changed" }));
+      }
+    } catch (error) {
+      const { message } = error as AuthError;
+      dispatch(setToast({ message, type: "error" }));
     }
   };
 
   return (
-    <div className="flex flex-col items-center gap-4">
-      <h2>Make changes to your account here.</h2>
+    <div className="flex w-full max-w-xs flex-col items-center gap-4">
+      <h2>Make changes to your account.</h2>
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={changeAccount}>
-        <div className="flex flex-col">
-          <label htmlFor="name">first name</label>
+        <label className="flex flex-col">
+          First name
           <input {...name} className="input-login" autoComplete="name" />
-        </div>
-        <div className="mb-4 flex flex-col">
-          <label htmlFor="email">email</label>
+        </label>
+        <label className="mb-4 flex flex-col">
+          Email
           <input {...email} className="input-login" autoComplete="email" />
-        </div>
+        </label>
         <button
-          className="btn self-end border-0 bg-green-200 text-lg normal-case text-green-900"
+          className="btn self-end bg-green-200 text-green-900"
           type="submit"
         >
           Save Changes

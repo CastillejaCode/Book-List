@@ -1,16 +1,23 @@
+import clsx from "clsx";
 import { useState } from "react";
-import ConfirmChoice from "src/components/ConfirmChoice";
+import { useDispatch } from "react-redux";
+import ConfirmChoice from "src/components/ui/ConfirmChoice";
 import { useDeleteBookMutation } from "src/services/books";
+import { setToast } from "src/slices/toastSlice";
+import { saveUndo } from "src/slices/undoSlice";
 import { Book } from "src/types";
+import Cover from "../common/Cover";
+import CoverControls from "./CoverControls";
 import EditForm from "./EditForm";
-import moby from "/moby.jpg";
 
 interface Props {
   book: Book;
 }
 
 export default function Info({ book }: Props) {
-  const [deleteBook] = useDeleteBookMutation();
+  const dispatch = useDispatch();
+  const [deleteBook, { isError }] = useDeleteBookMutation();
+
   const [showForm, setShowForm] = useState(false);
   const [showConfirmChoice, setShowConfirmChoice] = useState(false);
 
@@ -36,43 +43,84 @@ export default function Info({ book }: Props) {
     return `${days} ${days === 1 ? "day" : "days"}`;
   };
 
+  const handleDelete = async () => {
+    try {
+      await deleteBook(book.id);
+      if (isError) throw new Error("Couldn't delete book");
+
+      dispatch(saveUndo(book));
+      setTimeout(() => {
+        dispatch(saveUndo(null));
+      }, 60000);
+    } catch (error) {
+      if (error instanceof Error) {
+        const { message } = error;
+        dispatch(setToast({ type: "error", message }));
+      }
+    }
+  };
+
+  const heartColors = [
+    "bg-red-600/10",
+    "bg-red-600/20",
+    "bg-red-600/30",
+    "bg-red-600/40",
+    "bg-red-600/50",
+    "bg-red-600/60",
+    "bg-red-600/70",
+    "bg-red-600/80",
+    "bg-red-600/90",
+    "bg-red-600",
+    "bg-green-600",
+  ];
+
   return (
-    <div className="flex flex-col gap-4 ">
-      <div>
+    <div className="flex flex-col">
+      <div className="mb-4">
         <h1 className="text-3xl font-semibold">{book.title}</h1>
         <h2 className="text-2xl">{book.author}</h2>
       </div>
-      <div className="flex flex-col items-center gap-6">
-        <h3 className="text-2xl" aria-label="Rating">
+      <div className="flex flex-col items-center gap-1">
+        <h3 className="flex items-center gap-2 text-2xl" aria-label="Rating">
           {book.rating}
+          <div
+            className={clsx(
+              "mask mask-heart h-5 w-5",
+              heartColors.at(book.rating * 2)
+            )}
+          ></div>
         </h3>
+        <div className="divider my-0 w-1/2 self-center"></div>
         {(book.startDate || book.endDate) && (
-          <div className="flex flex-col items-center">
-            <h3 className="text-xl" aria-label="Start and End Dates">
-              {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
-            </h3>
-            <p className="text-lg" aria-label="Duration">
-              {`${subtractDates(book.endDate, book.startDate)}`}
-            </p>
-          </div>
+          <>
+            <div className="flex flex-col items-center">
+              <p className="text-xl">
+                {formatDate(book.startDate)} ⇀ {formatDate(book.endDate)}
+              </p>
+              <p className="text-lg">
+                {`${subtractDates(book.endDate, book.startDate)}`}
+              </p>
+            </div>
+            <div className="divider my-0 w-1/2 self-center"></div>
+          </>
         )}
         {!book.endDate && book.read && <h3 className="text-lg">Finished</h3>}
-        <p aria-label="Review" className="text-lg">
-          {book.review}
+        <p aria-label="Review" className="mb-2 text-lg">
+          {book.review || "..."}
         </p>
       </div>
       <div className="divider my-0"></div>
       {!showForm && (
         <>
-          <div className=" flex justify-around">
+          <div className=" my-4 flex gap-8 px-4">
             <button
-              className="btn-warning  btn-sm btn"
+              className="btn-warning btn-sm  btn flex-1"
               onClick={() => setShowForm(true)}
             >
               Edit
             </button>
             <button
-              className="btn-error btn-sm btn"
+              className="btn-error btn-sm btn flex-1"
               onClick={() => setShowConfirmChoice(true)}
             >
               Delete
@@ -80,7 +128,7 @@ export default function Info({ book }: Props) {
             <ConfirmChoice
               visible={showConfirmChoice}
               setVisible={setShowConfirmChoice}
-              confirmAction={() => deleteBook(book.id)}
+              confirmAction={handleDelete}
             />
           </div>
           <div className="divider my-0"></div>
@@ -88,11 +136,13 @@ export default function Info({ book }: Props) {
       )}
       {showForm && <EditForm book={book} setShowForm={setShowForm} />}
       {!showForm && (
-        <img
-          src={moby}
-          alt={`Cover of ${book.title}`}
-          className="max-w-[16rem] self-center"
-        />
+        <div className="mt-4 flex w-full flex-col gap-4">
+          <CoverControls
+            coverNumber={book.coverNumber}
+            id={book.id as string}
+          />
+          <Cover title={book.title} coverNumber={book.coverNumber} size="L" />
+        </div>
       )}
     </div>
   );

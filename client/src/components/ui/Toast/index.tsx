@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetToast } from "../slices/notificationSlice";
-import { RootState } from "../store";
+import { resetToast } from "src/slices/toastSlice";
+import { RootState } from "src/store";
 import clsx from "clsx";
 
 const Toast = () => {

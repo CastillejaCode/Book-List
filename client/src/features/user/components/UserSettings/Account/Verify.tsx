@@ -2,7 +2,7 @@ import { useDispatch } from "react-redux";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { sendEmailVerification } from "firebase/auth";
 import auth from "src/auth/config";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 import useCheckVerify from "src/hooks/useCheckVerify";
 
 export default function Verify() {

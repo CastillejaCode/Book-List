@@ -1,99 +1,113 @@
 import {
   AdjustmentsHorizontalIcon,
-  ArrowUturnDownIcon,
   Bars3Icon,
   XMarkIcon,
 } from "@heroicons/react/24/solid";
-import { useRef } from "react";
+import clsx from "clsx";
+import { useRef, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import Filter from "src/features/books/components/Filter";
 import Menu from "src/features/books/components/Menu";
-import { useAddBookMutation } from "src/services/books";
-import { resetSearch, setSearch } from "src/slices/searchSlice";
-import { toggleMenu, toggleSearch, toggleSort } from "src/slices/toggleSlice";
-import { toggleUndoStatus } from "src/slices/undoSlice";
+import useExit from "src/hooks/useExit";
+import { setSearch } from "src/slices/searchSlice";
 import { RootState } from "src/store";
 
-const NavBar = () => {
+interface Props {
+  children?: React.ReactNode;
+}
+
+const NavBar = ({ children }: Props) => {
   const dispatch = useDispatch();
-  const showSort = useSelector((state: RootState) => state.toggle.sort);
-  const showMenu = useSelector((state: RootState) => state.toggle.menu);
-  const showUndo = useSelector((state: RootState) => state.undo.status);
-  const showSearch = useSelector((state: RootState) => state.toggle.search);
 
-  const inputRef = useRef(null);
-
-  const [addBook] = useAddBookMutation();
-  const undoBook = useSelector((state: RootState) => state.undo.value);
   const searchTerm = useSelector((state: RootState) => state.search.value);
 
-  const addUndoBook = () => {
-    addBook(undoBook);
-    dispatch(toggleUndoStatus());
+  const [showCategorize, setShowCategorize] = useState(false);
+  const [showMenu, setShowMenu] = useState(false);
+  const [showSearch, setShowSearch] = useState(false);
+
+  const clickOutsideRef = useRef<HTMLDivElement>(null);
+  const handleExit = () => {
+    setShowCategorize(false);
+    setShowSearch(false);
+    setShowMenu(false);
   };
 
-  const focusInput = () => {
-    inputRef.current?.focus();
+  // Executes action when clicking outside ref or hitting the escape key
+  useExit(handleExit, clickOutsideRef);
+
+  const handleMenu = () => {
+    if (!showMenu && showSearch) {
+      dispatch(setSearch(""));
+      setShowSearch(false);
+    } else setShowMenu(!showMenu);
   };
 
   return (
-    <div className="fixed top-0 z-20">
-      <header className="sticky flex w-screen items-center justify-between border-b border-gray-900 bg-zinc-200 px-4 pb-2 pt-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
-        <button
-          onClick={() => {
-            dispatch(resetSearch());
-            if (showSearch) dispatch(toggleSearch());
-            else dispatch(toggleMenu());
-          }}
-          className="relative"
-        >
-          <Bars3Icon
-            className={` aspect-square w-10 transition-all duration-300 
-            ${showMenu || showSearch ? "invisible rotate-90 opacity-0" : ""}`}
-          />
-          <XMarkIcon
-            className={`absolute left-0 top-0 aspect-square w-10 transition-all duration-300 
-            ${!showMenu && !showSearch ? "invisible -rotate-90 opacity-0" : ""}
-            `}
-          />
-        </button>
-        <div className="relative">
-          <Link
-            to="/home"
-            className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300
-            ${showSearch && "invisible opacity-0"}
-            `}
+    <div ref={clickOutsideRef} className="sticky top-0 z-10">
+      <header className="flex w-screen flex-col border-b border-gray-900 bg-zinc-200 px-4 py-2 shadow-md dark:border-zinc-200 dark:bg-zinc-900">
+        <div className="flex justify-between ">
+          <button
+            onClick={handleMenu}
+            className="relative"
+            aria-label="Toggle Menu"
           >
-            tomeTracker
-          </Link>
-          <input
-            onChange={(event) => dispatch(setSearch(event.target.value))}
-            value={searchTerm}
-            type="text"
-            ref={inputRef}
-            className={`w- input-bordered input absolute left-1/2 top-0 h-full w-52 -translate-x-1/2 text-lg transition-all duration-300
-            ${!showSearch && "invisible opacity-0"}
-            `}
-          />
+            <Bars3Icon
+              className={` aspect-square w-10 transition-all duration-300
+              ${(showMenu || showSearch) && "invisible rotate-90 opacity-0"}`}
+            />
+            <XMarkIcon
+              className={`absolute left-0 top-0 aspect-square w-10 transition-all duration-300
+              ${!(showMenu || showSearch) && "invisible -rotate-90 opacity-0"}
+              `}
+            />
+          </button>
+          <div className="relative">
+            {!showSearch && (
+              <Link
+                to="/home"
+                className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300`}
+              >
+                tomeTracker
+              </Link>
+            )}
+            {showSearch && (
+              <input
+                onChange={(event) => dispatch(setSearch(event.target.value))}
+                value={searchTerm}
+                type="text"
+                autoFocus={true}
+                className={`input-bordered input absolute left-1/2 top-0 h-full max-w-lg -translate-x-1/2 text-lg transition-all duration-300`}
+              />
+            )}
+          </div>
+          <button
+            aria-label="Toggle open form for filtering and sorting books"
+            onClick={() => {
+              setShowCategorize(!showCategorize);
+            }}
+          >
+            <AdjustmentsHorizontalIcon
+              className={clsx(
+                "aspect-square w-8 transition-all duration-200",
+                showCategorize && "-rotate-90"
+              )}
+            />
+          </button>
         </div>
-        <button onClick={() => dispatch(toggleSort())}>
-          <AdjustmentsHorizontalIcon
-            className={`aspect-square w-8 transition-all duration-300 ${
-              showSort && "-rotate-90"
-            }`}
-          />
-        </button>
-        <button
-          onClick={addUndoBook}
-          className={`absolute right-16 aspect-square w-8 transition-all duration-300 
-            ${showUndo ? "visible opacity-100" : "invisible opacity-0"}`}
+        <div
+          className={clsx(
+            "flex justify-center md:visible",
+            !showCategorize && "hidden"
+          )}
         >
-          <ArrowUturnDownIcon />
-        </button>
+          {children}
+        </div>
       </header>
-      <Menu showMenu={showMenu} focusInput={focusInput} />
-      <Filter showSort={showSort} />
+      <Menu
+        showMenu={showMenu}
+        setShowMenu={setShowMenu}
+        setShowSearch={setShowSearch}
+      />
     </div>
   );
 };

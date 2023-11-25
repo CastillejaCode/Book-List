@@ -28,9 +28,8 @@ export const toggleSlice = createSlice({
       state.addForm = action.payload;
       state.menu = false;
     },
-    toggleSearch: (state) => {
-      state.search = !state.search;
-      state.menu = false;
+    toggleSearch: (state, action) => {
+      state.search = action.payload;
     },
     toggleCreate: (state) => {
       state.create = !state.create;

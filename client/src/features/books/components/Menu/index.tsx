@@ -1,100 +1,134 @@
 import {
   ArrowLeftOnRectangleIcon,
+  ArrowUturnDownIcon,
   MagnifyingGlassIcon,
   PlusIcon,
   UserCircleIcon,
 } from "@heroicons/react/20/solid";
+import { BookOpenIcon } from "@heroicons/react/24/outline";
 import { signOut } from "firebase/auth";
-import { useRef } from "react";
+import { SetStateAction, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDispatch } from "react-redux";
-import { Link, useNavigate } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
-import Dialog from "src/components/Dialog";
-import { setToast } from "src/slices/notificationSlice";
-import {
-  setShowAddForm,
-  setUser,
-  toggleMenu,
-  toggleSearch,
-  toggleUser,
-} from "src/slices/toggleSlice";
+import Dialog from "src/components/function/Dialog";
+import { useAddBookMutation } from "src/services/books";
+import { setToast } from "src/slices/toastSlice";
+import { setUser } from "src/slices/toggleSlice";
+import { saveUndo } from "src/slices/undoSlice";
+import { RootState } from "src/store";
 import AddForm from "../AddForm";
 
 interface Props {
   showMenu: boolean;
-  focusInput: () => void;
+  setShowMenu: React.Dispatch<SetStateAction<boolean>>;
+  setShowSearch: React.Dispatch<SetStateAction<boolean>>;
 }
 
-const Menu = ({ showMenu, focusInput }: Props) => {
+const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const location = useLocation();
+  const [addBook, { isError }] = useAddBookMutation();
+
   const dialogRef = useRef<HTMLDialogElement>(null);
   const [user] = useAuthState(auth);
 
-  if (!user) return <></>;
+  const undoBook = useSelector((state: RootState) => state.undo.value);
 
   // Only allows adding books if user is verified or if user is doing a demo and has gone over the 24 hour limit for "testing" out the app
   const verifyTimeLimit = () => {
-    const timeCreated = user.metadata.creationTime as string;
+    const timeCreated = user?.metadata.creationTime as string;
     const timeDifference = Date.now() - new Date(timeCreated).getTime();
     const timeLimit = 24 * 3600;
-    if (user.emailVerified) return false;
+    if (user?.emailVerified) return false;
     return timeDifference > timeLimit;
+  };
+
+  const handleOpenAddbook = () => {
+    dialogRef.current?.showModal();
+    setShowMenu(false);
+  };
+
+  const handleSearch = () => {
+    setShowSearch(true);
+    setShowMenu(false);
+  };
+
+  const handleSignOut = () => {
+    signOut(auth);
+    navigate("/");
+    dispatch(setToast({ message: "Signed out", type: "notification" }));
+    setShowMenu(false);
+    dispatch(setUser(false));
+  };
+
+  const handleUndo = async () => {
+    try {
+      if (!undoBook) throw new Error("Can't find book to undelete");
+      await addBook(undoBook);
+      if (isError) throw new Error("Couldn't undo deletion");
+      dispatch(saveUndo(null));
+    } catch (err) {
+      if (err instanceof Error) {
+        const { message } = err;
+        dispatch(setToast({ type: "error", message }));
+      }
+    }
   };
 
   return (
     <div
-      className={`menu absolute z-50 w-fit rounded-br-md border-b-2 border-r-2 border-zinc-700 bg-zinc-100 transition-all duration-300 dark:bg-zinc-900
-    ${showMenu ? "left-0" : "-left-60"}
+      className={`menu absolute w-fit rounded-br-md border-b-2 border-r-2 border-zinc-700 bg-zinc-100 transition-all duration-200 dark:bg-zinc-900
+    ${showMenu ? "left-0" : "invisible -left-60"}
     `}
     >
-      {/* Doesn't look nice b/c had to conform to DaisyUI */}
       <ul className="menu text-xl">
-        <li onClick={() => dispatch(toggleUser())}>
-          <Link to="/account">
-            <UserCircleIcon className="aspect-square w-6" />
-            {auth.currentUser?.displayName || "Account"}
-          </Link>
-        </li>
+        {location.pathname !== "/account" && (
+          <li>
+            <Link to="/account">
+              <UserCircleIcon className="aspect-square w-6" />
+              {auth.currentUser?.displayName ?? "Account"}
+            </Link>
+          </li>
+        )}
+        {location.pathname !== "/home" && (
+          <li>
+            <Link to="/home">
+              <BookOpenIcon className="aspect-square w-6" />
+              Books
+            </Link>
+          </li>
+        )}
         {!verifyTimeLimit() && (
-          <li onClick={() => dispatch(setShowAddForm(true))}>
-            <a onClick={() => dialogRef.current?.showModal()}>
+          <li>
+            <a onClick={handleOpenAddbook}>
               <PlusIcon className="aspect-square w-6" />
               <p>Add Book</p>
             </a>
           </li>
         )}
-        <li tabIndex={0} className="mb-4">
-          <a
-            onClick={() => {
-              dispatch(toggleSearch());
-              // Janky way of waiting for input element to exist before focusing on it
-              setTimeout(() => {
-                focusInput();
-              }, 50);
-            }}
-          >
+        <li tabIndex={0}>
+          <button onClick={handleSearch}>
             <MagnifyingGlassIcon className="aspect-square w-6" />
             Search
-          </a>
+          </button>
         </li>
-        <li>
-          <a
-            onClick={() => {
-              signOut(auth);
-              navigate("/");
-              dispatch(
-                setToast({ message: "Signed out", type: "notification" })
-              );
-              dispatch(toggleMenu());
-              dispatch(setUser(false));
-            }}
-          >
+        <li className="mt-4">
+          <button onClick={handleSignOut}>
             <ArrowLeftOnRectangleIcon className="aspect-square w-6" />
             Sign Out
-          </a>
+          </button>
         </li>
+        {undoBook && (
+          <li className="mt-4">
+            <button onClick={handleUndo} aria-label="Undelete book">
+              <ArrowUturnDownIcon className="aspect-square w-6" />
+              Undo
+            </button>
+          </li>
+        )}
       </ul>
       <Dialog ref={dialogRef}>
         <AddForm />

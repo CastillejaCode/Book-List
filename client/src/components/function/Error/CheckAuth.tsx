@@ -1,7 +1,7 @@
 import { useAuthState } from "react-firebase-hooks/auth";
 import auth from "src/auth/config";
 import ErrorPage from "./ErrorPage";
-import Loading from "../Loading";
+import Loading from "src/components/ui/Loading";
 
 interface Props {
   children: React.ReactNode;

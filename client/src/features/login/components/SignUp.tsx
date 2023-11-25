@@ -4,10 +4,10 @@ import { createUserWithEmailAndPassword, updateProfile } from "firebase/auth";
 import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
-import SubmitButton from "src/components/SubmitButton";
-import Toast from "src/components/Toast";
+import SubmitButton from "src/components/ui/SubmitButton";
+import Toast from "src/components/ui/Toast";
 import { useField } from "src/hooks/useField";
-import { setToast } from "src/slices/notificationSlice";
+import { setToast } from "src/slices/toastSlice";
 
 interface Props {
   text: "Sign up" | "Get started";

@@ -1,33 +1,24 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { PayloadAction, createSlice } from "@reduxjs/toolkit";
+import { Book } from "src/types";
 
-const initialState = {
-  status: false,
-  value: {
-    title: null,
-    author: null,
-    rating: null,
-    id: null,
-    date: null,
-    review: null,
-  },
+interface InitalState {
+  value: Book | null;
+}
+
+const initialState: InitalState = {
+  value: null,
 };
 
 export const undoSlice = createSlice({
   name: "undo",
   initialState,
   reducers: {
-    saveUndo: (state, action) => {
+    saveUndo: (state, action: PayloadAction<Book | null>) => {
       state.value = action.payload;
-    },
-    toggleUndoStatus: (state) => {
-      state.status = !state.status;
-    },
-    setUndoStatus: (state, action) => {
-      state.status = action.payload;
     },
   },
 });
 
-export const { saveUndo, toggleUndoStatus, setUndoStatus } = undoSlice.actions;
+export const { saveUndo } = undoSlice.actions;
 
 export default undoSlice.reducer;
