@@ -1,11 +1,10 @@
 import { AuthError, updateEmail, updateProfile } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import { useField } from "src/hooks/useField";
 import { setToast } from "src/slices/toastSlice";
-import { RootState } from "src/store";
 import Verify from "./Verify";
 interface Props {
   handleName: React.Dispatch<string>;
@@ -14,7 +13,6 @@ interface Props {
 const Account = ({ handleName }: Props) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const verified = useSelector((state: RootState) => state.user.verification);
 
   const [user] = useAuthState(auth);
   const [name, setNameValue] = useField({
@@ -75,22 +73,22 @@ const Account = ({ handleName }: Props) => {
           <>
             <label className="flex flex-col">
               First name
-              <input {...name} className="input-login" autoComplete="name" />
+              <input {...name} className="input-login" />
             </label>
-            <label className="mb-4 flex flex-col">
+            <label className=" flex flex-col">
               Email
-              <input {...email} className="input-login" autoComplete="email" />
+              <input {...email} className="input-login" />
             </label>
           </>
         )}
         <button
-          className="btn mt-4 self-end bg-green-200 text-green-900"
+          className="btn self-end bg-green-200 text-green-900"
           type="submit"
         >
-          {user?.isAnonymous ? "sign up" : "Save Changes"}
+          {user?.isAnonymous ? "Sign up" : "Save Changes"}
         </button>
       </form>
-      {((!user?.emailVerified && !user?.isAnonymous) || verified) && <Verify />}
+      {!user?.emailVerified && !user?.isAnonymous && <Verify />}
     </div>
   );
 };
