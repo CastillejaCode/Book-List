@@ -38,10 +38,10 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const undoBook = useSelector((state: RootState) => state.undo.value);
 
   // Only allows adding books if user is verified or if user is doing a demo and has gone over the 24 hour limit for "testing" out the app
-  const verifyTimeLimit = () => {
+  const timeLimitBreached = () => {
     const timeCreated = user?.metadata.creationTime as string;
     const timeDifference = Date.now() - new Date(timeCreated).getTime();
-    const timeLimit = 24 * 3600;
+    const timeLimit = 24 * 3600 * 1000;
     if (user?.emailVerified) return false;
     return timeDifference > timeLimit;
   };
@@ -101,7 +101,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
             </Link>
           </li>
         )}
-        {!verifyTimeLimit() && (
+        {!timeLimitBreached() && (
           <li>
             <a onClick={handleOpenAddbook}>
               <PlusIcon className="aspect-square w-6" />
