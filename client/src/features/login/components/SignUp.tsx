@@ -6,9 +6,10 @@ import {
   linkWithCredential,
   updateProfile,
 } from "firebase/auth";
-import { useRef } from "react";
+import { useEffect, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
+import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import SubmitButton from "src/components/ui/SubmitButton";
 import Toast from "src/components/ui/Toast";
@@ -22,6 +23,7 @@ interface Props {
 export default function SignUp({ text }: Props) {
   const dialogRef = useRef<HTMLDialogElement>(null);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const [user] = useAuthState(auth);
 
   const [name, setName] = useField({
@@ -36,6 +38,12 @@ export default function SignUp({ text }: Props) {
     id: "pwd",
     type: "password",
   });
+
+  useEffect(() => {
+    if (user?.isAnonymous) {
+      dialogRef.current?.showModal();
+    }
+  }, []);
 
   const signUp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
@@ -57,8 +65,8 @@ export default function SignUp({ text }: Props) {
         );
         await updateProfile(userCredential.user, { displayName: name.value });
       }
+      navigate("/home");
       dialogRef.current?.close();
-      // dispatch(setToast({ message: "verification email sent" }));
       setName("");
       setEmail("");
       setPassword("");
