@@ -1,4 +1,4 @@
-import { deleteUser } from "firebase/auth";
+import { AuthError, deleteUser } from "firebase/auth";
 import { useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useDispatch } from "react-redux";
@@ -18,10 +18,15 @@ const Delete = () => {
   const [account, setAccount] = useState(false);
 
   const deleteData = async () => {
-    if (!user) return;
-    const uid = user.uid;
-    await deleteAllBooks({ uid });
-    dispatch(setToast({ message: "Data deleted", type: "error" }));
+    try {
+      if (!user) return;
+      const uid = user.uid;
+      await deleteAllBooks({ uid });
+      dispatch(setToast({ message: "Data deleted" }));
+    } catch (error) {
+      const { message } = error as AuthError;
+      dispatch(setToast({ type: "error", message }));
+    }
   };
 
   const deleteAccount = async () => {
@@ -31,7 +36,8 @@ const Delete = () => {
       await deleteUser(user);
       navigate("/");
     } catch (error) {
-      console.log(error);
+      const { message } = error as AuthError;
+      dispatch(setToast({ type: "error", message }));
     }
   };
 
