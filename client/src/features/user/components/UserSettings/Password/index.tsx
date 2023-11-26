@@ -43,6 +43,7 @@ const Password = () => {
         Reset your password. <br /> You will be signed out.
       </h2>
       <form className="flex w-full flex-col gap-6 p-0" onSubmit={resetPassword}>
+        <input type="text" hidden autoComplete="username" />
         <label className="flex flex-col">
           Password
           <input
