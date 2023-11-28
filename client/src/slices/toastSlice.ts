@@ -1,7 +1,7 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 interface Toast {
-  type: "error" | "notification";
+  type?: "error" | "notification";
   message: string;
 }
 
@@ -14,12 +14,11 @@ export const toastSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    setToast: (state, action) => {
-      const { type, message } = action.payload;
-      return (state = {
-        type: type ?? "notification",
-        message,
-      });
+    setToast: (_state, action) => {
+      return {
+        type: "notification",
+        ...action.payload,
+      };
     },
     resetToast: (state) => {
       state.message = "";
