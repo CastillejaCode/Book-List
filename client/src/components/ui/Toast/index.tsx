@@ -1,10 +1,9 @@
+import clsx from "clsx";
+import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { resetToast } from "src/slices/toastSlice";
 import { RootState } from "src/store";
-import clsx from "clsx";
-
-import { motion, AnimatePresence } from "framer-motion";
 
 const Toast = () => {
   const dispatch = useDispatch();
@@ -12,12 +11,12 @@ const Toast = () => {
     (state: RootState) => state.notification
   );
 
-  useEffect(() => {
-    const timeout = setTimeout(() => {
-      dispatch(resetToast());
-    }, 5000);
-    return () => clearTimeout(timeout);
-  }, [dispatch, message]);
+  // useEffect(() => {
+  //   const timeout = setTimeout(() => {
+  //     dispatch(resetToast());
+  //   }, 5000);
+  //   return () => clearTimeout(timeout);
+  // }, [dispatch, message]);
 
   const style = {
     notification: "bg-zinc-100 dark:bg-zinc-800",
@@ -36,11 +35,11 @@ const Toast = () => {
           onDragEnd={(_event, info) =>
             Math.abs(info.offset.x) > limit && dispatch(resetToast())
           }
-          initial={{ y: 50 }}
+          initial={{ x: "-50%", y: 50 }}
           animate={{ y: 0 }}
           exit={{ opacity: 0 }}
           className={clsx(
-            "toast fixed bottom-8 left-1/2 flex w-fit -translate-x-1/2 flex-row gap-6 rounded-lg px-6 py-4 font-semibold shadow-xl ",
+            "toast fixed bottom-8 left-1/2 flex w-fit flex-row gap-6 rounded-lg px-6 py-4 font-semibold shadow-xl ",
             style[type]
           )}
         >
