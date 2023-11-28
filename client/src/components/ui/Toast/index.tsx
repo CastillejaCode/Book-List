@@ -4,6 +4,8 @@ import { resetToast } from "src/slices/toastSlice";
 import { RootState } from "src/store";
 import clsx from "clsx";
 
+import { motion, AnimatePresence } from "framer-motion";
+
 const Toast = () => {
   const dispatch = useDispatch();
   const { message, type } = useSelector(
@@ -22,17 +24,31 @@ const Toast = () => {
     error: "bg-red-700 dark:bg-red-900 text-red-200",
   };
 
-  if (!message) return <></>;
+  const limit = 50;
+
   return (
-    <div
-      className={clsx(
-        "toast fixed bottom-8 left-1/2 flex w-fit -translate-x-1/2 flex-row gap-6 rounded-lg px-6 py-4 font-semibold shadow-xl ",
-        style[type]
+    <AnimatePresence>
+      {message && (
+        <motion.div
+          drag="x"
+          dragConstraints={{ left: limit, right: limit }}
+          whileDrag={{ opacity: 0.5 }}
+          onDragEnd={(_event, info) =>
+            Math.abs(info.offset.x) > limit && dispatch(resetToast())
+          }
+          initial={{ y: 50 }}
+          animate={{ y: 0 }}
+          exit={{ opacity: 0 }}
+          className={clsx(
+            "toast fixed bottom-8 left-1/2 flex w-fit -translate-x-1/2 flex-row gap-6 rounded-lg px-6 py-4 font-semibold shadow-xl ",
+            style[type]
+          )}
+        >
+          <p>{message}</p>
+          <button onClick={() => dispatch(resetToast())}>X</button>
+        </motion.div>
       )}
-    >
-      <p>{message}</p>
-      <button onClick={() => dispatch(resetToast())}>X</button>
-    </div>
+    </AnimatePresence>
   );
 };
 
