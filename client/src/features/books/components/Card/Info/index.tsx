@@ -47,7 +47,7 @@ export default function Info({ book }: Props) {
     try {
       await deleteBook(book.id);
       if (isError) throw new Error("Couldn't delete book");
-
+      dispatch(setToast({ message: "Book deleted." }));
       dispatch(saveUndo(book));
       setTimeout(() => {
         dispatch(saveUndo(null));
