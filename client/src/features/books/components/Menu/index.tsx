@@ -14,7 +14,7 @@ import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import Dialog from "src/components/function/Dialog";
 import { useAddBookMutation } from "src/services/books";
-import { setToast } from "src/slices/toastSlice";
+import { addToast } from "src/slices/toastSlice";
 import { setUser } from "src/slices/toggleSlice";
 import { saveUndo } from "src/slices/undoSlice";
 import { RootState } from "src/store";
@@ -59,7 +59,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const handleSignOut = () => {
     signOut(auth);
     navigate("/");
-    dispatch(setToast({ message: "Signed out", type: "notification" }));
+    dispatch(addToast({ message: "Signed out", type: "notification" }));
     setShowMenu(false);
     dispatch(setUser(false));
   };
@@ -73,7 +73,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
     } catch (err) {
       if (err instanceof Error) {
         const { message } = err;
-        dispatch(setToast({ type: "error", message }));
+        dispatch(addToast({ type: "error", message }));
       }
     }
   };

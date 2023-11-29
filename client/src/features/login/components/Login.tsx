@@ -11,7 +11,7 @@ import auth from "src/auth/config";
 import SubmitButton from "src/components/ui/SubmitButton";
 import Toast from "src/components/ui/Toast";
 import { useField } from "src/hooks/useField";
-import { setToast } from "src/slices/toastSlice";
+import { addToast } from "src/slices/toastSlice";
 
 export default function Login() {
   const dialogRef = useRef<HTMLDialogElement>(null);
@@ -36,7 +36,7 @@ export default function Login() {
       setPassword("");
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
-      dispatch(setToast({ message: error.code, type: "error" }));
+      dispatch(addToast({ message: error.code, type: "error" }));
     }
   };
 
@@ -47,14 +47,14 @@ export default function Login() {
       dialogRef.current?.close();
       setEmail("");
       dispatch(
-        setToast({
+        addToast({
           message: "email sent to reset password",
           type: "notification",
         })
       );
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
-      dispatch(setToast({ message: error.code, type: "error" }));
+      dispatch(addToast({ message: error.code, type: "error" }));
     }
   };
 

@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import ConfirmChoice from "src/components/ui/ConfirmChoice";
 import { useDeleteAllBooksMutation } from "src/services/books";
-import { setToast } from "src/slices/toastSlice";
+import { addToast } from "src/slices/toastSlice";
 
 const Delete = () => {
   const dispatch = useDispatch();
@@ -22,10 +22,10 @@ const Delete = () => {
       if (!user) return;
       const uid = user.uid;
       await deleteAllBooks({ uid });
-      dispatch(setToast({ message: "Data deleted" }));
+      dispatch(addToast({ message: "Data deleted" }));
     } catch (error) {
       const { message } = error as AuthError;
-      dispatch(setToast({ type: "error", message }));
+      dispatch(addToast({ type: "error", message }));
     }
   };
 
@@ -37,7 +37,7 @@ const Delete = () => {
       navigate("/");
     } catch (error) {
       const { message } = error as AuthError;
-      dispatch(setToast({ type: "error", message }));
+      dispatch(addToast({ type: "error", message }));
     }
   };
 

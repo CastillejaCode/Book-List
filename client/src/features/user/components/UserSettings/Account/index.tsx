@@ -4,7 +4,7 @@ import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import { useField } from "src/hooks/useField";
-import { setToast } from "src/slices/toastSlice";
+import { addToast } from "src/slices/toastSlice";
 import Verify from "./Verify";
 interface Props {
   handleName: React.Dispatch<string>;
@@ -38,19 +38,19 @@ const Account = ({ handleName }: Props) => {
         await updateProfile(user, { displayName: name.value });
         handleName(name.value);
         setNameValue("");
-        dispatch(setToast({ message: "name changed" }));
+        dispatch(addToast({ message: "name changed" }));
       }
       if (email.value) {
         await updateEmail(user, email.value);
         setEmailValue("");
-        dispatch(setToast({ message: "email changed" }));
+        dispatch(addToast({ message: "email changed" }));
       }
       if (email.value && name.value) {
-        dispatch(setToast({ message: "name and email changed" }));
+        dispatch(addToast({ message: "name and email changed" }));
       }
     } catch (error) {
       const { message } = error as AuthError;
-      dispatch(setToast({ message, type: "error" }));
+      dispatch(addToast({ message, type: "error" }));
     }
   };
 
