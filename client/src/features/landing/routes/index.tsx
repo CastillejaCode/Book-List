@@ -1,8 +1,8 @@
 import Footer from "src/components/ui/Footer";
 import Header from "src/components/ui/Header";
 import Toast from "src/components/ui/Toast";
-import AnonLogin from "src/features/login/components/AnonLogin";
-import SignUp from "src/features/login/components/SignUp";
+import AnonLogin from "src/features/landing/components/AnonLogin";
+import SignUp from "src/features/landing/components/SignUp";
 
 export default function Landing() {
   return (

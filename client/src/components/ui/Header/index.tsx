@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
-import Login from "src/features/login/components/Login";
-import SignUp from "src/features/login/components/SignUp";
+import Login from "src/features/landing/components/Login";
+import SignUp from "src/features/landing/components/SignUp";
 
 export default function Header() {
   return (
