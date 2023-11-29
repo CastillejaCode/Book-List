@@ -1,6 +1,5 @@
 import { configureStore } from "@reduxjs/toolkit";
 import { bookApi, bookSearchApi } from "./services/books.js";
-import toggleReducer from "./slices/toggleSlice.js";
 import categorizeReducer from "./slices/categorizeSlice.js";
 import undoReducer from "./slices/undoSlice.js";
 import searchReducer from "./slices/searchSlice.js";
@@ -12,7 +11,6 @@ export const store = configureStore({
     search: searchReducer,
     undo: undoReducer,
     categorize: categorizeReducer,
-    toggle: toggleReducer,
     [bookApi.reducerPath]: bookApi.reducer,
     [bookSearchApi.reducerPath]: bookSearchApi.reducer,
   },
