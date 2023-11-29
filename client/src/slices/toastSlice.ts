@@ -5,15 +5,7 @@ export interface Toast {
   message: string;
 }
 
-const initialState: Toast[] = [
-  {
-    type: "notification",
-    message: "first",
-  },
-  {
-    message: "second",
-  },
-];
+const initialState: Toast[] = [];
 
 export const toastSlice = createSlice({
   name: "notification",
