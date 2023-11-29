@@ -8,7 +8,7 @@ export interface Toast {
 const initialState: Toast[] = [];
 
 export const toastSlice = createSlice({
-  name: "notification",
+  name: "toast",
   initialState,
   reducers: {
     addToast: (state, action: PayloadAction<Toast>) => {

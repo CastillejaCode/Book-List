@@ -6,7 +6,7 @@ import { RootState } from "src/store";
 
 const Toast = () => {
   const dispatch = useDispatch();
-  const toast = useSelector((state: RootState) => state.notification[0]);
+  const toast = useSelector((state: RootState) => state.toast[0]);
 
   if (toast) {
     setTimeout(() => {
