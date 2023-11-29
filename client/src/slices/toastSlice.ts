@@ -5,27 +5,34 @@ interface Toast {
   message: string;
 }
 
-const initialState: Toast = {
-  type: "notification",
-  message: "",
-};
+const initialState: Toast[] = [
+  {
+    type: "notification",
+    message: "first",
+  },
+  {
+    message: "second",
+  },
+];
 
 export const toastSlice = createSlice({
   name: "notification",
   initialState,
   reducers: {
-    setToast: (_state, action) => {
-      return {
+    setToast: (state, action) => {
+      const toast = {
         type: "notification",
         ...action.payload,
       };
+      state.push(toast);
     },
-    resetToast: (state) => {
-      state.message = "";
+    removeToast: (state) => {
+      state.shift();
     },
+    resetToast: (state) => state,
   },
 });
 
-export const { setToast, resetToast } = toastSlice.actions;
+export const { removeToast, setToast, resetToast } = toastSlice.actions;
 
 export default toastSlice.reducer;

@@ -2,21 +2,22 @@ import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { resetToast } from "src/slices/toastSlice";
+import { removeToast, resetToast } from "src/slices/toastSlice";
 import { RootState } from "src/store";
 
 const Toast = () => {
   const dispatch = useDispatch();
-  const { message, type } = useSelector(
-    (state: RootState) => state.notification
-  );
+  const toast = useSelector((state: RootState) => state.notification.at(0));
 
   useEffect(() => {
+    const delay = 5000;
     const timeout = setTimeout(() => {
-      dispatch(resetToast());
-    }, 5000);
+      dispatch(removeToast());
+      if (!toast) clearTimeout(timeout);
+    }, delay);
     return () => clearTimeout(timeout);
-  }, [dispatch, message]);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [toast]);
 
   const style = {
     notification: "bg-zinc-100 dark:bg-zinc-800",
@@ -27,7 +28,7 @@ const Toast = () => {
 
   return (
     <AnimatePresence>
-      {message && (
+      {toast && (
         <motion.div
           drag="x"
           dragConstraints={{ left: limit, right: limit }}
@@ -40,13 +41,13 @@ const Toast = () => {
           exit={{ opacity: 0 }}
           className={clsx(
             "toast-end toast m-4 flex w-fit -translate-x-1/2 flex-row rounded-lg pl-8 pr-10 shadow-xl ",
-            style[type]
+            style[toast.type ?? "notification"]
           )}
         >
-          <p>{message}</p>
+          <p>{toast.message}</p>
           <button
             className="btn-ghost btn-sm btn-circle btn absolute right-0 top-0 "
-            onClick={() => dispatch(resetToast())}
+            onClick={() => dispatch(removeToast())}
           >
             ✕
           </button>
