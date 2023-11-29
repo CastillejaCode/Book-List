@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
 import { useDispatch, useSelector } from "react-redux";
-import { removeToast, resetToast } from "src/slices/toastSlice";
+import { removeToast } from "src/slices/toastSlice";
 import { RootState } from "src/store";
 
 const Toast = () => {
@@ -29,7 +29,7 @@ const Toast = () => {
           dragConstraints={{ left: limit, right: limit }}
           whileDrag={{ opacity: 0.5 }}
           onDragEnd={(_event, info) =>
-            Math.abs(info.offset.x) > limit && dispatch(resetToast())
+            Math.abs(info.offset.x) > limit && dispatch(removeToast())
           }
           initial={{ y: 50 }}
           animate={{ y: 0 }}
