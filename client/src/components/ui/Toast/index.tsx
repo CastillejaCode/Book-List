@@ -1,23 +1,18 @@
 import clsx from "clsx";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { removeToast, resetToast } from "src/slices/toastSlice";
 import { RootState } from "src/store";
 
 const Toast = () => {
   const dispatch = useDispatch();
-  const toast = useSelector((state: RootState) => state.notification.at(0));
+  const toast = useSelector((state: RootState) => state.notification[0]);
 
-  useEffect(() => {
-    const delay = 5000;
-    const timeout = setTimeout(() => {
+  if (toast) {
+    setTimeout(() => {
       dispatch(removeToast());
-      if (!toast) clearTimeout(timeout);
-    }, delay);
-    return () => clearTimeout(timeout);
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [toast]);
+    }, 5000);
+  }
 
   const style = {
     notification: "bg-zinc-100 dark:bg-zinc-800",
