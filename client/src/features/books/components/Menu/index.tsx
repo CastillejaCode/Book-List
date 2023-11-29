@@ -13,9 +13,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import Dialog from "src/components/function/Dialog";
+import useToast from "src/hooks/useToast";
 import { useAddBookMutation } from "src/services/books";
-import { addToast } from "src/slices/toastSlice";
-import { setUser } from "src/slices/toggleSlice";
 import { saveUndo } from "src/slices/undoSlice";
 import { RootState } from "src/store";
 import AddForm from "../AddForm";
@@ -28,6 +27,7 @@ interface Props {
 
 const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const dispatch = useDispatch();
+  const { addToast } = useToast();
   const navigate = useNavigate();
   const location = useLocation();
   const [addBook, { isError }] = useAddBookMutation();
@@ -59,9 +59,8 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
   const handleSignOut = () => {
     signOut(auth);
     navigate("/");
-    dispatch(addToast({ message: "Signed out", type: "notification" }));
+    addToast({ message: "Signed out" });
     setShowMenu(false);
-    dispatch(setUser(false));
   };
 
   const handleUndo = async () => {
@@ -73,7 +72,7 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
     } catch (err) {
       if (err instanceof Error) {
         const { message } = err;
-        dispatch(addToast({ type: "error", message }));
+        addToast({ type: "error", message });
       }
     }
   };
