@@ -1,8 +1,9 @@
-import { SetStateAction, useEffect, useState } from "react";
+import clsx from "clsx";
+import { FirebaseError } from "firebase/app";
+import { SetStateAction, useRef, useState } from "react";
+import useToast from "src/hooks/useToast";
 import { useUpdateBookMutation } from "src/services/books";
 import { Book } from "src/types";
-import { useRef } from "react";
-import clsx from "clsx";
 
 interface Props {
   book: Book;
@@ -10,6 +11,7 @@ interface Props {
 }
 
 const EditForm = ({ book, setShowForm }: Props) => {
+  const { addToast } = useToast();
   const [updateBook] = useUpdateBookMutation();
   const inputReadRef = useRef<HTMLInputElement>(null);
 
@@ -26,26 +28,27 @@ const EditForm = ({ book, setShowForm }: Props) => {
   );
   const [read, setRead] = useState(book.read);
 
-  // Set Read toggle based on endDate
-  useEffect(() => {
-    if (!inputReadRef.current) return;
-    if (endDate) inputReadRef.current.disabled = true;
-  }, []);
-
-  const submitForm = (event: React.SyntheticEvent) => {
+  const submitForm = async (event: React.SyntheticEvent) => {
     event.preventDefault();
-    const body = {
-      title,
-      author,
-      rating,
-      startDate: startDate ? new Date(startDate) : null,
-      endDate: endDate ? new Date(endDate) : null,
-      read,
-      review,
-    };
-    const { id } = book;
-    setShowForm(false);
-    updateBook({ id, body });
+    try {
+      const body = {
+        title,
+        author,
+        rating,
+        startDate: startDate ? new Date(startDate) : null,
+        endDate: endDate ? new Date(endDate) : null,
+        read,
+        review,
+      };
+      const { id } = book;
+      await updateBook({ id, body });
+      addToast({ message: "Book updated." });
+      setShowForm(false);
+    } catch (error) {
+      if (!(error instanceof FirebaseError)) return;
+      const { message } = error;
+      addToast({ type: "error", message });
+    }
   };
 
   const handleEndDate = (event: React.FormEvent<HTMLInputElement>) => {

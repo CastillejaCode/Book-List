@@ -1,11 +1,10 @@
-import { useDispatch } from "react-redux";
 import { AuthError, signInAnonymously } from "firebase/auth";
-import auth from "src/auth/config";
-import { setToast } from "src/slices/toastSlice";
 import { useNavigate } from "react-router-dom";
+import auth from "src/auth/config";
+import useToast from "src/hooks/useToast";
 
 export default function AnonLogin() {
-  const dispatch = useDispatch();
+  const { addToast } = useToast();
   const navigate = useNavigate();
 
   const handleAnonLogin = async () => {
@@ -14,7 +13,7 @@ export default function AnonLogin() {
       navigate("/home");
     } catch (error) {
       const { message } = error as AuthError;
-      dispatch(setToast({ message, type: "error" }));
+      addToast({ message, type: "error" });
     }
   };
 

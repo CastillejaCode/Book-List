@@ -1,12 +1,11 @@
 import { signOut, updatePassword } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
 import { useField } from "src/hooks/useField";
-import { setToast } from "src/slices/toastSlice";
+import useToast from "src/hooks/useToast";
 
 const Password = () => {
-  const dispatch = useDispatch();
+  const { addToast } = useToast();
   const [password, setPassword] = useField({
     id: "pwd",
     type: "password",
@@ -28,10 +27,11 @@ const Password = () => {
       setPassword("");
       setPasswordConfirm("");
       signOut(auth);
-      dispatch(setToast({ message: "Password reset" }));
+      addToast({ message: "Password reset." });
     } catch (error) {
-      if (error instanceof Error)
-        dispatch(setToast({ type: "error", message: error.message }));
+      if (error instanceof Error) {
+        addToast({ type: "error", message: error.message });
+      }
       setPassword("");
       setPasswordConfirm("");
     }

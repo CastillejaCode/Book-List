@@ -15,7 +15,7 @@ export default function Content({
   return (
     <div className="flex gap-4">
       <Cover title={title} coverNumber={coverNumber} size="M" />
-      <div className="flex flex-auto flex-col text-center transition-all duration-300">
+      <div className="flex flex-auto cursor-pointer flex-col text-center transition-all duration-300">
         <h2 className=" text-2xl font-semibold">{title}</h2>
         <h3 className=" text-xl">{author}</h3>
       </div>

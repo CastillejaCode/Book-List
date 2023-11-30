@@ -1,12 +1,11 @@
 import { sendEmailVerification } from "firebase/auth";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
-import { setToast } from "src/slices/toastSlice";
+import useToast from "src/hooks/useToast";
 import checkVerification from "src/utils/checkVerification";
 
 export default function Verify() {
-  const dispatch = useDispatch();
+  const { addToast } = useToast();
   const [user] = useAuthState(auth);
 
   const verifyEmail = async (event: React.SyntheticEvent) => {
@@ -16,9 +15,12 @@ export default function Verify() {
       if (user.emailVerified) throw Error("email already verified");
       await sendEmailVerification(user);
       checkVerification(2, 60);
-      dispatch(setToast({ message: "email sent" }));
+      addToast({ message: "email sent" });
     } catch (error) {
-      if (error instanceof Error) dispatch(setToast(error.message));
+      if (error instanceof Error) {
+        const { message } = error;
+        addToast({ type: "error", message });
+      }
     }
   };
 

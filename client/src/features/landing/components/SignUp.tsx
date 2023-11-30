@@ -8,22 +8,21 @@ import {
 } from "firebase/auth";
 import { useEffect, useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import SubmitButton from "src/components/ui/SubmitButton";
 import Toast from "src/components/ui/Toast";
 import { useField } from "src/hooks/useField";
-import { setToast } from "src/slices/toastSlice";
+import useToast from "src/hooks/useToast";
 
 interface Props {
   text: "Sign up" | "Get started";
 }
 
 export default function SignUp({ text }: Props) {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const dispatch = useDispatch();
+  const { addToast } = useToast();
   const navigate = useNavigate();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [user] = useAuthState(auth);
 
   const [name, setName] = useField({
@@ -54,9 +53,8 @@ export default function SignUp({ text }: Props) {
           password.value
         );
         await linkWithCredential(user, credential);
-        dispatch(
-          setToast({ message: "Anonymous account successfully upgraded" })
-        );
+
+        addToast({ message: "Anonymous account successfully upgraded." });
       } else {
         const userCredential = await createUserWithEmailAndPassword(
           auth,
@@ -72,7 +70,7 @@ export default function SignUp({ text }: Props) {
       setPassword("");
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
-      dispatch(setToast({ message: error.code, type: "error" }));
+      addToast({ message: error.code, type: "error" });
     }
   };
 

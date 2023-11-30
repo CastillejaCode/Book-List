@@ -5,18 +5,17 @@ import {
   signInWithEmailAndPassword,
 } from "firebase/auth";
 import { useRef, useState } from "react";
-import { useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
 import SubmitButton from "src/components/ui/SubmitButton";
 import Toast from "src/components/ui/Toast";
 import { useField } from "src/hooks/useField";
-import { setToast } from "src/slices/toastSlice";
+import useToast from "src/hooks/useToast";
 
 export default function Login() {
-  const dialogRef = useRef<HTMLDialogElement>(null);
-  const dispatch = useDispatch();
+  const { addToast } = useToast();
   const navigate = useNavigate();
+  const dialogRef = useRef<HTMLDialogElement>(null);
   const [showLogin, setShowLogin] = useState(true);
   const [email, setEmail] = useField({
     id: "email",
@@ -36,7 +35,7 @@ export default function Login() {
       setPassword("");
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
-      dispatch(setToast({ message: error.code, type: "error" }));
+      addToast({ message: error.code, type: "error" });
     }
   };
 
@@ -46,15 +45,10 @@ export default function Login() {
       await sendPasswordResetEmail(auth, email.value);
       dialogRef.current?.close();
       setEmail("");
-      dispatch(
-        setToast({
-          message: "email sent to reset password",
-          type: "notification",
-        })
-      );
+      addToast({ message: "email sent to reset password" });
     } catch (error) {
       if (!(error instanceof FirebaseError)) return;
-      dispatch(setToast({ message: error.code, type: "error" }));
+      addToast({ message: error.code, type: "error" });
     }
   };
 

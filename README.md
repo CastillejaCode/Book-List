@@ -6,3 +6,8 @@ Could have just used autofocus but instead did a really weird implementation
 Again, too much usage of rtk
 Too much chaos when not defining function aheads of time instead of directly in the html tag
 Needs more error handling
+
+Good
+Lots of refactoring to get rid of too much global state
+Reorganizing files
+Queue for toast

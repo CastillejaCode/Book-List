@@ -3,12 +3,12 @@ import { useState } from "react";
 import { useDispatch } from "react-redux";
 import ConfirmChoice from "src/components/ui/ConfirmChoice";
 import { useDeleteBookMutation } from "src/services/books";
-import { setToast } from "src/slices/toastSlice";
 import { saveUndo } from "src/slices/undoSlice";
 import { Book } from "src/types";
 import Cover from "../common/Cover";
 import CoverControls from "./CoverControls";
 import EditForm from "./EditForm";
+import useToast from "src/hooks/useToast";
 
 interface Props {
   book: Book;
@@ -16,6 +16,7 @@ interface Props {
 
 export default function Info({ book }: Props) {
   const dispatch = useDispatch();
+  const { addToast } = useToast();
   const [deleteBook, { isError }] = useDeleteBookMutation();
 
   const [showForm, setShowForm] = useState(false);
@@ -47,7 +48,7 @@ export default function Info({ book }: Props) {
     try {
       await deleteBook(book.id);
       if (isError) throw new Error("Couldn't delete book");
-
+      addToast({ message: "Book deleted." });
       dispatch(saveUndo(book));
       setTimeout(() => {
         dispatch(saveUndo(null));
@@ -55,7 +56,7 @@ export default function Info({ book }: Props) {
     } catch (error) {
       if (error instanceof Error) {
         const { message } = error;
-        dispatch(setToast({ type: "error", message }));
+        addToast({ type: "error", message });
       }
     }
   };

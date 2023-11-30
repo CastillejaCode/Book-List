@@ -1,10 +1,9 @@
 import clsx from "clsx";
 import React, { useRef, useState } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
-import { useDispatch } from "react-redux";
 import auth from "src/auth/config";
+import useToast from "src/hooks/useToast";
 import { useAddBookMutation } from "src/services/books";
-import { setToast } from "src/slices/toastSlice";
 import { z } from "zod";
 
 const Book = z.object({
@@ -21,7 +20,7 @@ const Book = z.object({
 });
 
 export default function AddForm() {
-  const dispatch = useDispatch();
+  const { addToast } = useToast();
   const [addBook] = useAddBookMutation();
   const inputReadRef = useRef<HTMLInputElement>(null);
   const [user] = useAuthState(auth);
@@ -59,12 +58,12 @@ export default function AddForm() {
       setStartDate("");
       setEndDate("");
       setRead(false);
-      dispatch(setToast({ message: "Book added" }));
+      addToast({ message: "Book added" });
     } catch (error) {
       if (error instanceof Error) {
         console.log(error.message);
         const { message } = error;
-        dispatch(setToast({ type: "error", message }));
+        addToast({ type: "error", message });
       }
     }
   };
