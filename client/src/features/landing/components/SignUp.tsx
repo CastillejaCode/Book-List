@@ -6,7 +6,7 @@ import {
   linkWithCredential,
   updateProfile,
 } from "firebase/auth";
-import { useEffect, useRef } from "react";
+import { useRef } from "react";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { useNavigate } from "react-router-dom";
 import auth from "src/auth/config";
@@ -38,11 +38,9 @@ export default function SignUp({ text }: Props) {
     type: "password",
   });
 
-  useEffect(() => {
-    if (user?.isAnonymous) {
-      dialogRef.current?.showModal();
-    }
-  }, []);
+  if (user?.isAnonymous) {
+    dialogRef.current?.showModal();
+  }
 
   const signUp = async (event: React.SyntheticEvent) => {
     event.preventDefault();
