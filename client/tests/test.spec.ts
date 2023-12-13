@@ -20,6 +20,11 @@ test.describe("Add Book", () => {
 
     await expect(page).toHaveURL(/\.*home/);
   });
+
+  test("should add book", async ({ page }) => {
+    await page.getByRole("button", { name: "Toggle Menu" }).click();
+    await page.getByRole("button", { name: "Add Book" }).click();
+  });
 });
 // test("get started link", async ({ page }) => {
 //   await page.goto("https://playwright.dev/");

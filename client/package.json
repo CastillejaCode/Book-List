@@ -8,7 +8,8 @@
     "compile": "tsc",
     "build": "tsc && vite build",
     "lint": "eslint src --ext ts,tsx --report-unused-disable-directives --max-warnings 0",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "test": "pnpm exec playwright test"
   },
   "dependencies": {
     "@headlessui/react": "^1.7.14",

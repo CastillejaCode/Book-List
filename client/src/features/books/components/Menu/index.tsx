@@ -102,10 +102,10 @@ const Menu = ({ showMenu, setShowMenu, setShowSearch }: Props) => {
         )}
         {!timeLimitBreached() && (
           <li>
-            <a onClick={handleOpenAddbook}>
+            <button onClick={handleOpenAddbook}>
               <PlusIcon className="aspect-square w-6" />
               <p>Add Book</p>
-            </a>
+            </button>
           </li>
         )}
         <li tabIndex={0}>
