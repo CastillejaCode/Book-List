@@ -4,6 +4,6 @@
 
 @layer components {
   .input-login {
-    @apply w-full rounded-md border-2 border-gray-800/70 pl-2;
+    @apply w-full rounded-md border-2 border-gray-800/70 p-2;
   }
 }
