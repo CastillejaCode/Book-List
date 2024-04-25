@@ -35,24 +35,25 @@ export default function Books() {
   if (isError) return <ErrorPage suppliedError="Can't find your books" />;
 
   return (
-    <div>
+    <div className="flex min-h-screen flex-col items-center">
       <NavBar>
         <Categorize
           state={{ sort, filter, order }}
           setState={{ setSort, setFilter, setOrder }}
         />
       </NavBar>
-      <main
-        className=" place-items-center gap-4 p-6 "
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(auto-fit, minmax(17rem , 1fr))",
-        }}
-      >
-        {books &&
-          books.map((book: Book) => {
-            return <Card book={book} key={book.id} />;
-          })}
+      <main className="w-full max-w-7xl flex-1 p-8">
+        <div
+          className="grid place-items-center gap-8"
+          style={{
+            gridTemplateColumns: "repeat(auto-fit, minmax(17rem , 1fr))",
+          }}
+        >
+          {books &&
+            books.map((book: Book) => {
+              return <Card book={book} key={book.id} />;
+            })}
+        </div>
       </main>
       <Toast />
     </div>
