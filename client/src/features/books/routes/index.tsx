@@ -49,10 +49,13 @@ export default function Books() {
             gridTemplateColumns: "repeat(auto-fit, minmax(17rem , 1fr))",
           }}
         >
-          {books &&
+          {books?.length ? (
             books.map((book: Book) => {
               return <Card book={book} key={book.id} />;
-            })}
+            })
+          ) : (
+            <p>You should add a book!</p>
+          )}
         </div>
       </main>
       <Toast />
