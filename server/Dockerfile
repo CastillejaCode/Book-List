@@ -7,15 +7,14 @@ FROM node:${NODE_VERSION}-slim as base
 LABEL fly_launch_runtime="Node.js"
 
 # Node.js app lives here
-WORKDIR /
+WORKDIR /app
 
 # Set production environment
-ENV NODE_ENV="production"
+ENV NODE_ENV=production
 
 # Install pnpm
 ARG PNPM_VERSION=8.11.0
 RUN npm install -g pnpm@$PNPM_VERSION
-
 
 # Throw-away build stage to reduce size of final image
 FROM base as build
@@ -31,12 +30,15 @@ RUN pnpm install --frozen-lockfile
 # Copy application code
 COPY --link . .
 
+# Build application
+RUN pnpm build
+
 # Final stage for app image
 FROM base
 
 # Copy built application
-COPY --from=build / /
+COPY --from=build /app /app
 
 # Start the server by default, this can be overwritten at runtime
 EXPOSE 3000
-CMD [ "pnpm", "run", "start" ]
+CMD [ "pnpm", "start" ]
