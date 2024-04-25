@@ -30,6 +30,7 @@ const NavBar = ({ children }: Props) => {
     setShowCategorize(false);
     setShowSearch(false);
     setShowMenu(false);
+    dispatch(setSearch(""));
   };
 
   // Executes action when clicking outside ref or hitting the escape key
@@ -62,15 +63,7 @@ const NavBar = ({ children }: Props) => {
             />
           </button>
           <div className="relative">
-            {!showSearch && (
-              <Link
-                to="/home"
-                className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300`}
-              >
-                tomeTracker
-              </Link>
-            )}
-            {showSearch && (
+            {showSearch ? (
               <input
                 onChange={(event) => dispatch(setSearch(event.target.value))}
                 value={searchTerm}
@@ -78,6 +71,13 @@ const NavBar = ({ children }: Props) => {
                 autoFocus={true}
                 className={`input-bordered input absolute left-1/2 top-0 h-full max-w-lg -translate-x-1/2 text-lg transition-all duration-300`}
               />
+            ) : (
+              <Link
+                to="/home"
+                className={`self-baseline text-3xl font-semibold tracking-wide transition-all duration-300`}
+              >
+                tomeTracker
+              </Link>
             )}
           </div>
           <button
