@@ -1,10 +1,15 @@
-import config from './utils/config.js';
-import express from 'express';
-const app = express();
 import cors from 'cors';
-import booksRouter from './controllers/books.js';
+import express from 'express';
 import mongoose from 'mongoose';
+import booksRouter from './controllers/books.js';
+import config from './utils/config.js';
 import logger from './utils/logger.js';
+const app = express();
+
+const corsOptions = {
+	origin: 'https://tometracker.pages.dev',
+	optionsSuccessStatus: 200,
+};
 
 mongoose.set('strictQuery', false);
 
@@ -17,9 +22,12 @@ if (config.MONGODB) {
 		);
 }
 
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(express.json());
 
 app.use('/api/books', booksRouter);
+app.get('/', (_req, res) => {
+	res.send('howdy');
+});
 
 export default app;
