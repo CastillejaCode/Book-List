@@ -3,7 +3,7 @@ import { Book, BookSearchAPI } from "../types";
 
 export const bookApi = createApi({
   reducerPath: "bookApi",
-  baseQuery: fetchBaseQuery({ baseUrl: "http://localhost:3001/api" }),
+  baseQuery: fetchBaseQuery({ baseUrl: "https://tome-tracker.fly.dev/api" }),
   tagTypes: ["Books"],
   endpoints: (builder) => ({
     getUserBooks: builder.query({
